@@ -1,33 +1,100 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  font-family: "Plus Jakarta Sans", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.my-input {
+  border: 1px solid #cacbca !important;
+}
+.my-input:focus {
+  border-width: 2px !important;
+  border-color: #454fec !important;
+  border-top-width: 2px !important;
+  border-top-color: #454fec !important;
+  border-bottom-width: 2px !important;
+  border-bottom-color: #9e0bf3 !important;
+  box-sizing: border-box !important;
+  padding-left: 0.75rem !important;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
+.my-text {
+  background-image: linear-gradient(#9e0bf3, #454fec);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 300;
+}
+
+.button-google {
+  border-width: 2px !important;
+  border-color: #454fec !important;
+  border-top-width: 2px !important;
+  border-top-color: #454fec !important;
+  border-bottom-width: 2px !important;
+  border-bottom-color: #9e0bf3 !important;
+  box-sizing: border-box !important;
+  padding-left: 0.75rem !important;
+}
+
+/* target the active bullet */
+span.swiper-pagination-bullet.swiper-pagination-bullet-active {
+  background-color: #ffffff;
+  opacity: 1;
+  width: 40px !important;
+  height: 7px;
+  border-radius: 10px;
+}
+
+/* target all bullets */
+.swiper-pagination-bullet {
+  background: #ffffff !important;
+  width: 20px !important;
+  height: 7px !important;
+  border-radius: 10px !important;
+}
+
+.aside-login1 {
+  background: #2b2c2b;
+  position: relative !important;
+}
+
+/* create ellipse top corner aside login1 */
+.aside-login1::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 200px;
+  border-right: 50px solid transparent;
+  background: rgb(74, 75, 74);
   background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    0deg,
+    rgba(74, 75, 74, 1) 0%,
+    rgba(74, 75, 74, 1) 50%,
+    rgba(43, 44, 43, 1) 100%
+  );
+  border-radius: 0 0 0 250px;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+/* create ellipse bottom corner aside login1 */
+.aside-login1::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200px;
+  height: 200px;
+  border-right: 50px solid transparent;
+  background: rgb(74, 75, 74);
+  background: linear-gradient(
+    0deg,
+    rgba(43, 44, 43, 1) 0%,
+    rgba(74, 75, 74, 1) 50%,
+    rgba(74, 75, 74, 1) 100%
+  );
+  border-radius: 0 250px 0 0;
 }
