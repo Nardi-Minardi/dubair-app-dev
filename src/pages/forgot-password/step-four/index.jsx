@@ -6,6 +6,9 @@ import dynamic from 'next/dynamic'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/modules';
 import ButtonDarkMode from '@/components/buttons/buttonDarkMode';
+import ForgotPasswordLine from '@/components/lines/forgotPasswordLine';
+import { useRouter } from 'next/router';
+import { CheckIcon } from '@heroicons/react/20/solid';
 import Logo from '@/components/elements/logo';
 
 const CarouselLogin1 = dynamic(() => import('@/components/carousel/carouselLogin1'),
@@ -35,8 +38,27 @@ const dataCarouselLogin = [
 
 
 
-const Login = () => {
+const ForgotStepFour = () => {
+  const router = useRouter();
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedPath, setSelectedPath] = useState("");
+
+  const query = router.query;
+  const currentPath = router.pathname;
+
+  useEffect(() => {
+    if (currentPath === "/forgot-password/step-three") {
+      setSelectedPath("/forgot-password/step-four")
+    }
+  }, [currentPath])
+
+  const handleNextPath = (e) => {
+    e.preventDefault();
+    //send params
+    router.push({
+      query: { lastStep: true }
+    })
+  }
 
   return (
     <section className="bg-white dark:bg-zinc-900">
@@ -81,29 +103,16 @@ const Login = () => {
           {/* end logo */}
 
 
-          <div className="px-8 lg:px-32">
+          <div className="px-8 lg:px-32 py-20">
             <h1 className="text-2xl font-bold text-gray-900 sm:text-2xl md:text-4xl text-center dark:text-white">
-              Welcome to Dub Air
+              Everything Complete
             </h1>
 
-            <p className="mt-4 mb-4 text-2xl leading-relaxed text-gray-500 text-center">
-              Create the ultimate dubbing experience
+            <p className="mt-4 mb-4 text-1xl leading-relaxed text-gray-500 text-center">
+              Your password has been successfully reset. You can login now.
             </p>
 
             <form action="#" className="">
-              <div className='flex flex-col gap-4'>
-                <ButtonGoogle
-                  title="Login with Google"
-                  width="w-full"
-                  height="h-12"
-                  radius="rounded-[12px]"
-                  onClick={() => console.log("Button clicked")} />
-                <div className="flex items-center justify-center gap-2 mt-4">
-                  <div className="w-full h-0.5 bg-gray-300"></div>
-                  <p className="text-gray-500">OR</p>
-                  <div className="w-full h-0.5 bg-gray-300"></div>
-                </div>
-              </div>
 
               <div className='flex items-center gap-1'>
                 <label htmlFor="Email" className="block text-sm py-2 font-medium text-gray-700 dark:text-white"> Email</label> <span className="text-red-500 text-lg">*</span>
@@ -139,7 +148,7 @@ const Login = () => {
                     Remember me
                   </span>
                 </label>
-                <a href="/forgot-password/step-one" className="my-text text-sm underline">Forgot your password?</a>
+                {/* <a href="/forgot-password/step-one" className="my-text text-sm underline">Forgot your password?</a> */}
               </div>
 
               <div className="fex flex-col mt-[50px]">
@@ -148,14 +157,45 @@ const Login = () => {
                   title="Login"
                   width="w-full"
                   height="h-12"
+                  type="button"
                   radius="rounded-[12px]"
-                  onClick={() => console.log("Button clicked")} />
+                  onClick={handleNextPath}
+                />
 
-                <p className="mt-4 text-sm">
+                {/* <p className="mt-4 text-sm">
                   Don't have an account? <a href="/register" className="text-zinc-700 font-bold underline dark:text-white">Sign Up Now</a>
-                </p>
+                </p> */}
               </div>
             </form>
+
+            <div className="flex items-center justify-center gap-2 mt-4">
+              <div className='mt-12'>
+                {/* create bullet timeline here */}
+                <div className="flex items-center justify-center">
+                  <div
+                    className="w-4 h-4 bg-gradient-to-t from-[#9E0BF3] via-[#66B0FE] to-[#454FEC] rounded-full cursor-pointer">
+                    {query.lastStep &&
+                      <CheckIcon className="text-white w-4 h-4" />}
+                  </div>
+                  <span className="w-4 h-0.5 bg-gradient-to-t from-[#9E0BF3] via-[#66B0FE] to-[#454FEC]"></span>
+                  <div className="w-4 h-4 bg-gradient-to-t from-[#9E0BF3] via-[#66B0FE] to-[#454FEC] rounded-full cursor-pointer">
+                    {query.lastStep &&
+                      <CheckIcon className="text-white w-4 h-4" />}
+                  </div>
+                  <span className="w-4 h-0.5 bg-gradient-to-t from-[#9E0BF3] via-[#66B0FE] to-[#454FEC]"></span>
+                  <div className="w-4 h-4 bg-gradient-to-t from-[#9E0BF3] via-[#66B0FE] to-[#454FEC] rounded-full cursor-pointer">
+                    {query.lastStep &&
+                      <CheckIcon className="text-white w-4 h-4" />}
+                  </div>
+                  <span className="w-4 h-0.5 bg-gradient-to-t from-[#9E0BF3] via-[#66B0FE] to-[#454FEC]"></span>
+                  <div className="w-4 h-4 bg-gradient-to-t from-[#9E0BF3] via-[#66B0FE] to-[#454FEC] rounded-full cursor-pointer">
+                    {query.lastStep &&
+                      <CheckIcon className="text-white w-4 h-4" />}
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </main>
 
@@ -166,8 +206,8 @@ const Login = () => {
   )
 }
 
-Login.getLayout = function getLayout(page) {
-  return <AuthLayout title={"Login"}>{page}</AuthLayout>;
+ForgotStepFour.getLayout = function getLayout(page) {
+  return <AuthLayout title={"Forgot Password"}>{page}</AuthLayout>;
 }
 
-export default Login;
+export default ForgotStepFour;

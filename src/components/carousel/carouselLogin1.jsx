@@ -14,13 +14,13 @@ const CarouselLogin1 = () => {
       <div className="flex flex-col items-center h-auto justify-center mt-[70px]">
         <img
           alt=""
-          src={`/assets/images/img-login2-${theme === 'dark' ? 'dark' : 'light'}.png`}
+          src={`/assets/images/img-page1-login2-${theme === 'dark' ? 'dark' : 'light'}.png`}
           className="absolute top-[120px] right-0 xl:w-auto h-auto object-contain lg:w-[400px]"
 
         />
         <img
           alt=""
-          src={`/assets/images/img-login1-${theme === 'dark' ? 'dark' : 'light'}.png`}
+          src={`/assets/images/img-page1-login1-${theme === 'dark' ? 'dark' : 'light'}.png`}
           className="z-10 w-auto h-auto object-contain"
         />
         <div className="flex flex-col items-start h-auto justify-center xl:px-32 px-16 z-10">

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 import { SunIcon, MoonIcon } from "@heroicons/react/20/solid";
 
-const styles = "h-4 w-4 text-gray-600 dark:text-gray-300";
+const styles = "h-4 w-4 text-gray-600 dark:text-yellow-300";
 
 export default function ButtonDarkMode() {
   const { theme, setTheme } = useTheme();

@@ -5,11 +5,13 @@ const ButtonGradient = ({
   onClick,
   width,
   height,
-  radius
+  radius,
+  type
 }) => {
   return (
     <React.Fragment>
       <button
+        type={type}
         onClick={onClick}
         className={`
         ${width} 

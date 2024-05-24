@@ -56,20 +56,19 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
   border-radius: 10px !important;
 }
 
-.aside-login1 {
+.aside-container-login1 {
   background: #2b2c2b;
   position: relative !important;
 }
 
 /* create ellipse top corner aside login1 */
-.aside-login1::before {
+.aside-container-login1::before {
   content: "";
   position: absolute;
   top: 0;
   right: 0;
   width: 200px;
   height: 200px;
-  border-right: 50px solid transparent;
   background: rgb(74, 75, 74);
   background: linear-gradient(
     0deg,
@@ -81,14 +80,13 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
 }
 
 /* create ellipse bottom corner aside login1 */
-.aside-login1::after {
+.aside-container-login1::after {
   content: "";
   position: absolute;
   bottom: 0;
   left: 0;
   width: 200px;
   height: 200px;
-  border-right: 50px solid transparent;
   background: rgb(74, 75, 74);
   background: linear-gradient(
     0deg,
@@ -97,4 +95,147 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
     rgba(74, 75, 74, 1) 100%
   );
   border-radius: 0 250px 0 0;
+}
+
+.aside-container-login2 {
+  background: #2b2c2b;
+  position: relative !important;
+}
+
+/* create ellipse top corner aside login2 */
+.aside-container-login2::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 200px;
+  background: rgb(74, 75, 74);
+  background: linear-gradient(
+    0deg,
+    rgba(74, 75, 74, 1) 0%,
+    rgba(74, 75, 74, 1) 50%,
+    rgba(43, 44, 43, 1) 100%
+  );
+  border-radius: 0 0 250px 0;
+}
+
+/* create ellipse bottom corner aside login2 */
+.aside-container-login2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 200px;
+  height: 200px;
+  background: rgb(74, 75, 74);
+  background: linear-gradient(
+    0deg,
+    rgba(43, 44, 43, 1) 0%,
+    rgba(74, 75, 74, 1) 50%,
+    rgba(74, 75, 74, 1) 100%
+  );
+  border-radius: 250px 0 0 0;
+}
+
+.aside-container-login3 {
+  background: #2b2c2b;
+  position: relative !important;
+}
+
+/* create ellipse top corner aside login3 */
+.aside-container-login3::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100px;
+  background: rgb(74, 75, 74);
+  background: linear-gradient(
+    0deg,
+    rgba(74, 75, 74, 1) 0%,
+    rgba(74, 75, 74, 1) 50%,
+    rgba(43, 44, 43, 1) 100%
+  );
+  border-radius: 0 0 250px 0;
+}
+
+/* create ellipse bottom corner aside login3 */
+.aside-container-login3::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 200px;
+  background: rgb(74, 75, 74);
+  background: linear-gradient(
+    0deg,
+    rgba(43, 44, 43, 1) 0%,
+    rgba(74, 75, 74, 1) 50%,
+    rgba(74, 75, 74, 1) 100%
+  );
+  border-radius: 0 0 0 250px;
+}
+
+/* create ellipse in middle bottwo center aside login3 */
+.ellipse-page3-login {
+  position: absolute;
+  bottom: -160px;
+  /* transform: translate(-50%, -50%); */
+  width: 400px;
+  height: 200px;
+  background: rgb(74, 75, 74);
+  background: linear-gradient(
+    0deg,
+    rgba(74, 75, 74, 1) 0%,
+    rgba(74, 75, 74, 1) 50%,
+    rgba(74, 75, 74, 1) 100%
+  );
+  border-radius: 50%;
+  z-index: 999;
+}
+
+@media only screen and (min-width: 968px) {
+  .ellipse-page3-login {
+    left: 130px !important;
+  }
+}
+
+@media only screen and (min-width: 1440px){
+  .ellipse-page3-login {
+    left: 170px !important;
+  }
+}
+
+.ellipse-page3-register {
+  position: absolute;
+ 
+  /* transform: translate(-50%, -50%); */
+  width: 400px;
+  height: 220px;
+  border-right: 50px solid transparent;
+  background: rgb(74, 75, 74);
+  background: linear-gradient(
+    0deg,
+    rgba(74, 75, 74, 1) 0%,
+    rgba(74, 75, 74, 1) 50%,
+    rgba(74, 75, 74, 1) 100%
+  );
+  border-radius: 50%;
+  z-index: 999;
+}
+
+@media only screen and (min-width: 968px) {
+  .ellipse-page3-register {
+    left: 130px !important;
+    bottom: -170px !important;
+  }
+}
+
+@media only screen and (min-width: 1440px){
+  .ellipse-page3-register {
+    left: 170px !important;
+  }
 }

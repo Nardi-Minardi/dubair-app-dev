@@ -14,7 +14,7 @@ const CarouselLogin1 = dynamic(() => import('@/components/carousel/carouselLogin
 const CarouselLogin2 = dynamic(() => import('@/components/carousel/carouselLogin2'),
   { ssr: false }
 )
-const CarouselLogin3 = dynamic(() => import('@/components/carousel/carouselLogin3'),
+const CarouselRegister3 = dynamic(() => import('@/components/carousel/carouselRegister3'),
   { ssr: false }
 )
 
@@ -29,13 +29,13 @@ const dataCarouselLogin = [
   },
   {
     id: 3,
-    component: <CarouselLogin3 />,
+    component: <CarouselRegister3 />,
   }
 ];
 
 
 
-const Login = () => {
+const Register = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   return (
@@ -83,15 +83,15 @@ const Login = () => {
 
           <div className="px-8 lg:px-32">
             <h1 className="text-2xl font-bold text-gray-900 sm:text-2xl md:text-4xl text-center dark:text-white">
-              Welcome to Dub Air
+              Create Your Account
             </h1>
 
             <p className="mt-4 mb-4 text-2xl leading-relaxed text-gray-500 text-center">
-              Create the ultimate dubbing experience
+              Let's get started with your free 5 minutes trial
             </p>
 
             <form action="#" className="">
-              <div className='flex flex-col gap-4'>
+              <div className=' flex flex-col gap-4'>
                 <ButtonGoogle
                   title="Login with Google"
                   width="w-full"
@@ -104,6 +104,16 @@ const Login = () => {
                   <div className="w-full h-0.5 bg-gray-300"></div>
                 </div>
               </div>
+
+              <div className='flex items-center gap-1'>
+                <label htmlFor="FullName" className="block text-sm py-2 font-medium text-gray-700 dark:text-white"> Full Name</label> <span className="text-red-500 text-lg">*</span>
+              </div>
+              <input
+                type="test"
+                id="FullName"
+                name="fullname"
+                className="my-input mb-5 h-[48px] w-full rounded-[12px] bg-white text-md text-gray-700 outline-none"
+              />
 
               <div className='flex items-center gap-1'>
                 <label htmlFor="Email" className="block text-sm py-2 font-medium text-gray-700 dark:text-white"> Email</label> <span className="text-red-500 text-lg">*</span>
@@ -136,23 +146,24 @@ const Login = () => {
                   />
 
                   <span className="text-sm text-gray-700 dark:text-white">
-                    Remember me
+                    I agree to all <a href="/terms-of-services" className="text-dark-500 font-bold underline">Terms of Service</a>&nbsp;
+                    and <a href="/privacy-policy" className="text-dark-500 font-bold underline">Privacy Policy</a>
                   </span>
                 </label>
-                <a href="/forgot-password/step-one" className="my-text text-sm underline">Forgot your password?</a>
+                {/* <a href="#" className="my-text text-sm underline">Forgot your password?</a> */}
               </div>
 
               <div className="fex flex-col mt-[50px]">
 
                 <ButtonGradient
-                  title="Login"
+                  title="Sign Up"
                   width="w-full"
                   height="h-12"
                   radius="rounded-[12px]"
                   onClick={() => console.log("Button clicked")} />
 
                 <p className="mt-4 text-sm">
-                  Don't have an account? <a href="/register" className="text-zinc-700 font-bold underline dark:text-white">Sign Up Now</a>
+                  Already have account? <a href="/" className="text-zinc-700 font-bold underline dark:text-white">Login</a>
                 </p>
               </div>
             </form>
@@ -166,8 +177,8 @@ const Login = () => {
   )
 }
 
-Login.getLayout = function getLayout(page) {
-  return <AuthLayout title={"Login"}>{page}</AuthLayout>;
+Register.getLayout = function getLayout(page) {
+  return <AuthLayout title={"Register"}>{page}</AuthLayout>;
 }
 
-export default Login;
+export default Register;
