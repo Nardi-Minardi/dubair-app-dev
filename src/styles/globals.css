@@ -8,9 +8,65 @@
   font-family: "Plus Jakarta Sans";
 }
 
+
+.loader {
+  position: absolute;
+  z-index: 99999;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(74, 75, 74);
+  opacity: 0.5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader-message {
+  margin-top: 10px;
+  font-size: 22px;
+  font-weight: 600;
+  color: #2f73a3;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.spinner {
+  --d: 24.6px;
+  width: 4.5px;
+  height: 4.5px;
+  border-radius: 50%;
+  color: #cacbca;
+  box-shadow: calc(1 * var(--d)) calc(0 * var(--d)) 0 0,
+    calc(0.707 * var(--d)) calc(0.707 * var(--d)) 0 1.1px,
+    calc(0 * var(--d)) calc(1 * var(--d)) 0 2.2px,
+    calc(-0.707 * var(--d)) calc(0.707 * var(--d)) 0 3.4px,
+    calc(-1 * var(--d)) calc(0 * var(--d)) 0 4.5px,
+    calc(-0.707 * var(--d)) calc(-0.707 * var(--d)) 0 5.6px,
+    calc(0 * var(--d)) calc(-1 * var(--d)) 0 6.7px;
+  animation: spinner-a90wxe 1s infinite steps(8);
+}
+
+@keyframes spinner-a90wxe {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+.my-border {
+  border-width: 2px !important;
+  border-color: #454fec !important;
+  border-top-width: 2px !important;
+  border-top-color: #454fec !important;
+  border-bottom-width: 2px !important;
+  border-bottom-color: #9e0bf3 !important;
+  box-sizing: border-box !important;
+}
+
 .my-input {
   border: 1px solid #cacbca !important;
 }
+
 .my-input:focus {
   border-width: 2px !important;
   border-color: #454fec !important;
@@ -57,242 +113,6 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
   width: 20px !important;
   height: 5px !important;
   border-radius: 10px !important;
-}
-
-.aside-container-login1 {
-  background: #2b2c2b;
-  position: relative !important;
-}
-
-/* create ellipse top corner aside login1 */
-.aside-container-login1::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 200px;
-  height: 200px;
-  background: rgb(74, 75, 74);
-  background: linear-gradient(
-    0deg,
-    rgba(74, 75, 74, 1) 0%,
-    rgba(74, 75, 74, 1) 50%,
-    rgba(43, 44, 43, 1) 100%
-  );
-  border-radius: 0 0 0 250px;
-}
-
-/* create ellipse bottom corner aside login1 */
-.aside-container-login1::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 200px;
-  height: 200px;
-  background: rgb(74, 75, 74);
-  background: linear-gradient(
-    0deg,
-    rgba(43, 44, 43, 1) 0%,
-    rgba(74, 75, 74, 1) 50%,
-    rgba(74, 75, 74, 1) 100%
-  );
-  border-radius: 0 250px 0 0;
-}
-
-.aside-container-login2 {
-  background: #2b2c2b;
-  position: relative !important;
-}
-
-/* create ellipse top corner aside login2 */
-.aside-container-login2::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 200px;
-  height: 200px;
-  background: rgb(74, 75, 74);
-  background: linear-gradient(
-    0deg,
-    rgba(74, 75, 74, 1) 0%,
-    rgba(74, 75, 74, 1) 50%,
-    rgba(43, 44, 43, 1) 100%
-  );
-  border-radius: 0 0 250px 0;
-}
-
-/* create ellipse bottom corner aside login2 */
-.aside-container-login2::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 200px;
-  height: 200px;
-  background: rgb(74, 75, 74);
-  background: linear-gradient(
-    0deg,
-    rgba(43, 44, 43, 1) 0%,
-    rgba(74, 75, 74, 1) 50%,
-    rgba(74, 75, 74, 1) 100%
-  );
-  border-radius: 250px 0 0 0;
-}
-
-.aside-container-login3 {
-  background: #2b2c2b;
-  position: relative !important;
-}
-
-/* create ellipse top corner aside login3 */
-.aside-container-login3::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 150px;
-  height: 150px;
-  background: rgb(74, 75, 74);
-  background: linear-gradient(
-    0deg,
-    rgba(74, 75, 74, 1) 0%,
-    rgba(74, 75, 74, 1) 50%,
-    rgba(43, 44, 43, 1) 100%
-  );
-  border-radius: 0 0 250px 0;
-}
-
-/* create ellipse bottom corner aside login3 */
-.aside-container-login3::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 180px;
-  height: 180px;
-  background: rgb(74, 75, 74);
-  background: linear-gradient(
-    0deg,
-    rgba(43, 44, 43, 1) 0%,
-    rgba(74, 75, 74, 1) 50%,
-    rgba(74, 75, 74, 1) 100%
-  );
-  border-radius: 0 0 0 250px;
-}
-
-/* create ellipse in middle bottwo center aside login3 */
-.ellipse-page3-login {
-  position: absolute;
-  bottom: -160px;
-  width: 500px;
-  height: 230px;
-  background: rgb(74, 75, 74);
-  background: linear-gradient(
-    0deg,
-    rgba(74, 75, 74, 1) 0%,
-    rgba(74, 75, 74, 1) 50%,
-    rgba(74, 75, 74, 1) 100%
-  );
-  border-radius: 50%;
-  z-index: 1;
-}
-
-@media only screen and (min-width: 640px) {
-  .ellipse-page3-login {
-    left: 90px !important;
-  }
-}
-
-@media only screen and (min-width: 968px) {
-  .ellipse-page3-login {
-    left: 100px !important;
-  }
-}
-
-@media only screen and (min-width: 1440px) {
-  .ellipse-page3-login {
-    left: 130px !important;
-  }
-}
-
-.ellipse-page3-register {
-  position: absolute;
-  bottom: -160px;
-  width: 500px;
-  height: 230px;
-  background: rgb(74, 75, 74);
-  background: linear-gradient(
-    0deg,
-    rgba(74, 75, 74, 1) 0%,
-    rgba(74, 75, 74, 1) 50%,
-    rgba(74, 75, 74, 1) 100%
-  );
-  border-radius: 50%;
-  z-index: 1;
-}
-
-@media only screen and (min-width: 640px) {
-  .ellipse-page3-register {
-    left: 90px !important;
-  }
-}
-
-@media only screen and (min-width: 968px) {
-  .ellipse-page3-register {
-    left: 100px !important;
-  }
-}
-
-@media only screen and (min-width: 1440px) {
-  .ellipse-page3-register {
-    left: 130px !important;
-  }
-}
-
-.loader {
-  position: absolute;
-  z-index: 99999;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: rgb(74, 75, 74);
-  opacity: 0.9;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.loader-message {
-  margin-top: 10px;
-  font-size: 22px;
-  font-weight: 600;
-  color: #2f73a3;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
-.spinner {
-  --d: 24.6px;
-  width: 4.5px;
-  height: 4.5px;
-  border-radius: 50%;
-  color: #cacbca;
-  box-shadow: calc(1 * var(--d)) calc(0 * var(--d)) 0 0,
-    calc(0.707 * var(--d)) calc(0.707 * var(--d)) 0 1.1px,
-    calc(0 * var(--d)) calc(1 * var(--d)) 0 2.2px,
-    calc(-0.707 * var(--d)) calc(0.707 * var(--d)) 0 3.4px,
-    calc(-1 * var(--d)) calc(0 * var(--d)) 0 4.5px,
-    calc(-0.707 * var(--d)) calc(-0.707 * var(--d)) 0 5.6px,
-    calc(0 * var(--d)) calc(-1 * var(--d)) 0 6.7px;
-  animation: spinner-a90wxe 1s infinite steps(8);
-}
-
-@keyframes spinner-a90wxe {
-  100% {
-    transform: rotate(1turn);
-  }
 }
 
 /* .dropzone {

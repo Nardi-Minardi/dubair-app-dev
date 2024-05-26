@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useTheme } from 'next-themes';
+import styles from '../../styles/login.module.css'
 
 const CarouselRegister3 = () => {
   const { theme, setTheme } = useTheme();
@@ -7,7 +8,7 @@ const CarouselRegister3 = () => {
   useEffect(() => setMounted(true), []);
 
   return (
-    <div className="flex flex-col justify-center align-center h-screen relative aside-container-login3">
+    <div className={`flex flex-col justify-center align-center h-screen relative ${styles.asideContainerLogin3}`}>
       <div className="z-10">
         <p className=" text-white text-center xl:text-3xl lg:text-1xl m-0">
           Transform language effortlessly in your videos <br /> with AI-driven dubbing technology.
@@ -27,7 +28,7 @@ const CarouselRegister3 = () => {
         </div>
       </div>
 
-      <div className='ellipse-page3-register'></div>
+      <div className={styles.ellipsePage3Register}></div>
     </div>
   )
 }

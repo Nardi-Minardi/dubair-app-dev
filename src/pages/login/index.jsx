@@ -8,12 +8,13 @@ import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/module
 import ButtonDarkMode from '@/components/buttons/buttonDarkMode';
 import Logo from '@/components/elements/logo';
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '@/store/slices/authSlice';
 import { LoadingContext } from '@/context/loadingContext';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useRouter } from 'next/router';
 import { getData, storeData } from '@/utils/LocalStorage';
+import Loader from '@/components/elements/loader';
 
 const CarouselLogin1 = dynamic(() => import('@/components/carousel/carouselLogin1'),
   { ssr: false }
@@ -43,6 +44,7 @@ const dataCarouselLogin = [
 const Login = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.rootSlice.auth);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [rememberMe, setRememberMe] = useState(false);
   const [email, setEmail] = useState('');
@@ -74,7 +76,7 @@ const Login = () => {
       return;
     }
 
-    showLoader && showLoader();
+    // showLoader && showLoader();
     dispatch(loginUser({ username: email, password }))
       .then((response) => {
         const resp = response.payload;
@@ -162,6 +164,8 @@ const Login = () => {
       });
     }
   }
+
+  if (loading) return <Loader message="Loading..." />
 
   return (
     <section className="bg-white dark:bg-[#121212]">

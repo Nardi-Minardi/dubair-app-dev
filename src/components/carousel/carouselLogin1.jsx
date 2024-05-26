@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useTheme } from 'next-themes';
+import styles from '../../styles/login.module.css'
 
 const CarouselLogin1 = () => {
   const { theme, setTheme } = useTheme();
@@ -7,7 +8,7 @@ const CarouselLogin1 = () => {
   useEffect(() => setMounted(true), []);
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen relative aside-container-login1">
+    <div className={`flex flex-col justify-center items-center h-screen relative ${styles.asideContainerLogin1}`}>
       <div className="z-10">
         <p className="text-white text-center xl:text-3xl lg:text-1xl">
           AI takes care of dubbing details,  so you can <br />focus on your entertainment

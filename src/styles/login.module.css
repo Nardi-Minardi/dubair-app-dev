@@ -1,0 +1,191 @@
+ .asideContainerLogin1 {
+  background: #2b2c2b;
+  position: relative !important;
+}
+
+/* create ellipse top corner aside login1 */
+.asideContainerLogin1::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 200px;
+  background: rgb(74, 75, 74);
+  background: linear-gradient(
+    0deg,
+    rgba(74, 75, 74, 1) 0%,
+    rgba(74, 75, 74, 1) 50%,
+    rgba(43, 44, 43, 1) 100%
+  );
+  border-radius: 0 0 0 250px;
+}
+
+/* create ellipse bottom corner aside login1 */
+.asideContainerLogin1::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200px;
+  height: 200px;
+  background: rgb(74, 75, 74);
+  background: linear-gradient(
+    0deg,
+    rgba(43, 44, 43, 1) 0%,
+    rgba(74, 75, 74, 1) 50%,
+    rgba(74, 75, 74, 1) 100%
+  );
+  border-radius: 0 250px 0 0;
+}
+
+.asideContainerLogin2 {
+  background: #2b2c2b;
+  position: relative !important;
+}
+
+/* create ellipse top corner aside login2 */
+.asideContainerLogin2::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 200px;
+  background: rgb(74, 75, 74);
+  background: linear-gradient(
+    0deg,
+    rgba(74, 75, 74, 1) 0%,
+    rgba(74, 75, 74, 1) 50%,
+    rgba(43, 44, 43, 1) 100%
+  );
+  border-radius: 0 0 250px 0;
+}
+
+/* create ellipse bottom corner aside login2 */
+.asideContainerLogin2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 200px;
+  height: 200px;
+  background: rgb(74, 75, 74);
+  background: linear-gradient(
+    0deg,
+    rgba(43, 44, 43, 1) 0%,
+    rgba(74, 75, 74, 1) 50%,
+    rgba(74, 75, 74, 1) 100%
+  );
+  border-radius: 250px 0 0 0;
+}
+
+.asideContainerLogin3 {
+  background: #2b2c2b;
+  position: relative !important;
+}
+
+/* create ellipse top corner aside login3 */
+.asideContainerLogin3::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 150px;
+  height: 150px;
+  background: rgb(74, 75, 74);
+  background: linear-gradient(
+    0deg,
+    rgba(74, 75, 74, 1) 0%,
+    rgba(74, 75, 74, 1) 50%,
+    rgba(43, 44, 43, 1) 100%
+  );
+  border-radius: 0 0 250px 0;
+}
+
+/* create ellipse bottom corner aside login3 */
+.asideContainerLogin3::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 180px;
+  height: 180px;
+  background: rgb(74, 75, 74);
+  background: linear-gradient(
+    0deg,
+    rgba(43, 44, 43, 1) 0%,
+    rgba(74, 75, 74, 1) 50%,
+    rgba(74, 75, 74, 1) 100%
+  );
+  border-radius: 0 0 0 250px;
+}
+
+/* create ellipse in middle bottwo center aside login3 */
+.ellipsePage3Login {
+  position: absolute;
+  bottom: -160px;
+  width: 500px;
+  height: 230px;
+  background: rgb(74, 75, 74);
+  background: linear-gradient(
+    0deg,
+    rgba(74, 75, 74, 1) 0%,
+    rgba(74, 75, 74, 1) 50%,
+    rgba(74, 75, 74, 1) 100%
+  );
+  border-radius: 50%;
+  z-index: 1;
+}
+
+@media only screen and (min-width: 640px) {
+  .ellipsePage3Login {
+    left: 90px !important;
+  }
+}
+
+@media only screen and (min-width: 968px) {
+  .ellipsePage3Login {
+    left: 100px !important;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .ellipsePage3Login {
+    left: 130px !important;
+  }
+}
+
+.ellipsePage3Register {
+  position: absolute;
+  bottom: -160px;
+  width: 500px;
+  height: 230px;
+  background: rgb(74, 75, 74);
+  background: linear-gradient(
+    0deg,
+    rgba(74, 75, 74, 1) 0%,
+    rgba(74, 75, 74, 1) 50%,
+    rgba(74, 75, 74, 1) 100%
+  );
+  border-radius: 50%;
+  z-index: 1;
+}
+
+@media only screen and (min-width: 640px) {
+  .ellipsePage3Register {
+    left: 90px !important;
+  }
+}
+
+@media only screen and (min-width: 968px) {
+  .ellipsePage3Register {
+    left: 100px !important;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .ellipsePage3Register {
+    left: 130px !important;
+  }
+}

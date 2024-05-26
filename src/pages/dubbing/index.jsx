@@ -1,19 +1,31 @@
-import React from 'react'
-import Link from 'next/link'
+import React, { useEffect } from 'react'
 import AdminLayout from "@/layouts/adminLayout";
-import dynamic from 'next/dynamic';
-import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/router';
 import DragDropFiles from '@/components/inputs/dragDropFiles';
 import ButtonGradient from '@/components/buttons/buttonGradient';
-
+import ListDubbingVideo from '@/components/dubbing/listDubbingVideo';
+import { useDispatch } from 'react-redux';
+import { fetchVideo } from '@/store/slices/videoSlice';
 
 const Dubbing = () => {
   const t = useTranslations('Dubbing');
+  const dispatch = useDispatch()
+  useEffect(() => {
+    getVideo()
+  }, [])
+
+  const getVideo = () => {
+    try {
+      dispatch(fetchVideo())
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
-    <div className="mt-6 py-2 sm:w-full">
-      <div className="flex w-full h-full py-10 bg-white dark:bg-[#2B2C2B] rounded-sm">
+    <div className="mt-6 py-2 sm:w-full flex flex-col gap-6">
+
+      <div className="flex w-full py-10 bg-white dark:bg-[#2B2C2B] rounded-sm">
         <div className="px-8 m-auto w-screen">
           <DragDropFiles
             title={t('langTitleUpload')}
@@ -27,10 +39,10 @@ const Dubbing = () => {
           </div>
 
           <div className="flex h-10 flex-row align-center justify-between gap-2 mt-4">
-            <input 
-            placeholder={t('langPlaceholderUpload')}
-            type="text" 
-            className="my-input h-10 pl-3 w-full rounded-[12px] bg-white text-md text-gray-700 outline-none" />
+            <input
+              placeholder={t('langPlaceholderUpload')}
+              type="text"
+              className="my-input h-10 pl-3 w-full rounded-[12px] bg-white text-md text-gray-700 outline-none" />
 
             <ButtonGradient
               title={t('langBtnUpload')}
@@ -40,6 +52,15 @@ const Dubbing = () => {
               onClick={() => { }}
             />
           </div>
+
+        </div>
+      </div>
+
+      <div className="flex w-full py-10 bg-white dark:bg-[#2B2C2B] rounded-sm">
+        <div className="px-8 m-auto w-screen">
+          <ListDubbingVideo
+            getVideo={getVideo}
+          />
         </div>
       </div>
     </div>

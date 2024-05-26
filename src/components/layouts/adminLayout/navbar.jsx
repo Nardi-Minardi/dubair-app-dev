@@ -1,21 +1,29 @@
 import React from 'react'
 import {
-  ChevronDownIcon,
   Bars3Icon,
-  XMarkIcon
 } from '@heroicons/react/20/solid'
 import ButtonDarkMode from '@/components/buttons/buttonDarkMode'
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
 import { useRouter } from 'next/router'
-import dynamic from 'next/dynamic'
 import LanguageSelector from '@/components/elements/languageSelector'
+import { useSelector, useDispatch } from 'react-redux'
+import moment from 'moment'
+import { logoutUser } from '@/store/slices/authSlice'
 
 const Navbar = ({ show, setter }) => {
+  const dispatch = useDispatch()
+  const { user, token } = useSelector((state) => state.rootSlice?.auth);
+  console.log( token)
   const router = useRouter()
 
   const handleLogout = (e) => {
     e.preventDefault()
-    router.push('/login')
+    try {
+      dispatch(logoutUser(token))
+      router.push('/login')
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -23,7 +31,9 @@ const Navbar = ({ show, setter }) => {
       <div className="flex flex-grow items-center py-2">
         <div className="flex flex-row w-full gap-5 items-center justify-between">
           <div className="flex flex-col w-1/2">
-            <span className="text-2xl font-bold">Hi, Welcome Back</span><span className="font-extralight">Friday, May 24th 2024</span>
+            <span className="text-2xl font-bold">Hi, Welcome Back</span><span className="font-extralight">
+              {moment().format('dddd, MMMM Do YYYY')}
+            </span>
           </div>
           {/* bars icons */}
           <div className='flex flex-col items-end justify-end gap-3'>
@@ -49,10 +59,14 @@ const Navbar = ({ show, setter }) => {
           </div>
 
           <div className="flex flex-row items-center">
-            <img src="https://lh3.googleusercontent.com/a/ACg8ocKuVBMfQLAWzMALmkf5BvG6ZK8_gXW1qdlbLSs8_XSD-FD4G8rO=s96-c" className="w-12 mr-1 aspect-square rounded-full" />
+            <img src={user?.image ? user.image : '/assets/images/avatar.png'}
+            alt="avatar"
+            className="w-12 mr-1 aspect-square rounded-full" />
             <div className="flex flex-col">
-              <span className="text-lg md-max:w-20 w-32 truncate mt-1">Minardi</span>
-              <span className="font-extralight lg-max:text-sm md-max:w-20 w-40 truncate">nardiminardi20@gmail.com</span>
+              <span className="text-lg md-max:w-20 w-32 truncate mt-1">{user?.name}</span>
+              <span className="font-extralight lg-max:text-sm md-max:w-20 w-40 truncate">
+                {user?.email ? user.email.substring(0, 15) + '...' : ''}
+              </span>
             </div>
             <Menu as="div" className="relative inline-block text-left">
               <MenuButton className="bg-white dark:bg-[#2B2C2B] rounded-full flex items-center text-sm font-medium">

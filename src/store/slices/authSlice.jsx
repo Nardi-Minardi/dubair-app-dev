@@ -6,9 +6,7 @@ import { storeData } from '@/utils/LocalStorage';
 const initialState = {
   user: {},
   token: '',
-  isAuthenticated: false,
   loading: false,
-  error: null,
 };
 
 export const loginUser = createAsyncThunk(
@@ -113,13 +111,11 @@ const authSlice = createSlice({
     builder.addCase(loginUser.fulfilled, (state, { payload }) => {
       state.user = payload.data.user;
       state.token = payload.data.token;
-      state.isAuthenticated = true;
       state.loading = false;
       //clear error
-      state.error = null;
+     
     });
     builder.addCase(loginUser.rejected, (state, { payload }) => {
-      state.error = payload.data;
       state.loading = false;
     });
     //login by google
@@ -129,11 +125,9 @@ const authSlice = createSlice({
     builder.addCase(loginByGoogle.fulfilled, (state, { payload }) => {
       state.user = payload.data.user;
       state.token = payload.data.token;
-      state.isAuthenticated = true;
       state.loading = false;
     });
     builder.addCase(loginByGoogle.rejected, (state, { payload }) => {
-      state.error = payload.data;
       state.loading = false;
     });
     //fetch user
@@ -142,11 +136,9 @@ const authSlice = createSlice({
     });
     builder.addCase(fetchUser.fulfilled, (state, { payload }) => {
       state.user = payload.data;
-      state.isAuthenticated = true;
       state.loading = false;
     });
     builder.addCase(fetchUser.rejected, (state, { payload }) => {
-      state.error = payload.data;
       state.loading = false;
     });
     //update user
@@ -158,21 +150,18 @@ const authSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(updateUser.rejected, (state, { payload }) => {
-      state.error = payload.data;
       state.loading = false;
     });
 
     // logout
-    builder.addCase(logoutUser.pending, (state) => {
-      state.loading = true;
-    });
     builder.addCase(logoutUser.fulfilled, (state) => {
       state.user = {};
       state.token = '';
-      state.isAuthenticated = false;
       state.loading = false;
       //clear error
-      state.error = null;
+    });
+    builder.addCase(logoutUser.rejected, (state) => {
+      state.loading = false;
     });
   }
 });

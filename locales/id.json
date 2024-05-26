@@ -3,7 +3,8 @@
     "langTitleUpload": "Letakkan file di sini, jelajahi file atau impor dari",
     "langDescUpload": "mp4, m4v, mov & webm SAJA - 5GB Gratis dan 15GB untuk PRO",
     "langBtnUpload": "Memulai",
-    "langPlaceholderUpload": "Masukkan tautan Anda, tautan video youtube, atau URL"
+    "langPlaceholderUpload": "Masukkan tautan Anda, tautan video youtube, atau URL",
+    "langRecentUpload": "Terkini"
   },
   "Index": {
     "title": "Selamat datang di next-intl!",

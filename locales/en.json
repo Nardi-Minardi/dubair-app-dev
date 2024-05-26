@@ -3,7 +3,8 @@
     "langTitleUpload": "Drop files here, browse files or import from:",
     "langDescUpload": "mp4, m4v, mov & webm ONLY - 5GB for Free and 15GB for PRO",
     "langBtnUpload": "Get Started",
-    "langPlaceholderUpload": "Enter your link, youtube video link or URL"
+    "langPlaceholderUpload": "Enter your link, youtube video link or URL",
+    "langRecentUpload": "Recent"
   },
   "Index": {
     "title": "Home",

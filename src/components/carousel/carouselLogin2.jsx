@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useTheme } from 'next-themes';
+import styles from '../../styles/login.module.css'
 
 const CarouselLogin2 = () => {
   const { theme, setTheme } = useTheme();
@@ -7,7 +8,7 @@ const CarouselLogin2 = () => {
   useEffect(() => setMounted(true), []);
 
   return (
-    <div className="flex flex-col justify-center align-center h-screen relative aside-container-login2">
+    <div className={`flex flex-col justify-center align-center h-screen relative ${styles.asideContainerLogin2}`}>
       <div className="z-10">
         <p className=" text-white text-center xl:text-3xl lg:text-1xl">
           Let AI make your videos sound  perfect by <br /> syncing voices automatically.
