@@ -1,0 +1,18 @@
+{
+  "Dubbing": {
+    "langTitleUpload": "Letakkan file di sini, jelajahi file atau impor dari",
+    "langDescUpload": "mp4, m4v, mov & webm SAJA - 5GB Gratis dan 15GB untuk PRO",
+    "langBtnUpload": "Memulai",
+    "langPlaceholderUpload": "Masukkan tautan Anda, tautan video youtube, atau URL"
+  },
+  "Index": {
+    "title": "Selamat datang di next-intl!",
+    "description": "mainkan dengan internasionalisasi di Next.js."
+  },
+  "LocaleSwitcher": {
+    "switchLocale": "Zu {locale, select, de {Deutsch} en {Englisch} other {Unbekannt}} wechseln"
+  },
+  "PageLayout": {
+    "pageTitle": "next-intl"
+  }
+}

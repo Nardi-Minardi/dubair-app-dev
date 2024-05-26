@@ -4,14 +4,14 @@ import { ThemeProvider } from "next-themes"
 
 const AuthLayout = ({ children, title }) => {
   return (
-    <React.Fragment>
+    <ThemeProvider attribute="class">
       <Head >
         <title>{title}</title>
       </Head>
       <main>
         {children}
       </main>
-    </React.Fragment>
+    </ThemeProvider>
   )
 }
 

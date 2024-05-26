@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import AuthLayout from "@/layouts/AuthLayout";
+import AuthLayout from "@/layouts/authLayout";
 import ButtonGradient from '@/components/buttons/buttonGradient';
 import ButtonGoogle from '@/components/buttons/buttonGoogle';
 import dynamic from 'next/dynamic'
@@ -18,7 +18,7 @@ const CarouselLogin1 = dynamic(() => import('@/components/carousel/carouselLogin
 const CarouselLogin2 = dynamic(() => import('@/components/carousel/carouselLogin2'),
   { ssr: false }
 )
-const CarouselLogin3 = dynamic(() => import('@/components/carousel/carouselLogin3'),
+const CarouselRegister3 = dynamic(() => import('@/components/carousel/carouselRegister3'),
   { ssr: false }
 )
 
@@ -33,7 +33,7 @@ const dataCarouselLogin = [
   },
   {
     id: 3,
-    component: <CarouselLogin3 />,
+    component: <CarouselRegister3 />,
   }
 ];
 
@@ -62,50 +62,19 @@ const ForgotStepThree = () => {
 
 
   return (
-    <section className="bg-white dark:bg-zinc-900">
-      <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
+    <section className="bg-white dark:bg-[#121212]">
+      <div className="flex flex-col lg:flex-row">
 
-        <aside className={`
-        ${selectedIndex === 0 && 'aside-container-login1'}
-        ${selectedIndex === 1 && 'aside-container-login2'}
-        ${selectedIndex === 2 && 'aside-container-login3'}
-        relative 
-        hidden 
-        lg:block 
-        h-64 
-        lg:order-last 
-        lg:col-span-5 
-        lg:h-full 
-        xl:col-span-6`}>
-          <Swiper
-            modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
-            autoplay={false}
-            spaceBetween={50}
-            slidesPerView={1}
-            pagination={{ clickable: true }}
-            onSlideChange={(swiper) => setSelectedIndex(swiper.activeIndex)}
-          // onSwiper={(swiper) => console.log(swiper)}
-
-          >
-            {dataCarouselLogin.map((item, index) => (
-              <SwiperSlide key={index}>
-                {item.component}
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </aside>
-
-        <main className="lg:col-span-7 xl:col-span-6">
+        <main className="h-full w-full lg:w-1/2 min-h-screen">
           {/* logo */}
           <div className="px-8 py-8 flex justify-between items-center">
             <Logo />
-            <ButtonDarkMode />
+            {/* <ButtonDarkMode /> */}
           </div>
           {/* end logo */}
 
-
-          <div className="px-8 lg:px-32 py-20">
-            <h1 className="text-2xl font-bold text-gray-900 sm:text-2xl md:text-4xl text-center dark:text-white">
+          <div className="px-12 lg:px-[170px] py-5">
+            <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 text-center dark:text-white">
               Set New Password
             </h1>
 
@@ -113,7 +82,7 @@ const ForgotStepThree = () => {
               Your password must be at least 8 characters.
             </p>
 
-            <form action="#" className="">
+            <form action="#" className="mx-auto">
 
               <div className='flex items-center gap-1'>
                 <label htmlFor="Password" className="block text-sm py-2 font-medium text-gray-700 dark:text-white"> Password</label> <span className="text-red-500 text-lg">*</span>
@@ -182,6 +151,29 @@ const ForgotStepThree = () => {
           </div>
         </main>
 
+        <aside className={`
+        w-auto
+        lg:w-1/2
+        min-h-screen
+        `}>
+          <Swiper
+            style={{ position: 'sticky', top: 0, height: '100vh' }}
+            modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
+            autoplay={true}
+            spaceBetween={50}
+            slidesPerView={1}
+            pagination={{ clickable: true }}
+            onSlideChange={(swiper) => setSelectedIndex(swiper.activeIndex)}
+          // onSwiper={(swiper) => console.log(swiper)}
+
+          >
+            {dataCarouselLogin.map((item, index) => (
+              <SwiperSlide key={index}>
+                {item.component}
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </aside>
 
       </div>
     </section>

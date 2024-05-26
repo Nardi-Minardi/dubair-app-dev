@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import AuthLayout from "@/layouts/AuthLayout";
+import AuthLayout from "@/layouts/authLayout";
 import ButtonGradient from '@/components/buttons/buttonGradient';
 import ButtonGoogle from '@/components/buttons/buttonGoogle';
 import dynamic from 'next/dynamic'
@@ -67,50 +67,20 @@ const ForgotStepTwo = () => {
   }
 
   return (
-    <section className="bg-white dark:bg-zinc-900">
-      <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
+    <section className="bg-white dark:bg-[#121212]">
+      <div className="flex flex-col lg:flex-row">
 
-        <aside className={`
-        ${selectedIndex === 0 && 'aside-container-login1'}
-        ${selectedIndex === 1 && 'aside-container-login2'}
-        ${selectedIndex === 2 && 'aside-container-login3'}
-        relative 
-        hidden 
-        lg:block 
-        h-64 
-        lg:order-last 
-        lg:col-span-5 
-        lg:h-full 
-        xl:col-span-6`}>
-          <Swiper
-            modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
-            autoplay={false}
-            spaceBetween={50}
-            slidesPerView={1}
-            pagination={{ clickable: true }}
-            onSlideChange={(swiper) => setSelectedIndex(swiper.activeIndex)}
-          // onSwiper={(swiper) => console.log(swiper)}
-
-          >
-            {dataCarouselLogin.map((item, index) => (
-              <SwiperSlide key={index}>
-                {item.component}
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </aside>
-
-        <main className="lg:col-span-7 xl:col-span-6">
+        <main className="h-full w-full lg:w-1/2 min-h-screen">
           {/* logo */}
           <div className="px-8 py-8 flex justify-between items-center">
             <Logo />
-            <ButtonDarkMode />
+            {/* <ButtonDarkMode /> */}
           </div>
           {/* end logo */}
 
 
-          <div className="px-8 lg:px-32 py-20">
-            <h1 className="text-2xl font-bold text-gray-900 sm:text-2xl md:text-4xl text-center dark:text-white">
+          <div className="px-12 lg:px-[170px] py-5">
+            <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 text-center dark:text-white">
               Password Reset
             </h1>
 
@@ -118,7 +88,7 @@ const ForgotStepTwo = () => {
               We send code to email_user@gmail.com
             </p>
 
-            <form action="#" className="">
+            <form action="#" className="mx-auto">
 
               {/* Box code OTP 4 digits */}
               {/* <div className="flex justify-center items-center mt-8 gap-5">
@@ -135,18 +105,18 @@ const ForgotStepTwo = () => {
               <div className="flex justify-center items-center mt-8 gap-5">
                 {segments.map((s, key) =>
                   <input key={key} value={s} onPaste={onPaste}
-                  onChange={(e) => {
-                    const value = e.target.value
-                    //min 0 max 9
-                    if (value >= 0 && value <= 9) {
-                      const newSegments = [...segments]
-                      newSegments[key] = value
-                      setSegments(newSegments)
-                    }
+                    onChange={(e) => {
+                      const value = e.target.value
+                      //min 0 max 9
+                      if (value >= 0 && value <= 9) {
+                        const newSegments = [...segments]
+                        newSegments[key] = value
+                        setSegments(newSegments)
+                      }
 
-                  }}
-                  type="number" maxLength="1" min="0" max="9"
-                  className='w-12 h-12 font-bold text-center border pl-4 border-gray-300 dark:border-gray-700 rounded-[8px] dark:bg-gray-800 dark:text-white'
+                    }}
+                    type="number" maxLength="1" min="0" max="9"
+                    className='w-12 h-12 font-bold text-center border pl-4 border-gray-300 dark:border-gray-700 rounded-[8px] dark:bg-gray-800 dark:text-white'
                   />
                 )}
               </div>
@@ -201,6 +171,29 @@ const ForgotStepTwo = () => {
           </div>
         </main>
 
+        <aside className={`
+        w-auto
+        lg:w-1/2
+        min-h-screen
+        `}>
+          <Swiper
+            style={{ position: 'sticky', top: 0, height: '100vh' }}
+            modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
+            autoplay={true}
+            spaceBetween={50}
+            slidesPerView={1}
+            pagination={{ clickable: true }}
+            onSlideChange={(swiper) => setSelectedIndex(swiper.activeIndex)}
+          // onSwiper={(swiper) => console.log(swiper)}
+
+          >
+            {dataCarouselLogin.map((item, index) => (
+              <SwiperSlide key={index}>
+                {item.component}
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </aside>
 
       </div>
     </section>

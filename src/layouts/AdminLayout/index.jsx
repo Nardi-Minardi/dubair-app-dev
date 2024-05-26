@@ -1,14 +1,36 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
+import Navbar from '@/components/layouts/adminLayout/navbar'
+import { ThemeProvider } from 'next-themes'
+import dynamic from 'next/dynamic'
+
+
+const Sidebar = dynamic(() => import('@/components/layouts/adminLayout/sidebar',
+  { ssr: false }
+))
 
 const AdminLayout = ({ children, title }) => {
+  // Mobile sidebar visibility state
+  const [showSidebar, setShowSidebar] = useState(false);
+
   return (
-    <React.Fragment>
+    <ThemeProvider attribute="class">
       <Head >
         <title>{title}</title>
       </Head>
-      <main>{children}</main>
-    </React.Fragment>
+      <div className="flex h-full min-h-screen bg-[#eeeeee] dark:bg-zinc-900">
+        <Sidebar show={showSidebar} setter={setShowSidebar} />
+        <div className="w-full overflow-hidden">
+          <div className="p-4 h-[100vh] ">
+            <Navbar
+            show={showSidebar}
+              setter={setShowSidebar}
+            />
+            {children}
+          </div>
+        </div>
+      </div>
+    </ThemeProvider>
   )
 }
 

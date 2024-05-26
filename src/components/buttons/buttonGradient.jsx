@@ -6,7 +6,8 @@ const ButtonGradient = ({
   width,
   height,
   radius,
-  type
+  type,
+  whiteSpace
 }) => {
   return (
     <React.Fragment>
@@ -28,7 +29,9 @@ const ButtonGradient = ({
         ransition-shadow 
         duration-300 ease-in-out
         `}>
+        <span className={` ${whiteSpace} `}>
         {title}
+        </span>
       </button>
     </React.Fragment>
   )

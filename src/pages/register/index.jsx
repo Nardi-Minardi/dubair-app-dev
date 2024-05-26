@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import AuthLayout from "@/layouts/AuthLayout";
+import AuthLayout from "@/layouts/authLayout";
 import ButtonGradient from '@/components/buttons/buttonGradient';
 import ButtonGoogle from '@/components/buttons/buttonGoogle';
 import dynamic from 'next/dynamic'
@@ -39,49 +39,19 @@ const Register = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   return (
-    <section className="bg-white dark:bg-zinc-900">
-      <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
+    <section className="bg-white dark:bg-[#121212]">
+      <div className="flex flex-col lg:flex-row">
 
-        <aside className={`
-        ${selectedIndex === 0 && 'aside-container-login1'}
-        ${selectedIndex === 1 && 'aside-container-login2'}
-        ${selectedIndex === 2 && 'aside-container-login3'}
-        relative 
-        hidden 
-        lg:block 
-        h-64 
-        lg:order-last 
-        lg:col-span-5 
-        lg:h-full 
-        xl:col-span-6`}>
-          <Swiper
-            modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
-            autoplay={false}
-            spaceBetween={50}
-            slidesPerView={1}
-            pagination={{ clickable: true }}
-            onSlideChange={(swiper) => setSelectedIndex(swiper.activeIndex)}
-          // onSwiper={(swiper) => console.log(swiper)}
-
-          >
-            {dataCarouselLogin.map((item, index) => (
-              <SwiperSlide key={index}>
-                {item.component}
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </aside>
-
-        <main className="lg:col-span-7 xl:col-span-6">
+        <main className="h-full w-full lg:w-1/2 min-h-screen">
           {/* logo */}
-          <div className="px-8 py-8 flex justify-between items-center">
+          <div className="px-12 py-8 flex justify-between items-center">
             <Logo />
-            <ButtonDarkMode />
+            {/* <ButtonDarkMode /> */}
           </div>
           {/* end logo */}
 
 
-          <div className="px-8 lg:px-32">
+          <div className="px-12 lg:px-[170px]">
             <h1 className="text-2xl font-bold text-gray-900 sm:text-2xl md:text-4xl text-center dark:text-white">
               Create Your Account
             </h1>
@@ -90,7 +60,7 @@ const Register = () => {
               Let's get started with your free 5 minutes trial
             </p>
 
-            <form action="#" className="">
+            <form action="#" className="mx-auto">
               <div className=' flex flex-col gap-4'>
                 <ButtonGoogle
                   title="Login with Google"
@@ -162,7 +132,7 @@ const Register = () => {
                   radius="rounded-[12px]"
                   onClick={() => console.log("Button clicked")} />
 
-                <p className="mt-4 text-sm">
+                <p className="mt-4 mb-4 text-sm">
                   Already have account? <a href="/" className="text-zinc-700 font-bold underline dark:text-white">Login</a>
                 </p>
               </div>
@@ -170,6 +140,29 @@ const Register = () => {
           </div>
         </main>
 
+        <aside className={`
+        w-auto
+        lg:w-1/2
+        min-h-screen
+        `}>
+          <Swiper
+            style={{ position: 'sticky', top: 0, height: '100vh' }}
+            modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
+            autoplay={true}
+            spaceBetween={50}
+            slidesPerView={1}
+            pagination={{ clickable: true }}
+            onSlideChange={(swiper) => setSelectedIndex(swiper.activeIndex)}
+          // onSwiper={(swiper) => console.log(swiper)}
+
+          >
+            {dataCarouselLogin.map((item, index) => (
+              <SwiperSlide key={index}>
+                {item.component}
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </aside>
 
       </div>
     </section>

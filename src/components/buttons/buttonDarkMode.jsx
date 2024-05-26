@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 import { SunIcon, MoonIcon } from "@heroicons/react/20/solid";
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/20/solid'
 
-const styles = "h-4 w-4 text-gray-600 dark:text-yellow-300";
+const styles = "h-[26px] w-[26px] text-yellow-400 dark:text-gray-300 bg-white dark:bg-[#121212] rounded-full p-1";
 
 export default function ButtonDarkMode() {
   const { theme, setTheme } = useTheme();
@@ -11,24 +12,21 @@ export default function ButtonDarkMode() {
 
   return (
     <>
-    {mounted && (
-      <button
-        type="button"
-        className="bg-gray-200 hover:bg-gray-300 dark:bg-gray-800  dark:hover:bg-gray-700 transition-all rounded flex items-center justify-center h-7 w-7"
-        aria-label={
-          theme === "dark" ? "Toggle light mode" : "Toggle dark mode"
-        }
-        onClick={() => {
-          setTheme(theme === "dark" ? "light" : "dark");
-        }}
-      >
-        {theme === "dark" ? (
-          <SunIcon className={styles} />
-        ) : (
-          <MoonIcon className={styles} />
-        )}
-      </button>
-    )}
-  </>
+      {mounted && (
+        <div className={`flex w-[60px] h-6 bg-[#E6E6E6] rounded-full items-center cursor-pointer
+      ${theme === 'dark' ? 'justify-end' : 'justify-start'}
+      `}
+          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
+          <span className={`rounded-full px-1
+       
+        `}>
+
+            {theme === 'light' ? <SunIcon className={styles} /> : <MoonIcon className={styles} />}
+
+
+          </span>
+        </div>
+      )}
+    </>
   );
 }

@@ -10,6 +10,7 @@ const ButtonGoogle = ({
   return (
     <React.Fragment>
       <button
+        type="button"
         onClick={onClick}
         className={`
         ${width} 

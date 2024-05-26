@@ -3,8 +3,9 @@
 @tailwind utilities;
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
 
-:root {
-  font-family: "Plus Jakarta Sans", sans-serif;
+* {
+  box-sizing: border-box;
+  font-family: "Plus Jakarta Sans";
 }
 
 .my-input {
@@ -22,10 +23,12 @@
 }
 
 .my-text {
-  background-image: linear-gradient(#9e0bf3, #454fec);
+  background: #454fec;
+  background: -webkit-linear-gradient(38deg, #454fec 0%, #9e0bf3 100%);
+  background: linear-gradient(38deg, #454fec 0%, #9e0bf3 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-weight: 300;
+  font-weight: 500;
 }
 
 .button-google {
@@ -44,7 +47,7 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
   background-color: #ffffff;
   opacity: 1;
   width: 40px !important;
-  height: 7px;
+  height: 5px;
   border-radius: 10px;
 }
 
@@ -52,7 +55,7 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
 .swiper-pagination-bullet {
   background: #ffffff !important;
   width: 20px !important;
-  height: 7px !important;
+  height: 5px !important;
   border-radius: 10px !important;
 }
 
@@ -149,8 +152,8 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   background: rgb(74, 75, 74);
   background: linear-gradient(
     0deg,
@@ -167,8 +170,8 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
   position: absolute;
   top: 0;
   right: 0;
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
   background: rgb(74, 75, 74);
   background: linear-gradient(
     0deg,
@@ -183,9 +186,8 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
 .ellipse-page3-login {
   position: absolute;
   bottom: -160px;
-  /* transform: translate(-50%, -50%); */
-  width: 400px;
-  height: 200px;
+  width: 500px;
+  height: 230px;
   background: rgb(74, 75, 74);
   background: linear-gradient(
     0deg,
@@ -194,28 +196,32 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
     rgba(74, 75, 74, 1) 100%
   );
   border-radius: 50%;
-  z-index: 999;
+  z-index: 1;
+}
+
+@media only screen and (min-width: 640px) {
+  .ellipse-page3-login {
+    left: 90px !important;
+  }
 }
 
 @media only screen and (min-width: 968px) {
   .ellipse-page3-login {
-    left: 130px !important;
+    left: 100px !important;
   }
 }
 
-@media only screen and (min-width: 1440px){
+@media only screen and (min-width: 1440px) {
   .ellipse-page3-login {
-    left: 170px !important;
+    left: 130px !important;
   }
 }
 
 .ellipse-page3-register {
   position: absolute;
- 
-  /* transform: translate(-50%, -50%); */
-  width: 400px;
-  height: 220px;
-  border-right: 50px solid transparent;
+  bottom: -160px;
+  width: 500px;
+  height: 230px;
   background: rgb(74, 75, 74);
   background: linear-gradient(
     0deg,
@@ -224,18 +230,71 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
     rgba(74, 75, 74, 1) 100%
   );
   border-radius: 50%;
-  z-index: 999;
+  z-index: 1;
+}
+
+@media only screen and (min-width: 640px) {
+  .ellipse-page3-register {
+    left: 90px !important;
+  }
 }
 
 @media only screen and (min-width: 968px) {
   .ellipse-page3-register {
-    left: 130px !important;
-    bottom: -170px !important;
+    left: 100px !important;
   }
 }
 
-@media only screen and (min-width: 1440px){
+@media only screen and (min-width: 1440px) {
   .ellipse-page3-register {
-    left: 170px !important;
+    left: 130px !important;
   }
 }
+
+.loader {
+  position: absolute;
+  z-index: 99999;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(74, 75, 74);
+  opacity: 0.9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader-message {
+  margin-top: 10px;
+  font-size: 22px;
+  font-weight: 600;
+  color: #2f73a3;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.spinner {
+  --d: 24.6px;
+  width: 4.5px;
+  height: 4.5px;
+  border-radius: 50%;
+  color: #cacbca;
+  box-shadow: calc(1 * var(--d)) calc(0 * var(--d)) 0 0,
+    calc(0.707 * var(--d)) calc(0.707 * var(--d)) 0 1.1px,
+    calc(0 * var(--d)) calc(1 * var(--d)) 0 2.2px,
+    calc(-0.707 * var(--d)) calc(0.707 * var(--d)) 0 3.4px,
+    calc(-1 * var(--d)) calc(0 * var(--d)) 0 4.5px,
+    calc(-0.707 * var(--d)) calc(-0.707 * var(--d)) 0 5.6px,
+    calc(0 * var(--d)) calc(-1 * var(--d)) 0 6.7px;
+  animation: spinner-a90wxe 1s infinite steps(8);
+}
+
+@keyframes spinner-a90wxe {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+/* .dropzone {
+  border: 5px dashed rgb(117, 112, 112);
+} */

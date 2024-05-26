@@ -1,9 +1,13 @@
 import { Html, Head, Main, NextScript } from "next/document";
 import { APP_NAME, APP_DESCRIPTION } from "../config";
+import i18n from "../../next-i18next.config";
 
-export default function Document() {
+export default function Document(props) {
+
+  const { locale } = props;
+
   return (
-    <Html lang="en">
+    <Html lang={locale}>
       <Head >
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
