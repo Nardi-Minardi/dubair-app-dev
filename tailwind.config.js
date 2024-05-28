@@ -11,9 +11,7 @@ module.exports = {
   ],
   plugins: [
     nextui(),
-    require("@vidstack/react/tailwind.cjs")({
-      prefix: "media",
-    }),
+   
     function ({ addUtilities }) {
       const newUtilities = {
         ".scrollbar-webkit": {

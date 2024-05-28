@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import Head from 'next/head'
-import Navbar from '@/components/layouts/adminLayout/navbar'
+import Navbar2 from '@/components/layouts/adminLayout/navbar2'
 import { ThemeProvider } from 'next-themes'
 import dynamic from 'next/dynamic'
 import { Provider } from "react-redux";
@@ -14,9 +14,11 @@ const Sidebar = dynamic(() => import('@/components/layouts/adminLayout/sidebar',
   { ssr: false }
 ))
 
-const AdminLayout = ({ children, title }) => {
+const AdminLayout2 = ({ children, title }) => {
   const [loading, setLoading] = useState(false);
-  const [firstOpen, setFirstOpen] = useState(true);
+  const [firstOpen, setFirstOpen] = useState(false);
+  const [tabActive, setTabActive] = useState('rewrite')
+  const [heading, setHeading] = useState('Rewrite Project Translating To Bahasa Indonesia')
   const persistor = persistStore(store);
   //use context
   const loadingAction = useMemo(() => ({
@@ -31,17 +33,19 @@ const AdminLayout = ({ children, title }) => {
           <title>{title}</title>
         </Head>
         <PersistGate loading={null} persistor={persistor}>
-          <div className="flex h-full min-h-screen bg-[#FAFBFC] dark:bg-zinc-900">
+          <div className="flex h-auto pb-5 lg:h-[100vh] xl:h-[100vh] bg-[#FAFBFC] dark:bg-zinc-900">
             <SidebarPovider>
               <Sidebar
-                firstOpen={firstOpen}
-                setFirstOpen={setFirstOpen}
+               firstOpen={firstOpen}
+               setFirstOpen={setFirstOpen}
               />
-              <div className="w-full overflow-hidden">
+              <div className="w-full h-auto overflow-hidden">
                 <div className="p-4">
-                  <Navbar
-                  // show={showSidebar}
-                  // setter={setShowSidebar}
+                  <Navbar2
+                    title={heading}
+                    setTitle={setHeading}
+                    setFirstOpen={setFirstOpen}
+                    firstOpen={firstOpen}
                   />
                   <LoadingContext.Provider value={loadingAction}>
                     {loading && <Loader message="Loading..." />}
@@ -57,4 +61,4 @@ const AdminLayout = ({ children, title }) => {
   )
 }
 
-export default AdminLayout
+export default AdminLayout2

@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useRouter } from 'next/router'
 import { useTheme } from 'next-themes'
 import UpgradePro from '@/components/elements/upgradePro'
+import { useGlobalSidebarContext } from '@/context/sidebarContext'
 
 const menus = [
   {
@@ -39,19 +40,18 @@ const otherMenus = [
   },
 ]
 
-const Sidebar = ({ show, setter }) => {
+const Sidebar = ({ firstOpen, setFirstOpen }) => {
   const router = useRouter();
   const currentPath = router.pathname;
   const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = React.useState(false)
+  const [mounted, setMounted] = useState(false)
+  const { isSidebarOpen, closeSidebar } = useGlobalSidebarContext();
   useEffect(() => setMounted(true), [])
 
-  const ModalOverlay = () => (
+  const ModalOverlay = ({ onClick }) => (
     <div
       className={`flex md:hidden fixed top-0 right-0 bottom-0 left-0 bg-black/50 z-30`}
-      onClick={() => {
-        setter(oldVal => !oldVal);
-      }}
+      onClick={onClick}
     />
   )
 
@@ -62,7 +62,8 @@ const Sidebar = ({ show, setter }) => {
   return (
     <>
       <div className={`
-        ${show ? " ml-0" : " ml-[-20rem] md:ml-0"}
+        ${isSidebarOpen ? "fixed ml-0" : " ml-[-20rem] md:ml-0  "}
+        ${firstOpen ? "" : "md:ml-[-20rem]"}
         bg-white 
         dark:bg-[#121212] 
         text-[#8c8c8c] 
@@ -76,13 +77,13 @@ const Sidebar = ({ show, setter }) => {
         transition-[margin-left] 
         ease-in-out 
         duration-500 
-        fixed 
         md:static 
         top-0 
         bottom-0 
         left-0 
         z-40
         overflow-y-auto
+        scrollbar-webkit
       `}>
 
         <div className="flex flex-col">
@@ -99,13 +100,14 @@ const Sidebar = ({ show, setter }) => {
               {menus.length > 0 && menus.map((menu, index) => (
                 <div key={index} onClick={() => {
                   handleRoute(menu.link)
-                  setter(oldVal => !oldVal);
+                  closeSidebar()
                 }
                 }>
                   <div
                     className={`relative 
-                ${currentPath === menu.link ? 'bg-gradient-to-t from-[#9E0BF3] via-[#66B0FE] to-[#454FEC]' : ''}
-                ${currentPath === menu.link ? 'text-white' : ''}
+                ${currentPath === menu.link || currentPath.includes(menu.link)
+                        ? 'bg-gradient-to-t from-[#9E0BF3] via-[#66B0FE] to-[#454FEC]' : ''}
+                ${currentPath === menu.link || currentPath.includes(menu.link) ? 'text-white' : ''}
                 rounded-lg
                 my-3
                 py-2
@@ -116,7 +118,7 @@ const Sidebar = ({ show, setter }) => {
                 `}>
                     <li className="my-[3px] flex cursor-pointer items-center px-5">
                       <span>
-                        <img src={theme === 'dark' || currentPath === menu.link ? menu.iconWhite : menu.icon
+                        <img src={theme === 'dark' || currentPath === menu.link || currentPath.includes(menu.link) ? menu.iconWhite : menu.icon
                         } className="w-6" />
                       </span>
                       <p className="ml-2 flex text-md">{menu.title}</p>
@@ -133,11 +135,15 @@ const Sidebar = ({ show, setter }) => {
           {mounted && (
             <ul className="mb-auto mx-[10%] mt-4">
               {otherMenus.length > 0 && otherMenus.map((menu, index) => (
-                <div key={index} onClick={() => handleRoute(menu.link)}>
+                <div key={index} onClick={() => {
+                  handleRoute(menu.link)
+                  closeSidebar()
+                }
+                }>
                   <div
                     className={`relative 
-                ${currentPath === menu.link ? 'bg-gradient-to-t from-[#9E0BF3] via-[#66B0FE] to-[#454FEC]' : ''}
-                ${currentPath === menu.link ? 'text-white' : ''}
+                ${currentPath === menu.link || currentPath.includes(menu.link) ? 'bg-gradient-to-t from-[#9E0BF3] via-[#66B0FE] to-[#454FEC]' : ''}
+                ${currentPath === menu.link || currentPath.includes(menu.link) ? 'text-white' : ''}
                 rounded-lg
                 my-3
 
@@ -149,7 +155,7 @@ const Sidebar = ({ show, setter }) => {
                 `}>
                     <li className="my-[3px] flex cursor-pointer items-center px-5">
                       <span>
-                        <img src={theme === 'dark' || currentPath === menu.link ? menu.iconWhite : menu.icon
+                        <img src={theme === 'dark' || currentPath === menu.link && currentPath.includes(menu.link) ? menu.iconWhite : menu.icon
                         } className="w-6" />
                       </span>
                       <p className="ml-2 flex text-md">{menu.title}</p>
@@ -164,7 +170,14 @@ const Sidebar = ({ show, setter }) => {
         <UpgradePro />
 
       </div>
-      {show ? <ModalOverlay /> : <></>}
+      {isSidebarOpen ? <ModalOverlay onClick={() => {
+        closeSidebar()
+        if (firstOpen) {
+          setFirstOpen(false)
+        }
+      }
+
+      } /> : <></>}
     </>
   )
 }

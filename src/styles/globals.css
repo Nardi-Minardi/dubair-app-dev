@@ -118,3 +118,116 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
 /* .dropzone {
   border: 5px dashed rgb(117, 112, 112);
 } */
+
+/* video js here */
+.my-video-js {
+  position: relative !important;
+  width: 100% !important;
+  height: 60vh !important;
+  border-radius: 10px !important;
+}
+
+.vjs-control-bar {
+  border-bottom-left-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
+}
+
+/* end video js here */
+
+
+/* timeline audio editor here */
+.timeline-editor-example2 {
+  .timeline-editor-time-area{
+    color: #000000;
+  }
+  .timeline-editor-time-area-interact{
+    color: #000000;
+  }
+  .resize-triggers {
+    color: #000000;
+  }
+
+  .timeline-editor {
+    width: 100%;
+    height: 200px;
+    &-action {
+      height: 28px !important;
+      top: 50%;
+      transform: translateY(-50%);
+    }  
+
+    &-action {
+      
+      &-effect-effect0 {
+        cursor: pointer;
+        background-color: #454fec !important;
+        background-image: url("/assets/soundWave.png");
+        background-position: bottom;
+        background-repeat: repeat-x;
+        .effect0 {
+          width: 100%;
+          height: 100%;
+          font-size: small;
+          color: white;
+          border-radius: 5px;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+    
+          &-text {
+            margin-left: 4px;
+            flex: 1 1 auto;
+            text-align: center;
+            display: flex;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+          }
+        
+        }
+
+
+        .timeline-editor-action-left-stretch,
+        .timeline-editor-action-right-stretch {
+          overflow: inherit;
+
+          &::after {
+            width: 18px;
+            height: 18px;
+            transform: rotate(
+              45deg
+            ) scale(.8);
+            background: #aabbcc;
+            border: none;
+          }
+        }
+
+        .timeline-editor-action-left-stretch::after {
+          left: -9px;
+        }
+    
+        .timeline-editor-action-right-stretch::after {
+          right: -9px;
+        }
+      }
+      
+      .effect1 {
+        width: 25px;
+        height: 28px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+
+        & img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+}
+
+/* end timeline audio editor here */

@@ -7,8 +7,8 @@ import 'swiper/css/autoplay';
 import 'react-toastify/dist/ReactToastify.css';
 import "react-toggle/style.css"
 import "/node_modules/flag-icons/css/flag-icons.min.css";
-import '@vidstack/react/player/styles/base.css';
 import 'react-loading-skeleton/dist/skeleton.css'
+import 'video.js/dist/video-js.css';
 import React, { useState, useMemo } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import { store } from "@/store/store";

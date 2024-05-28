@@ -36,9 +36,3 @@ const nextConfig = {
 };
 
 module.exports = withPlugins([[withTM]], nextConfig);
-
-// const withTM = require("next-transpile-modules")([
-// 	"@pusher/push-notifications-web",
-// ]);
-
-// module.exports = withTM();

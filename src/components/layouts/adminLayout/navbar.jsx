@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {
   Bars3Icon,
 } from '@heroicons/react/20/solid'
@@ -9,12 +9,13 @@ import LanguageSelector from '@/components/elements/languageSelector'
 import { useSelector, useDispatch } from 'react-redux'
 import moment from 'moment'
 import { logoutUser } from '@/store/slices/authSlice'
+import { useGlobalSidebarContext } from '@/context/sidebarContext'
 
-const Navbar = ({ show, setter }) => {
+const Navbar = () => {
   const dispatch = useDispatch()
-  const { user, token } = useSelector((state) => state.rootSlice?.auth);
-  console.log( token)
   const router = useRouter()
+  const { user, token } = useSelector((state) => state.rootSlice?.auth);
+  const { showSidebar, isSidebarOpen } = useGlobalSidebarContext();  
 
   const handleLogout = (e) => {
     e.preventDefault()
@@ -38,11 +39,9 @@ const Navbar = ({ show, setter }) => {
           {/* bars icons */}
           <div className='flex flex-col items-end justify-end gap-3'>
             <div
-              onClick={() => {
-                setter(oldVal => !oldVal);
-              }}
+              onClick={showSidebar}
               className="xl:hidden md:hidden lg:hidden cursor-pointer">
-              {!show && <Bars3Icon className="h-6 w-6 stroke-2" />}
+              {!isSidebarOpen && <Bars3Icon className="h-6 w-6 stroke-2" />}
             </div>
             <div className="flex xl:hidden md:hidden lg:hidden">
               <LanguageSelector />

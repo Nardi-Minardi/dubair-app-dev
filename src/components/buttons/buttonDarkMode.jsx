@@ -3,7 +3,7 @@ import { useTheme } from 'next-themes';
 import { SunIcon, MoonIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/20/solid'
 
-const styles = "h-[26px] w-[26px] text-yellow-400 dark:text-gray-300 bg-white dark:bg-[#121212] rounded-full p-1";
+const styles = "h-[26px] w-[26px] text-zinc-500 dark:text-gray-300 bg-white dark:bg-[#121212] rounded-full p-1";
 
 export default function ButtonDarkMode() {
   const { theme, setTheme } = useTheme();
