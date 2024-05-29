@@ -43,10 +43,10 @@ const AdminLayout = ({ children, title }) => {
                   // show={showSidebar}
                   // setter={setShowSidebar}
                   />
-                  <LoadingContext.Provider value={loadingAction}>
-                    {loading && <Loader message="Loading..." />}
+                  {/* <LoadingContext.Provider value={loadingAction}>
+                    {loading && <Loader message="Loading..." />} */}
                     {children}
-                  </LoadingContext.Provider>
+                  {/* </LoadingContext.Provider> */}
                 </div>
               </div>
             </SidebarPovider>

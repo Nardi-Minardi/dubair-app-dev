@@ -13,24 +13,37 @@ import React, { useState, useMemo } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import { store } from "@/store/store";
 import { Provider } from "react-redux";
+import Loader from "@/components/elements/loader";
 import { NextIntlClientProvider } from 'next-intl';
 import { useRouter } from 'next/router';
+import NextNProgress from 'nextjs-progressbar';
+import { LoadingContext } from "@/context/loadingContext";
 
 const App = ({ Component, pageProps }) => {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
+  const loadingAction = useMemo(() => ({
+    showLoader: () => setLoading(true),
+    hideLoader: () => setLoading(false),
+  }), []);
 
   const getLayout = Component.getLayout || ((page) => page)
 
   return getLayout(
     <Provider store={store}>
-      <NextIntlClientProvider
-        locale={router.locale}
-        timeZone="Europe/Vienna"
-        messages={pageProps.messages}
-      >
-        <Component {...pageProps} />
-        <ToastContainer />
-      </NextIntlClientProvider>
+      <LoadingContext.Provider value={loadingAction}>
+        <NextIntlClientProvider
+          locale={router.locale}
+          timeZone="Europe/Vienna"
+          messages={pageProps.messages}
+        >
+          {loading && <Loader message="Loading..." />}
+          <Component {...pageProps} />
+          <ToastContainer />
+
+        </NextIntlClientProvider>
+      </LoadingContext.Provider>
     </Provider>
   )
 }

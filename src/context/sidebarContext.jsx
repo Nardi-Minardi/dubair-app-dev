@@ -4,7 +4,7 @@ const SidebarContext = createContext();
 
 const SidebarPovider = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [tabActive, setTabActive] = useState('refine');
+  const [tabActive, setTabActive] = useState('revoice');
 
   const showSidebar = () => {
     setIsSidebarOpen(true);

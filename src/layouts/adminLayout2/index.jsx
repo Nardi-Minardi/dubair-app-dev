@@ -47,10 +47,10 @@ const AdminLayout2 = ({ children, title }) => {
                     setFirstOpen={setFirstOpen}
                     firstOpen={firstOpen}
                   />
-                  <LoadingContext.Provider value={loadingAction}>
-                    {loading && <Loader message="Loading..." />}
+                  {/* <LoadingContext.Provider value={loadingAction}>
+                    {loading && <Loader message="Loading..." />} */}
                     {children}
-                  </LoadingContext.Provider>
+                  {/* </LoadingContext.Provider> */}
                 </div>
               </div>
             </SidebarPovider>

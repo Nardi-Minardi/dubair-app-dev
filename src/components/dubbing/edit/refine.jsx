@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { CiClock1, CiClock2 } from "react-icons/ci";
 import { FiTrash2, FiPlus } from "react-icons/fi";
 import moment from 'moment';
@@ -6,6 +6,7 @@ import PlayerComponent from '@/components/videoPlayer/playerComponent';
 import TimelineComponent from '@/components/videoPlayer/timelineComponent';
 
 const Refine = ({ items, items2 }) => {
+  const playerPanel = useRef();
   return (
     <div className='relative flex flex-col h-auto gap-4'>
 
@@ -60,7 +61,9 @@ const Refine = ({ items, items2 }) => {
 
         <div className=' bg-white w-full h-auto shadow-sm dark:bg-[#2B2C2B]'>
           <div className='max-h-[60vh] scrollbar-webkit overflow-y-auto'>
-            <PlayerComponent />
+            {/* videonya disini */}
+            <div className="player-panel" id="player-ground-1" ref={playerPanel}></div>
+            {/* <PlayerComponent /> */}
           </div>
           {/* <div>
           <button className='bg-[#2B2C2B] text-white py-2 px-4 rounded-lg flex items-center'>
@@ -71,10 +74,10 @@ const Refine = ({ items, items2 }) => {
       </div>
 
       {/* timeline audio */}
-      <div className='bg-white  w-full h-auto shadow-sm dark:bg-[#2B2C2B] rounded-sm'>
-        <div className='max-h-[40vh] scrollbar-webkit overflow-y-auto'>
-          <TimelineComponent />
+      <div className='bg-white w-full h-auto shadow-sm dark:bg-[#2B2C2B] rounded-sm'>
+        <div className='max-h-[40vh] w-full scrollbar-webkit overflow-x-auto overflow-y-auto'>
         </div>
+        <TimelineComponent />
       </div>
 
     </div>

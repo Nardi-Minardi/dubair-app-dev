@@ -1,22 +1,18 @@
 import React, { FC } from 'react';
-import { TimelineAction, TimelineRow } from '@xzdarcy/react-timeline-editor';
+import { CustomTimelineAction, CusTomTimelineRow } from './mock';
 
-export const CustomRender0: FC<{ action: TimelineAction; row: TimelineRow }> =
-  ({ action, row }) => {
-    return (
-      <div className={'effect0'}>
-        <div className={`effect0-text`}>{`Hei apakah pemakaiannya benar?: ${(
-          action.end - action.start
-        ).toFixed(2)}s`}</div>
-      </div>
-    );
-  };
+export const CustomRender0: FC<{ action: CustomTimelineAction; row: CusTomTimelineRow }> = ({ action, row }) => {
+  return (
+    <div className={'effect0'}>
+      <div className={`effect0-text`}>{`T : ${action.data.name}`}</div>
+    </div>
+  );
+};
 
-export const CustomRender1: FC<{ action: TimelineAction; row: TimelineRow }> =
-  ({ action, row }) => {
-    return (
-      <div className={'effect1'}>
-        <img src="/assets/flag.png"></img>
-      </div>
-    );
-  };
+export const CustomRender1: FC<{ action: CustomTimelineAction; row: CusTomTimelineRow }> = ({ action, row }) => {
+  return (
+    <div className={'effect1'}>
+      <div className={`effect1-text`}>{`T : ${action.data.name}`}</div>
+    </div>
+  );
+};

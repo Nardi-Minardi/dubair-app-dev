@@ -18,7 +18,8 @@ const ItemListDubbingVideo = ({ videos, isWatched, loading, theme }) => {
               </SkeletonTheme>
             ) : (
               <>
-                <div className={`relative w-full h-[200px] md:h-[250px] lg:h-[250px] xl:h-[250px] flex-1 rounded-lg overflow-hidden bg-[#18181b] aspect-video ${isWatched ? 'opacity-60' : ''}`}>
+                <div className={`relative w-full h-[200px] md:h-[250px] lg:h-[250px] xl:h-[250px] flex-1 rounded-lg overflow-hidden  aspect-video ${isWatched ? 'opacity-60' : ''}`}>
+
                   <img src={episode?.coverImage?.extraLarge || episode?.coverImage?.large}
                     alt={episode?.title?.english}
                     className="bg-[#18181b] h-full w-full object-cover aspect-w-16 aspect-h-9 rounded-lg transition-all duration-300 transform group-hover:scale-105 group-hover:opacity-60" quality={100} />
@@ -33,21 +34,24 @@ const ItemListDubbingVideo = ({ videos, isWatched, loading, theme }) => {
                   </div> */}
                 </div>
 
-                <div className="flex flex-row items-center justify-between mb-8 mt-3">
-                  <div className="flex flex-col">
-                    <div className="flex items-center gap-2">
+                <div className="flex flex-col lg:flex-row xl:flex-row justify-between mb-8 mt-3">
+                  <div className="flex flex-col items-start w-full">
+                    <div className="flex items-center  gap-2">
                       <span className="text-md font-semibold">{episode?.title?.english}</span>
                     </div>
-                    <div className="flex flex-col md:flex-row lg:flex-row xl:flex-row  gap-2">
-                      <span className="text-sm text-gray-400">Viewed 5 days ago</span>-
-                      <span className="text-sm text-gray-400">Edited 3 months ago</span>
+                    <div className="flex flex-row justify-between w-full ">
+                      <div className="flex items-center w-full flex-col md:flex-row lg:flex-row xl:flex-row  gap-2">
+                        <span className="text-sm text-gray-400">Viewed 5 days ago - Edited 3 months ago</span>
+                      </div>
+                      <CrudDropdown
+                        episode={episode}
+                      />
                     </div>
                   </div>
-                  <div className="flex items-center">
-                    <CrudDropdown
+
+                  {/* <CrudDropdown
                       episode={episode}
-                    />
-                  </div>
+                    /> */}
                 </div>
               </>
             )}

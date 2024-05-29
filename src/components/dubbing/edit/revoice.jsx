@@ -17,14 +17,14 @@ const Revoice = ({ items, items2 }) => {
               className='py-2 mx-3 flex lg:items-center xl:items-center border-b-2 border-[#EEEEEE] dark:border-white gap-4'>
 
 
-              <div className='flex w-auto px-3 justify-start align-top'>
+              <div className='flex max-w-8 px-3 justify-start align-top'>
                 <p>{item.id}</p>
               </div>
 
               <div className='flex w-full flex-col gap-3 lg:flex-row xl:flex-row px-3 lg:items-center xl:justify-center'>
 
-              <div className='flex flex-row w-full justify-between lg:flex-col xl:flex-col lg:w-auto xl:w-auto items-start pr-3'>
-                   <div className='bg-[#EEEEEE] dark:bg-[#121212] rounded-md items-center my-1 justify-center flex w-auto px-2'>
+                <div className='flex flex-row w-full justify-between lg:flex-col xl:flex-col lg:w-auto xl:w-auto items-start pr-3'>
+                  <div className='bg-[#EEEEEE] dark:bg-[#121212] rounded-md items-center my-1 justify-center flex w-auto px-2'>
                     <p className='text-[#2B2C2B] dark:text-white whitespace-nowrap text-sm font-semibold'>40 PCS</p>
                   </div>
                   <div className='flex w-full justify-end lg:justify-start gap-3 items-center'>

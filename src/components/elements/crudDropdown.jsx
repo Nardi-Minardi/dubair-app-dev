@@ -16,11 +16,12 @@ const CrudDropdown = ({episode}) => {
 
 
   return (
-    <div className="">
       <Dropdown>
         <DropdownTrigger>
           <Button
-            className="bg-transparent text-gray-500 hover:text-gray-700">
+            size='sm'
+            isIconOnly
+            className="bg-transparent text-gray-800 hover:text-gray-800">
             <FiMoreVertical />
           </Button>
         </DropdownTrigger>
@@ -43,7 +44,6 @@ const CrudDropdown = ({episode}) => {
           ))}
         </DropdownMenu>
       </Dropdown>
-    </div>
   )
 }
 

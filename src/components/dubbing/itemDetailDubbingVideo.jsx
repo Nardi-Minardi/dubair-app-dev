@@ -26,7 +26,7 @@ const ItemDetailDubbingVideo = ({ videos, isWatched, loading, theme }) => {
                 </div>
               </div>
             ) : (
-              <div className='flex justify-between flex-row gap-4 p-4 items-center w-full'>
+              <div className='flex justify-between flex-row gap-4 py-4 items-center w-full'>
                 <div className="flex flex-row gap-4 items-center justify-center">
                   <div className={`relative  max-w-[80px] h-[100px] lg:max-w-[80px] lg:h-[80px] xl:max-w-[80px] xl:h-[80px]
                       rounded-lg overflow-hidden bg-[#18181b] aspect-video ${isWatched ? 'opacity-60' : ''}`}>
@@ -45,7 +45,7 @@ const ItemDetailDubbingVideo = ({ videos, isWatched, loading, theme }) => {
                     </div> */}
 
                   </div>
-                  <div className="flex text-sm flex-col items-start justify-center">
+                  <div className="flex text-sm flex-col w-full items-start justify-center">
                     <div className="text-md">
                       {episode?.title?.english}
                     </div>

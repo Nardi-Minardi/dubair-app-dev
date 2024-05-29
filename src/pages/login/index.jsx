@@ -76,7 +76,7 @@ const Login = () => {
       return;
     }
 
-    // showLoader && showLoader();
+    showLoader && showLoader();
     dispatch(loginUser({ username: email, password }))
       .then((response) => {
         const resp = response.payload;
@@ -165,7 +165,7 @@ const Login = () => {
     }
   }
 
-  if (loading) return <Loader message="Loading..." />
+  // if (loading) return <Loader message="Loading..." />
 
   return (
     <section className="bg-white dark:bg-[#121212]">

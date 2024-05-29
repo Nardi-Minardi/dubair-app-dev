@@ -14,7 +14,7 @@ const TimelineAudioComponent = () => {
   return (
     <div className='flex flex-col lg:flex-row xl:flex-row h-auto w-full'>
 
-      <div className='flex bg-white dark:bg-[#2B2C2B] flex-col items-start justify-start w-full lg:w-auto xl:w-auto 
+      <div className='flex h-full bg-white dark:bg-[#2B2C2B] flex-col items-start justify-start w-full lg:w-auto xl:w-auto 
       border-r-2 border-[#EEEEEE] dark:border-white px-5'>
         <ul className='flex flex-col gap-3 cursor-pointer w-full'>
           <li className='flex flex-row justify-center gap-5 py-2 border-b-2 border-[#EEEEEE] dark:border-white'>
@@ -54,9 +54,9 @@ const TimelineAudioComponent = () => {
       </div>
 
       {/* timeline audio */}
-      <div className=' bg-[#EEEEEE] dark:bg-[#2B2C2B]  w-full scrollbar-webkit overflow-y-auto overflow-x-auto'>
-        < TimelineEditor />
-      </div>
+        <TimelineEditor />
+      {/* <div className='bg-[#EEEEEE] dark:bg-[#2B2C2B] h-32 w-full scrollbar-webkit overflow-y-auto overflow-x-auto'>
+      </div> */}
 
     </div>
   )
