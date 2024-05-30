@@ -4,7 +4,7 @@ const SidebarContext = createContext();
 
 const SidebarPovider = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [tabActive, setTabActive] = useState('remix');
+  const [tabActive, setTabActive] = useState('rewrite');
 
   const showSidebar = () => {
     setIsSidebarOpen(true);

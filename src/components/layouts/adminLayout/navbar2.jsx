@@ -12,6 +12,7 @@ import { FiChevronsLeft } from "react-icons/fi";
 const Navbar2 = ({ firstOpen, setFirstOpen, setTitle, title }) => {
   const dispatch = useDispatch()
   const router = useRouter()
+  const locale = router.locale
   const { user, token } = useSelector((state) => state.rootSlice?.auth);
   const { closeSidebar, isSidebarOpen, showSidebar, tabActive, setTabActive } = useGlobalSidebarContext();
 
@@ -23,6 +24,12 @@ const Navbar2 = ({ firstOpen, setFirstOpen, setTitle, title }) => {
     } catch (error) {
       console.log(error)
     }
+  }
+
+  const handleExport = (e) => {
+    //go to export page
+    e.preventDefault()
+    router.push(`/${locale}/export`)
   }
 
   return (
@@ -104,7 +111,7 @@ const Navbar2 = ({ firstOpen, setFirstOpen, setTitle, title }) => {
             <p className=''>Add New Sub</p>
           </button>
           <button
-            onClick={handleLogout}
+            onClick={handleExport}
             className="bg-[#2B2C2B] text-white  text-xs py-2 px-4 rounded-lg flex items-center">
             Export
             <FiUpload className="w-5 ml-1" />
