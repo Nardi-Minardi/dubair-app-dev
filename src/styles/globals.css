@@ -343,5 +343,9 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
     }
   } */
 }
+div.swiper-remix > .swiper-wrapper {
+  flex-direction: unset;
+  flex-wrap: wrap;
+}
 
 /* end timeline audio editor here */

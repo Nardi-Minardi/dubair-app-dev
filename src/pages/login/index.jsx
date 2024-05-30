@@ -57,9 +57,9 @@ const Login = () => {
 
   useEffect(() => {
     getData('rememberMe').then((data) => {
-      setRememberMe(data.rememberMe);
-      setEmail(data.email);
-      setPassword(data.password);
+      setRememberMe(data?.rememberMe);
+      setEmail(data?.email);
+      setPassword(data?.password);
     });
   }, []);
 

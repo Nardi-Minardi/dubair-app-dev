@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { CiClock1, CiClock2 } from "react-icons/ci";
 import { FiTrash2, FiPlus } from "react-icons/fi";
 import moment from 'moment';
+import ModalRevoice from '@/components/inputs/modalRevoice';
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, RadioGroup, Radio } from "@nextui-org/react";
 
 const Revoice = ({ items, items2 }) => {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [scrollBehavior, setScrollBehavior] = useState("inside");
   return (
-    <div className=''>
+    <>
       <div className=' bg-white w-full h-auto shadow-sm dark:bg-[#2B2C2B] rounded-sm'>
         <div className='py-2 flex items-center border-b-2 mx-3 border-[#EEEEEE] dark:border-white
           font-semibold justify-center rounded-t-lg'>
@@ -64,7 +68,9 @@ const Revoice = ({ items, items2 }) => {
                     <p className='text-[#2B2C2B] dark:text-white font-semibold'>{item.title}</p>
                     <p className='text-[#676D73] dark:text-white text-justify'>{item.description}</p>
                   </div>
-                  <button className='text-black dark:text-white border-2 h-8 border-[#EEEEEE] text-sm whitespace-nowrap rounded-lg px-2'>
+                  <button
+                    onClick={onOpen}
+                    className='text-black dark:text-white border-2 h-8 border-[#EEEEEE] text-sm whitespace-nowrap rounded-lg px-2'>
                     Add or Change
                   </button>
                 </div>
@@ -74,7 +80,12 @@ const Revoice = ({ items, items2 }) => {
         </div>
       </div>
 
-    </div>
+      <ModalRevoice
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        scrollBehavior={scrollBehavior}
+      />
+    </>
   )
 }
 

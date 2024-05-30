@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import AdminLayout2 from "@/layouts/adminLayout2";
 import { useTranslations } from 'next-intl';
-import { useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Rewrite from '@/components/dubbing/edit/rewrite';
 import Revoice from '@/components/dubbing/edit/revoice';
 import Refine from '@/components/dubbing/edit/refine';
@@ -167,34 +167,36 @@ const DubbingDetail = () => {
   const { slug } = router.query;
 
   useEffect(() => {
-    dispatch(fetchListVideo({id:slug}))
-   
+    dispatch(fetchListVideo({ id: slug }))
+
   }, []);
 
   return (
-      <div className="mt-6 w-full ">
-        {tabActive === 'rewrite' && (
-          <Rewrite
-            items={items}
-            items2={items2}
-          />
-        )}
-        {tabActive === 'revoice' && (
-          <Revoice
-            items={items}
-            items2={items2}
-          />
-        )}
-        {tabActive === 'refine' && (
-          <Refine
-            items={items}
-            items2={items2}
-          />
-        )}
-        {tabActive === 'remix' && (
-          <Remix />
-        )}
-      </div>
+    <div className="mt-6 w-full ">
+      {tabActive === 'rewrite' && (
+        <Rewrite
+          items={items}
+          items2={items2}
+        />
+      )}
+      {tabActive === 'revoice' && (
+        <Revoice
+          items={items}
+          items2={items2}
+        />
+      )}
+      {tabActive === 'refine' && (
+        <Refine
+          items={items}
+          items2={items2}
+        />
+      )}
+      {tabActive === 'remix' && (
+        <Remix
+          items={items}
+          items2={items2} />
+      )}
+    </div>
   )
 }
 

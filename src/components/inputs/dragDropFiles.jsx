@@ -12,7 +12,7 @@ const DragDropFiles = ({ title, desc }) => {
   const [mounted, setMounted] = React.useState(false)
   const [files, setFiles] = useState([])
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [scrollBehavior, setScrollBehavior] = React.useState("inside");
+  const [scrollBehavior, setScrollBehavior] = useState("inside");
   const [noFileSelected, setNoFileSelected] = useState(false)
 
   useEffect(() => {
