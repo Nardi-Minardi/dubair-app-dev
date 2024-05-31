@@ -26,7 +26,6 @@ import ButtonGradient from '../buttons/buttonGradient';
 import { toast } from 'react-toastify';
 
 const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files, noFileSelected }) => {
-  console.log('noFileSelected', noFileSelected)
   const [projectName, setProjectName] = useState('')
   const [numberSpeaker, setNumberSpeaker] = useState('auto')
   const [language, setLanguage] = useState('auto')

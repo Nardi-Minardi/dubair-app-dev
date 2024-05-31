@@ -113,7 +113,7 @@ const Remix = ({ items, items2 }) => {
       <div className='flex flex-col-reverse lg:flex-row gap-4 justify-between'>
         <div className='bg-white w-full h-auto shadow-sm  dark:bg-[#2B2C2B] rounded-sm'>
           {/* tabs */}
-          <div className='pb-2 flex items-center border-b-2 mx-3  border-[#EEEEEE] dark:border-white
+          <div className='pb-2 flex items-center border-b-2 mx-3 mt-2 border-[#EEEEEE] dark:border-white
             font-semibold justify-center rounded-t-lg'>
             <div className='flex items-center w-full gap-4 lg:w-auto justify-center  rounded-lg'>
               <button

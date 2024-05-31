@@ -91,7 +91,7 @@ const ForgotStepOne = () => {
                 type="email"
                 id="Email"
                 name="email"
-                className="my-input mb-5 h-[48px] w-full rounded-[12px] bg-white text-md text-gray-700 outline-none"
+                className="my-input pl-3 mb-5 h-[48px] w-full rounded-[12px] bg-white text-md text-gray-700 outline-none"
               />
 
               <div className="fex flex-col mt-[50px]">

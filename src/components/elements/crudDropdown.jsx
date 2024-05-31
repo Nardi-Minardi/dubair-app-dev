@@ -23,7 +23,7 @@ const CrudDropdown = ({ episode }) => {
         <Button
           size='sm'
           isIconOnly
-          className="bg-transparent text-gray-800 hover:text-gray-800">
+          className="bg-transparent dark:text-white text-gray-800 hover:text-gray-800">
           <FiMoreVertical />
         </Button>
       </DropdownTrigger>

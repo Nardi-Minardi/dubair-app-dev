@@ -68,6 +68,8 @@ body {
 }
 
 .my-input {
+  @apply dark:bg-[#2B2B2C] !important;
+  @apply dark:text-white !important;
   border: 1px solid #cacbca !important;
 }
 

@@ -82,7 +82,7 @@ const Register = () => {
                 type="test"
                 id="FullName"
                 name="fullname"
-                className="my-input mb-5 h-[48px] w-full rounded-[12px] bg-white text-md text-gray-700 outline-none"
+                className="my-input pl-3 mb-5 h-[48px] w-full rounded-[12px] bg-white text-md text-gray-700 outline-none"
               />
 
               <div className='flex items-center gap-1'>
@@ -92,7 +92,7 @@ const Register = () => {
                 type="email"
                 id="Email"
                 name="email"
-                className="my-input mb-5 h-[48px] w-full rounded-[12px] bg-white text-md text-gray-700 outline-none"
+                className="my-input pl-3 mb-5 h-[48px] w-full rounded-[12px] bg-white text-md text-gray-700 outline-none"
               />
 
               <div className='flex items-center gap-1'>
@@ -103,7 +103,7 @@ const Register = () => {
                 type="password"
                 id="Password"
                 name="password"
-                className="my-input mb-5 h-[48px] w-full rounded-[12px] bg-white text-md text-gray-700 outline-none"
+                className="my-input pl-3 mb-5 h-[48px] w-full rounded-[12px] bg-white text-md text-gray-700 outline-none"
               />
 
               <div className="flex items-center justify-between">

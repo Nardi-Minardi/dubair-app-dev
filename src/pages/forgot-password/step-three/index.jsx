@@ -91,7 +91,7 @@ const ForgotStepThree = () => {
                 type="password"
                 id="Password"
                 name="password"
-                className="my-input mb-5 h-[48px] w-full rounded-[12px] bg-white text-md text-gray-700 outline-none"
+                className="my-input pl-3 mb-5 h-[48px] w-full rounded-[12px] bg-white text-md text-gray-700 outline-none"
               />
 
               <div className='flex items-center gap-1'>
@@ -101,7 +101,7 @@ const ForgotStepThree = () => {
                 type="password"
                 id="ConfirmPassword"
                 name="confirmPassword"
-                className="my-input mb-5 h-[48px] w-full rounded-[12px] bg-white text-md text-gray-700 outline-none"
+                className="my-input pl-3 mb-5 h-[48px] w-full rounded-[12px] bg-white text-md text-gray-700 outline-none"
               />
 
               <div className="fex flex-col mt-[50px]">

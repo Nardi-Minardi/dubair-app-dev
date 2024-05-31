@@ -100,13 +100,13 @@ const ItemStyleRemix = ({ categoryStyles, dataMusics }) => {
           display: 'flex',
           justifyContent: 'end',
           alignItems: 'center',
-          gap: '2px',
+          gap: '4px',
           position: 'absolute',
           top: '20px',
           right: '0',
           zIndex: '9999',
           paddingRight: '1rem',
-          paddingTop: '0.5rem',
+          paddingTop: '0.3rem',
         }}>
           <button className='rounded-md bg-white dark:bg-[#121212] text-[#2B2C2B] dark:text-white border-2 border-[#EEEEEE] dark:border-white custom_prev'>
             <ArrowLeftIcon className='w-5 h-5' />

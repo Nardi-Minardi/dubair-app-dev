@@ -88,7 +88,7 @@ const Sidebar = ({ firstOpen, setFirstOpen }) => {
 
         <div className="flex flex-col">
           <div className="mx-auto pt-8 px-5">
-            <a href='/dashboard' >
+            <a href='/dubbing' >
               <img src="/assets/images/logo.png" className="w-full cursor-pointer" />
             </a>
           </div>
