@@ -18,9 +18,9 @@ const UserDropdown = ({user, handleLogout}) => {
         alt="avatar"
         className="w-12 mr-1 aspect-square rounded-full" />
       <div className="flex flex-col">
-        <span className="text-lg md-max:w-20 w-32 truncate mt-1">{user?.name}</span>
+        <span className="text-lg md-max:w-20 w-32 truncate mt-1">{user?.name ? user?.name : 'anonymous'}</span>
         <span className="font-extralight lg-max:text-sm md-max:w-20 w-40 truncate">
-          {user?.email ? user.email.substring(0, 15) + '...' : ''}
+          {user?.email ? user.email.substring(0, 15) + '...' : 'anonymous@gmail.com'}
         </span>
       </div>
       <Menu as="div" className="relative inline-block text-left">

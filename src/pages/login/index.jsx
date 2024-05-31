@@ -77,65 +77,67 @@ const Login = () => {
     }
 
     showLoader && showLoader();
-    dispatch(loginUser({ username: email, password }))
-      .then((response) => {
-        const resp = response.payload;
-        const data = resp.data;
-        console.log('response', resp)
-        if (resp.status === 200) {
+    router.push('/dubbing')
+    hideLoader && hideLoader();
+    // dispatch(loginUser({ username: email, password }))
+    //   .then((response) => {
+    //     const resp = response.payload;
+    //     const data = resp.data;
+    //     console.log('response', resp)
+    //     if (resp.status === 200) {
 
-          // toast.success('successfully logged in', {
-          //   position: "top-right",
-          //   autoClose: 5000,
-          //   hideProgressBar: true,
-          //   closeOnClick: true,
-          //   pauseOnHover: false,
-          //   draggable: true,
-          //   progress: undefined,
-          //   theme: "colored",
-          // });
-          router.push('/dubbing');
-        } else {
-          const errors = data.errors;
-          console.log(errors.username);
-          if (errors) {
-            // errors.map((error) => {
-            if (errors.username) {
-              setErrors({ ...errors, email: errors.username });
-            }
-            if (errors.password) {
-              setErrors({ ...errors, password: errors.password });
-            }
-            // })
-          }
-          toast.error('an error occurred', {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        hideLoader && hideLoader();
-        // toast.error('🦄 Wow so easy!', {
-        //   position: "top-right",
-        //   autoClose: 5000,
-        //   hideProgressBar: true,
-        //   closeOnClick: true,
-        //   pauseOnHover: false,
-        //   draggable: true,
-        //   progress: undefined,
-        //   theme: "colored",
-        // });
-      });
+    //       // toast.success('successfully logged in', {
+    //       //   position: "top-right",
+    //       //   autoClose: 5000,
+    //       //   hideProgressBar: true,
+    //       //   closeOnClick: true,
+    //       //   pauseOnHover: false,
+    //       //   draggable: true,
+    //       //   progress: undefined,
+    //       //   theme: "colored",
+    //       // });
+    //       router.push('/dubbing');
+    //     } else {
+    //       const errors = data.errors;
+    //       console.log(errors.username);
+    //       if (errors) {
+    //         // errors.map((error) => {
+    //         if (errors.username) {
+    //           setErrors({ ...errors, email: errors.username });
+    //         }
+    //         if (errors.password) {
+    //           setErrors({ ...errors, password: errors.password });
+    //         }
+    //         // })
+    //       }
+    //       toast.error('an error occurred', {
+    //         position: "top-right",
+    //         autoClose: 5000,
+    //         hideProgressBar: true,
+    //         closeOnClick: true,
+    //         pauseOnHover: false,
+    //         draggable: true,
+    //         progress: undefined,
+    //         theme: "colored",
+    //       });
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   })
+    //   .finally(() => {
+    //     hideLoader && hideLoader();
+    //     // toast.error('🦄 Wow so easy!', {
+    //     //   position: "top-right",
+    //     //   autoClose: 5000,
+    //     //   hideProgressBar: true,
+    //     //   closeOnClick: true,
+    //     //   pauseOnHover: false,
+    //     //   draggable: true,
+    //     //   progress: undefined,
+    //     //   theme: "colored",
+    //     // });
+    //   });
   }
 
   const handleLoginGoogle = useGoogleLogin({
