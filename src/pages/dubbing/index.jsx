@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import AdminLayout from "@/layouts/adminLayout";
+import AdminLayout from "../../layouts/adminLayout";
 import { useTranslations } from 'next-intl';
 import DragDropFiles from '@/components/inputs/dragDropFiles';
 import ButtonGradient from '@/components/buttons/buttonGradient';
