@@ -1,5 +1,5 @@
 import React from 'react'
-import AdminLayout from "@/layouts/adminLayout";
+import AdminLayout from '@/layouts/adminLayout';
 
 const Account = () => {
   return (

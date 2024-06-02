@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import AdminLayout2 from "@/layouts/adminLayout2";
+import AdminLayout2 from '@/layouts/adminLayout2';
 import { useTranslations } from 'next-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import Rewrite from '@/components/dubbing/edit/rewrite';
