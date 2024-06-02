@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import AuthLayout from "../../../layouts/authLayout";
+import AuthLayout from "@/layouts/authLayout";
 import ButtonGradient from '@/components/buttons/buttonGradient';
 import ButtonGoogle from '@/components/buttons/buttonGoogle';
 import dynamic from 'next/dynamic'
