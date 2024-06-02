@@ -15,6 +15,7 @@
     "@rajesh896/video-thumbnails-generator": "^2.3.9",
     "@react-oauth/google": "^0.12.1",
     "@reduxjs/toolkit": "^2.2.5",
+    "@typescript-eslint/parser": "^7.11.0",
     "@xzdarcy/react-timeline-editor": "^0.1.9",
     "axios": "^1.7.2",
     "flag-icons": "^7.2.2",
