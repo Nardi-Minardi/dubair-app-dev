@@ -37,7 +37,7 @@ const CarouselLogin1 = () => {
           </div> */}
       <div className="flex flex-col items-start lg:mt-5 h-auto justify-center  xl:px-12 px-12 z-10">
         <p className=" text-white text-left">
-          Dubbing or translating movies, series, dramas into various languages can help everyone enjoy such diverse works with the help of today's highly advanced technology.
+          {"Dubbing or translating movies, series, dramas into various languages can help everyone enjoy such diverse works with the help of today's highly advanced technology"}.
         </p>
         <p className='text-sm text-white text-left mt-3'>-Elizabeth Melan</p>
       </div>

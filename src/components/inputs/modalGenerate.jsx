@@ -122,7 +122,7 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
                   </div>
                 </div>
                 <span className="text-sm text-gray-400 dark:text-white">
-                  The trial video must have a duration of 20 minutes or less. We'll edit your video to craft a 5-minute test clip.
+                  {"The trial video must have a duration of 20 minutes or less. We'll edit your video to craft a 5-minute test clip"}.
                 </span>
               </ModalHeader>
               <ModalBody>

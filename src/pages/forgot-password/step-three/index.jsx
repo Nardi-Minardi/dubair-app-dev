@@ -11,6 +11,7 @@ import ForgotPasswordLine from '@/components/lines/forgotPasswordLine';
 import { useRouter } from 'next/router';
 import { CheckIcon } from '@heroicons/react/20/solid';
 import Logo from '@/components/elements/logo';
+import Link from 'next/link';
 
 const CarouselLogin1 = dynamic(() => import('@/components/carousel/carouselLogin1'),
   { ssr: false }
@@ -117,7 +118,7 @@ const ForgotStepThree = () => {
 
                 <p className="mt-4 text-sm text-center">
                   <ArrowLongLeftIcon className="h-5 w-5 inline-block text-gray-500 dark:text-white mr-1" />
-                  <a href="/" className="text-zinc-700 font-bold dark:text-white">Back to Login</a>
+                  <Link href="/Login" className="text-zinc-700 font-bold dark:text-white">Back to Login</Link>
                 </p>
               </div>
             </form>

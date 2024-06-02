@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { useTheme } from 'next-themes'
 import UpgradePro from '@/components/elements/upgradePro'
 import { useGlobalSidebarContext } from '@/context/sidebarContext'
+import Link from 'next/link'
 
 const menus = [
   {
@@ -88,9 +89,9 @@ const Sidebar = ({ firstOpen, setFirstOpen }) => {
 
         <div className="flex flex-col">
           <div className="mx-auto pt-8 px-5">
-            <a href='/dubbing' >
+            <Link href='/dubbing' >
               <img src="/assets/images/logo.png" className="w-full cursor-pointer" />
-            </a>
+            </Link>
           </div>
           <div className=" ml-8 mt-12 text-md text-color-gray">MENU
           </div>

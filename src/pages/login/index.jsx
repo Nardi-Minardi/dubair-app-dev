@@ -15,6 +15,7 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { useRouter } from 'next/router';
 import { getData, storeData } from '@/utils/LocalStorage';
 import Loader from '@/components/elements/loader';
+import Link from 'next/link';
 
 const CarouselLogin1 = dynamic(() => import('@/components/carousel/carouselLogin1'),
   { ssr: false }
@@ -258,7 +259,7 @@ const Login = () => {
                     Remember me
                   </span>
                 </label>
-                <a href="/forgot-password/step-one" className="my-text text-sm underline">Forgot your password?</a>
+                <Link href="/forgot-password/step-one" className="my-text text-sm underline">Forgot your password?</Link>
               </div>
 
               <div className="fex flex-col mt-[50px]">
@@ -273,7 +274,7 @@ const Login = () => {
                 />
 
                 <p className="mt-4 mb-4 text-sm">
-                  Don't have an account? <a href="/register" className="text-zinc-700 font-bold underline dark:text-white">Sign Up Now</a>
+                  {"Don't have an account?"} <Link href="/register" className="text-zinc-700 font-bold underline dark:text-white">Sign Up Now</Link>
                 </p>
               </div>
             </form>

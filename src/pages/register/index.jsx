@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/modules';
 import ButtonDarkMode from '@/components/buttons/buttonDarkMode';
 import Logo from '@/components/elements/logo';
+import Link from 'next/link';
 
 const CarouselLogin1 = dynamic(() => import('@/components/carousel/carouselLogin1'),
   { ssr: false }
@@ -57,7 +58,7 @@ const Register = () => {
             </h1>
 
             <p className="mt-4 mb-4 text-2xl leading-relaxed text-gray-500 text-center">
-              Let's get started with your free 5 minutes trial
+             {" Let's get started with your free 5 minutes trial"}
             </p>
 
             <form action="#" className="mx-auto">
@@ -116,8 +117,8 @@ const Register = () => {
                   />
 
                   <span className="text-sm text-gray-700 dark:text-white">
-                    I agree to all <a href="/terms-of-services" className="text-dark-500 font-bold underline">Terms of Service</a>&nbsp;
-                    and <a href="/privacy-policy" className="text-dark-500 font-bold underline">Privacy Policy</a>
+                    I agree to all <Link href="/terms-of-services" className="text-dark-500 font-bold underline">Terms of Service</Link>&nbsp;
+                    and <Link href="/privacy-policy" className="text-dark-500 font-bold underline">Privacy Policy</Link>
                   </span>
                 </label>
                 {/* <a href="#" className="my-text text-sm underline">Forgot your password?</a> */}
@@ -133,7 +134,7 @@ const Register = () => {
                   onClick={() => console.log("Button clicked")} />
 
                 <p className="mt-4 mb-4 text-sm">
-                  Already have account? <a href="/" className="text-zinc-700 font-bold underline dark:text-white">Login</a>
+                  Already have account? <Link href="/login" className="text-zinc-700 font-bold underline dark:text-white">Login</Link>
                 </p>
               </div>
             </form>
