@@ -8,6 +8,10 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "eslintIgnore": [
+    "node_modules",
+    "build/*"
+  ],
   "dependencies": {
     "@headlessui/react": "^2.0.3",
     "@heroicons/react": "^2.1.3",
