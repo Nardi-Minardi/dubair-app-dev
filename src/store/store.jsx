@@ -25,10 +25,10 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 // Create the Redux store using configureStore from @reduxjs/toolkit
 export const store = configureStore({
   reducer: persistedReducer,
-  devTools: NODE_ENV !== "production", // Enable Redux DevTools in development
+  devTools: NODE_ENV !== "production" ? true : false,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({
     serializableCheck: false,
-  }).concat(logger),
+  }).concat(NODE_ENV !== "production" ? logger : []),
 });
 
 export const persistor = persistStore(store);
