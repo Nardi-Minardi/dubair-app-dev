@@ -3,7 +3,6 @@ import {
   Bars3Icon,
 } from '@heroicons/react/20/solid'
 import { useRouter } from 'next/router'
-import { logoutUser } from '@/store/slices/authSlice'
 import { FiPlus, FiUpload } from "react-icons/fi";
 import { useGlobalSidebarContext } from '@/context/sidebarContext'
 import { FiChevronsLeft } from "react-icons/fi";
