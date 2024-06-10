@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, { useContext } from 'react'
 import {
   Bars3Icon,
 } from '@heroicons/react/20/solid'
@@ -10,19 +10,37 @@ import { useSelector, useDispatch } from 'react-redux'
 import moment from 'moment'
 import { logoutUser } from '@/store/slices/authSlice'
 import { useGlobalSidebarContext } from '@/context/sidebarContext'
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import { useTheme } from 'next-themes'
 
-const UserDropdown = ({user, handleLogout}) => {
+const UserDropdown = ({ user, loading, handleLogout }) => {
+  const { theme, setTheme } = useTheme();
   return (
     <div className="flex flex-row items-center">
       <img src={user?.image ? user.image : '/assets/images/avatar.png'}
         alt="avatar"
         className="w-12 mr-1 aspect-square rounded-full" />
       <div className="flex flex-col">
-        <span className="text-lg md-max:w-20 w-32 truncate mt-1">
-          {user?.name ? user?.name : 'anonymous'}</span>
-        <span className="font-extralight lg-max:text-sm md-max:w-20 w-40 truncate">
-          {user?.email ? user.email.substring(0, 15) + '...' : 'anonymous@gmail.com'}
-        </span>
+        {loading ? (
+          <>
+          <SkeletonTheme baseColor={theme === 'dark' ? '#1f1f1f' : '#e0e0e0'}
+            highlightColor={theme === 'dark' ? '#333' : '#f5f5f5'}>
+            <Skeleton width={100} height={20} />
+          </SkeletonTheme>
+          <SkeletonTheme baseColor={theme === 'dark' ? '#1f1f1f' : '#e0e0e0'}
+            highlightColor={theme === 'dark' ? '#333' : '#f5f5f5'}>
+            <Skeleton width={100} height={20} />
+          </SkeletonTheme>
+          </>
+        ) : (
+          <>
+            <span className="text-lg md-max:w-20 w-32 truncate mt-1">
+              {user?.name}</span>
+            <span className="font-extralight lg-max:text-sm md-max:w-20 w-40 truncate">
+              {user?.email?.substring(0, 15) + '...'}
+            </span>
+          </>
+        )}
       </div>
       <Menu as="div" className="relative inline-block text-left">
         <MenuButton className="bg-white dark:bg-[#2B2C2B] rounded-full flex items-center text-sm font-medium">

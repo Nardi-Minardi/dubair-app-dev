@@ -4,8 +4,6 @@ import { FiTrash2, FiPlus } from "react-icons/fi";
 import moment from 'moment';
 
 const Rewrite = ({ items, items2 }) => {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
   
   return (
     <div className='flex flex-col lg:flex-row justify-between gap-4'>
@@ -43,8 +41,8 @@ const Rewrite = ({ items, items2 }) => {
                         Out</span>
                     </div>
                     <div className='text-xs gap-1 flex flex-col items-center'>
-                      <span>{moment(new Date()).format('HH:mm:ss')}</span>
-                      <span>{moment(new Date()).format('HH:mm:ss')}</span>
+                      <span>{moment().format('HH:mm:ss')}</span>
+                      <span>{moment().format('HH:mm:ss')}</span>
                     </div>
                     <div className='items-center cursor-pointer text-[#676D73]'>
                       <FiTrash2 className='' />

@@ -15,7 +15,7 @@ import { fetchUser, logoutUser } from '@/store/slices/authSlice'
 const Navbar3 = ({ firstOpen, setFirstOpen, setTitle, title }) => {
   const dispatch = useDispatch()
   const router = useRouter()
-  const { user } = useSelector((state) => state.auth)
+  const { user, loading } = useSelector((state) => state.auth)
   const locale = router.locale
   const { closeSidebar, isSidebarOpen, showSidebar, tabActive, setTabActive } = useGlobalSidebarContext();
 
@@ -54,7 +54,7 @@ const Navbar3 = ({ firstOpen, setFirstOpen, setTitle, title }) => {
             VIP
             <img src="/assets/icons/diamond-white.svg" className="w-4 ml-1" />
           </button>
-          <UserDropdown user={user} handleLogout={handleLogout} />
+          <UserDropdown loading={loading} user={user} handleLogout={handleLogout} />
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@ import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button, cn, Tool
 import { FiEdit2, FiDownload, FiScissors, FiMoreVertical } from "react-icons/fi";
 import {useRouter} from 'next/router'
 
-const CrudDropdown = ({ episode }) => {
+const CrudDropdown = ({ video }) => {
   const router = useRouter()
   const locale = router.locale
   const options = [
@@ -31,7 +31,7 @@ const CrudDropdown = ({ episode }) => {
         aria-label="crud-dropdown">
         {options.map((option, index) => (
           <DropdownItem
-            href={`/${locale}/dubbing/${option.value}/${episode.id}`}
+            href={`/${locale}/dubbing/${option.value}/${video.projectId}`}
             textValue={option.label}
             key={index}>
             <div className="flex flex-row gap-4 items-start">

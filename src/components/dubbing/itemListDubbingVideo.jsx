@@ -19,7 +19,7 @@ const ItemListDubbingVideo = ({ videos, isWatched, loading, theme }) => {
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 max-h-[100vh] overflow-y-auto scrollbar-webkit">
-      {videos?.map((episode, index) => {
+      {videos?.map((video, index) => {
         return (
           <div key={index} className={`relative group`}>
             {/* skeleton loading */}
@@ -43,14 +43,14 @@ const ItemListDubbingVideo = ({ videos, isWatched, loading, theme }) => {
                 <div className="flex flex-col lg:flex-row xl:flex-row justify-between mb-8 mt-3">
                   <div className="flex flex-col items-start w-full">
                     <div className="flex items-center  gap-2">
-                      <span className="text-md font-semibold">{episode?.title?.english}</span>
+                      <span className="text-md font-semibold">{video?.name}</span>
                     </div>
                     <div className="flex flex-row justify-between w-full ">
                       <div className="flex items-center w-full flex-col md:flex-row lg:flex-row xl:flex-row  gap-2">
                         <span className="text-sm text-gray-400">Viewed 5 days ago - Edited 3 months ago</span>
                       </div>
                       <CrudDropdown
-                        episode={episode}
+                        video={video}
                       />
                     </div>
                   </div>

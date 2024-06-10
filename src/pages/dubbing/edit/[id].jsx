@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react'
 import AdminLayout2 from '@/layouts/adminLayout2';
 import { useTranslations } from 'next-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import Rewrite from '@/components/dubbing/edit/rewrite';
-import Revoice from '@/components/dubbing/edit/revoice';
-import Refine from '@/components/dubbing/edit/refine';
-import Remix from '@/components/dubbing/edit/remix';
 import { useGlobalSidebarContext } from '@/context/sidebarContext';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
+
+const Rewrite = dynamic(() => import('@/components/dubbing/edit/rewrite'), { ssr: false });
+const Revoice = dynamic(() => import('@/components/dubbing/edit/revoice'), { ssr: false });
+const Refine = dynamic(() => import('@/components/dubbing/edit/refine'), { ssr: false });
+const Remix = dynamic(() => import('@/components/dubbing/edit/remix'), { ssr: false });
 
 const items = [
   {
@@ -160,7 +162,7 @@ const DubbingDetail = () => {
   const t = useTranslations('Dubbing');
   const dispatch = useDispatch()
   const { tabActive, setTabActive } = useGlobalSidebarContext();
-  const { slug } = router.query;
+  const { id} = router.query;
 
   return (
     <div className="mt-6 w-full ">
@@ -195,7 +197,7 @@ DubbingDetail.getLayout = function getLayout(page) {
   return <AdminLayout2 title={"Dubbing Detail"}>{page}</AdminLayout2>;
 }
 
-export async function getServerSideProps({ locale, slug }) {
+export async function getServerSideProps({ locale, id}) {
   return {
     props: {
       messages: (await import(`../../../../locales/${locale}.json`)).default,

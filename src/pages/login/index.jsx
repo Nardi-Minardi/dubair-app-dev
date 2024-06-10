@@ -134,7 +134,6 @@ const Login = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         const accessToken = result.user.accessToken;
-        console.log('accessToken dr popup', accessToken);
         dispatch(loginByGoogle({ token: accessToken })).then((response) => {
           const resp = response.payload;
           const data = resp?.data;

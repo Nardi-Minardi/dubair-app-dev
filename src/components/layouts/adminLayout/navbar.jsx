@@ -16,7 +16,7 @@ import { tokenAuth } from '@/utils/LocalStorage'
 const Navbar = () => {
   const dispatch = useDispatch()
   const router = useRouter()
-  const { user } = useSelector((state) => state.auth)
+  const { user, loading } = useSelector((state) => state.auth)
   const { showSidebar, isSidebarOpen } = useGlobalSidebarContext();
 
   useEffect(() => {
@@ -64,7 +64,7 @@ const Navbar = () => {
             <LanguageSelector />
           </div>
 
-          <UserDropdown user={user} handleLogout={handleLogout} />
+          <UserDropdown loading={loading} user={user} handleLogout={handleLogout} />
 
         </div>
         <ButtonDarkMode />
