@@ -8,9 +8,6 @@ import Refine from '@/components/dubbing/edit/refine';
 import Remix from '@/components/dubbing/edit/remix';
 import { useGlobalSidebarContext } from '@/context/sidebarContext';
 import { useRouter } from 'next/router';
-import { fetchListVideo } from '@/store/slices/videoSlice';
-import { checkEnvironment } from '@/store/checkEnvironment';
-import { playeranimeinfo } from '@/store/query';
 
 const items = [
   {
