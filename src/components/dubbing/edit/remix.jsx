@@ -1,9 +1,8 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { CiClock1, CiClock2 } from "react-icons/ci";
 import { FiTrash2, FiPlus } from "react-icons/fi";
 import moment from 'moment';
 import { Avatar } from '@nextui-org/react';
-import PlayerComponent from '@/components/videoPlayer/playerComponent';
 import TimelineComponent from '@/components/videoPlayer/timelineComponent';
 import ItemMusicRemix from './itemMusicRemix';
 import ItemStyleRemix from './itemStyleRemix';
@@ -11,6 +10,8 @@ import ItemStyleRemix from './itemStyleRemix';
 const Remix = ({ items, items2 }) => {
   const playerPanel = useRef();
   const [tabActive, setTabActive] = useState('musics');
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   const categoryMusics = [
     {
@@ -149,7 +150,6 @@ const Remix = ({ items, items2 }) => {
           <div className='max-h-[60vh] scrollbar-webkit overflow-y-auto'>
             {/* videonya disini */}
             <div className="player-panel" id="player-ground-1" ref={playerPanel}></div>
-            {/* <PlayerComponent /> */}
           </div>
           {/* <div>
           <button className='bg-[#2B2C2B] text-white py-2 px-4 rounded-lg flex items-center'>

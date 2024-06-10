@@ -9,6 +9,7 @@ import "react-toggle/style.css"
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 import 'react-loading-skeleton/dist/skeleton.css'
 import 'video.js/dist/video-js.css';
+import "videojs-youtube";
 import React, { useState, useMemo } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import { store } from "@/store/store";
@@ -40,7 +41,7 @@ const App = ({ Component, pageProps }) => {
         >
           {loading && <Loader message="Loading..." />}
           <Component {...pageProps} />
-          <ToastContainer />
+          <ToastContainer theme="colored" />
 
         </NextIntlClientProvider>
       </LoadingContext.Provider>

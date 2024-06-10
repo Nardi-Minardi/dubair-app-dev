@@ -163,13 +163,7 @@ const DubbingDetail = () => {
   const t = useTranslations('Dubbing');
   const dispatch = useDispatch()
   const { tabActive, setTabActive } = useGlobalSidebarContext();
-  const { listVideo, loadingList } = useSelector((state) => state.rootSlice?.video);
   const { slug } = router.query;
-
-  useEffect(() => {
-    dispatch(fetchListVideo({ id: slug }))
-
-  }, []);
 
   return (
     <div className="mt-6 w-full ">

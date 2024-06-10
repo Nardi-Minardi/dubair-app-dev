@@ -1,35 +1,59 @@
 import React, { useEffect, useRef, useState } from "react";
 import videojs from 'video.js';
 
-const Player = ({options, onReady}) => {
+const Player = ({
+  file,
+  options,
+  onReady,
+  height,
+  width,
+  autoDetectSpeaker,
+  autoDetectLanguage,
+  setDuration,
+  setSpeakerValue,
+  setLanguage,
+  fileFromLink
+}) => {
   const videoRef = useRef(null);
   const playerRef = useRef(null);
 
   useEffect(() => {
-
-    // Make sure Video.js player is only initialized once
     if (!playerRef.current) {
-      // The Video.js player needs to be _inside_ the component el for React 18 Strict Mode. 
+
       const videoElement = document.createElement("video-js");
 
-      videoElement.classList.add('my-video-js');
+      // videoElement.classList.add('vjs-big-play-centered');
       videoRef.current.appendChild(videoElement);
 
       const player = playerRef.current = videojs(videoElement, options, () => {
-        console.log('videoElement', videoElement);
-        console.log('options', options);
-        videojs.log('player is ready asd');
         onReady && onReady(player);
       });
-
-    // You could update an existing player in the `else` block here
-    // on prop change, for example:
     } else {
       const player = playerRef.current;
 
       player.autoplay(options.autoplay);
       player.src(options.sources);
     }
+
+    if (file) {
+      getVideoDurationFromVideoFile(file).then((res) => {
+        // console.log('res duration', res)
+        setDuration(res);
+      });
+    }
+    if (autoDetectSpeaker) {
+      getAudioSpeaker().then((res) => {
+        // console.log('res speaker', res)
+        setSpeakerValue(res);
+      });
+    }
+    if (autoDetectLanguage) {
+      getLangVideo().then((res) => {
+        // console.log('res lang', res)
+        setLanguage(res);
+      });
+    }
+
   }, [options, videoRef]);
 
   // Dispose the Video.js player when the functional component unmounts
@@ -44,9 +68,53 @@ const Player = ({options, onReady}) => {
     };
   }, [playerRef]);
 
+  const getAudioSpeaker = () => {
+    return new Promise((resolve, reject) => {
+      let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const numberOfSpeakers = audioCtx.destination.numberOfInputs;
+      resolve(numberOfSpeakers);
+    });
+  }
+
+  const getLangVideo = () => {
+    return new Promise((resolve, reject) => {
+      const videoElement = playerRef.current;
+      const lang = videoElement.options_.language;
+      resolve(lang);
+    });
+  }
+
+  const generateVideoDurationFromUrl = (url) => {
+    return new Promise((resolve, reject) => {
+      const video = playerRef.current;
+      video.on('loadedmetadata', function () {
+        resolve(video.duration());
+      });
+    })
+  }
+
+  const getVideoDurationFromVideoFile = (videoFile) => {
+    return new Promise((resolve, reject) => {
+      try {
+        if (videoFile) {
+          const url = fileFromLink ? fileFromLink : URL?.createObjectURL(videoFile);
+          generateVideoDurationFromUrl(url).then((res) => {
+            resolve(res)
+          })
+        } else {
+          reject("Cannot generate video duration for this video file.");
+        }
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
+
   return (
     <div data-vjs-player>
-      <div ref={videoRef} />
+      <div
+        style={{ width: width, height: height }}
+        ref={videoRef} />
     </div>
   )
 }

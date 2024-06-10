@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useContext } from 'react'
 import AuthLayout from '@/layouts/authLayout';
 import ButtonGradient from '@/components/buttons/buttonGradient';
 import ButtonGoogle from '@/components/buttons/buttonGoogle';
@@ -8,6 +8,15 @@ import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/module
 import ButtonDarkMode from '@/components/buttons/buttonDarkMode';
 import Logo from '@/components/elements/logo';
 import Link from 'next/link';
+import { googleProvider } from '../api/firebase';
+import { getAuth, signInWithPopup } from "firebase/auth";
+import { LoadingContext } from '@/context/loadingContext';
+import { loginByGoogle, registerUser } from '@/store/slices/authSlice';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+import Cookies from 'js-cookie';
+import { APP_NAME } from '@/config';
 
 const CarouselLogin1 = dynamic(() => import('@/components/carousel/carouselLogin1'),
   { ssr: false }
@@ -34,10 +43,150 @@ const dataCarouselLogin = [
   }
 ];
 
-
-
 const Register = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [agree, setAgree] = useState(false);
+  const [errors, setErrors] = useState({
+    email: '',
+    password: ''
+  });
+  const { showLoader, hideLoader } = useContext(LoadingContext);
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    if (!name) {
+      setErrors({ ...errors, name: 'Name is required' });
+      return;
+    }
+
+    if (!email) {
+      setErrors({ ...errors, email: 'Email is required' });
+      return;
+    }
+
+    const validEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (!validEmail.test(email)) {
+      setErrors({ ...errors, email: 'Email is invalid' });
+      return;
+    }
+
+    if (!password) {
+      setErrors({ ...errors, password: 'Password is required' });
+      return;
+    }
+
+    if (password.length < 6) {
+      setErrors({ ...errors, password: 'Password must be at least 6 characters' });
+      return;
+    }
+
+    if (!agree) {
+      toast.error('Please agree to the terms of service and privacy policy', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+
+    showLoader && showLoader();
+    dispatch(registerUser({ name: name, email: email, password: password }))
+      .then((response) => {
+        const resp = response.payload;
+        const data = resp.data;
+        console.log('response', resp)
+        if (data.error) {
+          toast.error(data.error?.description, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+          });
+        } else {
+          toast.success('successfully registered, you will be redirected to the login page', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          setTimeout(() => {
+            router.push('/login');
+          }, 3000);
+        }
+        hideLoader && hideLoader();
+      })
+      .catch((err) => {
+        toast.error('an error occurred', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
+        hideLoader && hideLoader();
+      })
+      .finally(() => {
+        hideLoader && hideLoader();
+      });
+  }
+
+  const handleLoginGoogle = async (provider) => {
+    showLoader && showLoader();
+    const auth = getAuth();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const accessToken = result.user.accessToken;
+        dispatch(loginByGoogle({ token: accessToken })).then((response) => {
+          const resp = response.payload;
+          const data = resp?.data;
+          if (resp?.status === 200) {
+            const cookiesName = APP_NAME + '-token';
+            Cookies.set(cookiesName, data?.token,
+              {
+                expires: 7,
+                secure: true,
+              });
+            router.push('/dubbing');
+          } else {
+            toast.error('an error occurred', {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+          }
+        })
+      })
+      .catch((error) => {
+        console.log(error);
+        hideLoader && hideLoader();
+      })
+      .finally(() => {
+        hideLoader && hideLoader();
+      });
+  };
 
   return (
     <section className="bg-white dark:bg-[#121212]">
@@ -58,7 +207,7 @@ const Register = () => {
             </h1>
 
             <p className="mt-4 mb-4 text-2xl leading-relaxed text-gray-500 text-center">
-             {" Let's get started with your free 5 minutes trial"}
+              {" Let's get started with your free 5 minutes trial"}
             </p>
 
             <form action="#" className="mx-auto">
@@ -68,7 +217,7 @@ const Register = () => {
                   width="w-full"
                   height="h-12"
                   radius="rounded-[12px]"
-                  onClick={() => console.log("Button clicked")} />
+                  onClick={() => handleLoginGoogle(googleProvider)} />
                 <div className="flex items-center justify-center gap-2 mt-4">
                   <div className="w-full h-0.5 bg-gray-300"></div>
                   <p className="text-gray-500">OR</p>
@@ -79,37 +228,53 @@ const Register = () => {
               <div className='flex items-center gap-1'>
                 <label htmlFor="FullName" className="block text-sm py-2 font-medium text-gray-700 dark:text-white"> Full Name</label> <span className="text-red-500 text-lg">*</span>
               </div>
-              <input
-                type="test"
-                id="FullName"
-                name="fullname"
-                className="my-input pl-3 mb-5 h-[48px] w-full rounded-[12px] bg-white text-md text-gray-700 outline-none"
-              />
+              <div className=' mb-5'>
+                <input
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  type="test"
+                  id="FullName"
+                  name="fullname"
+                  className="my-input pl-3 h-[48px] w-full rounded-[12px] bg-white text-md text-gray-700 outline-none"
+                />
+                {errors && errors.name && <span className="text-red-500 text-sm">{errors.name}</span>}
+              </div>
 
               <div className='flex items-center gap-1'>
                 <label htmlFor="Email" className="block text-sm py-2 font-medium text-gray-700 dark:text-white"> Email</label> <span className="text-red-500 text-lg">*</span>
               </div>
-              <input
-                type="email"
-                id="Email"
-                name="email"
-                className="my-input pl-3 mb-5 h-[48px] w-full rounded-[12px] bg-white text-md text-gray-700 outline-none"
-              />
+              <div className=' mb-5'>
+                <input
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  type="email"
+                  id="Email"
+                  name="email"
+                  className="my-input pl-3 h-[48px] w-full rounded-[12px] bg-white text-md text-gray-700 outline-none"
+                />
+                {errors && errors.email && <span className="text-red-500 text-sm">{errors.email}</span>}
+              </div>
 
               <div className='flex items-center gap-1'>
                 <label htmlFor="Password" className="block text-sm py-2 font-medium text-gray-700 dark:text-white"> Password</label> <span className="text-red-500 text-lg">*</span>
               </div>
 
-              <input
-                type="password"
-                id="Password"
-                name="password"
-                className="my-input pl-3 mb-5 h-[48px] w-full rounded-[12px] bg-white text-md text-gray-700 outline-none"
-              />
+              <div className=' mb-5'>
+                <input
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  type="password"
+                  id="Password"
+                  name="password"
+                  className="my-input pl-3 h-[48px] w-full rounded-[12px] bg-white text-md text-gray-700 outline-none"
+                />
+                {errors && errors.password && <span className="text-red-500 text-sm">{errors.password}</span>}
+              </div>
 
               <div className="flex items-center justify-between">
                 <label htmlFor="rememberMe" className="flex gap-2">
                   <input
+                    onChange={(e) => setAgree(e.target.checked)}
                     type="checkbox"
                     id="rememberMe"
                     name="marketing_accept"
@@ -131,7 +296,9 @@ const Register = () => {
                   width="w-full"
                   height="h-12"
                   radius="rounded-[12px]"
-                  onClick={() => console.log("Button clicked")} />
+                  type="button"
+                  onClick={(e) => handleRegister(e)} // handleRegister
+                />
 
                 <p className="mt-4 mb-4 text-sm">
                   Already have account? <Link href="/login" className="text-zinc-700 font-bold underline dark:text-white">Login</Link>

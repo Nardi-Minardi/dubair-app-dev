@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import { useTheme } from 'next-themes'
 import {
   Modal,
@@ -24,17 +24,26 @@ import { FiMoreVertical } from "react-icons/fi";
 import { HiOutlineTranslate } from "react-icons/hi";
 import ButtonGradient from '../buttons/buttonGradient';
 import { toast } from 'react-toastify';
+import { createVideo } from '@/store/slices/videoSlice';
+import { useDispatch } from 'react-redux';
+import { LoadingContext } from '@/context/loadingContext';
 
-const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files, noFileSelected }) => {
+const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files, noFileSelected, fileFromLink, typeFromLink }) => {
+  const dispatch = useDispatch()
   const [projectName, setProjectName] = useState('')
   const [numberSpeaker, setNumberSpeaker] = useState('auto')
+  const [speakerValue, setSpeakerValue] = useState(0)
   const [language, setLanguage] = useState('auto')
   const [translateTo, setTranslateTo] = useState('id')
+  const [openInputSpeaker, setOpenInputSpeaker] = useState(false)
+  const [autoDetectSpeaker, setAutoDetectSpeaker] = useState(true)
+  const [autoDetectLanguage, setAutoDetectLanguage] = useState(true)
   const [errors, setErrors] = useState({
     projectName: '',
     numberSpeaker: '',
     language: ''
   });
+  const { showLoader, hideLoader } = useContext(LoadingContext);
 
   const speakers = [
     { key: "auto", label: "Autodetect" },
@@ -50,13 +59,27 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
   const translateLanguages = [
     { key: "id", label: "Indonesia", icon: "/assets/icons/id-icon.png" },
     { key: "en", label: "English", icon: "/assets/icons/en-icon.png" },
+    { key: "es", label: "Spanish", icon: "/assets/icons/es-icon.png" },
   ];
 
   const handleSelectionChangeSpeaker = (e) => {
+    if (e.target.value !== 'auto') {
+      setOpenInputSpeaker(true)
+      setAutoDetectSpeaker(false)
+      setSpeakerValue(0)
+    } else {
+      setAutoDetectSpeaker(true)
+      setOpenInputSpeaker(false)
+    }
     setNumberSpeaker(e.target.value)
   };
 
   const handleSelectionChangeLanguage = (e) => {
+    if (e.target.value !== 'auto') {
+      setAutoDetectLanguage(false)
+    } else {
+      setAutoDetectLanguage(true)
+    }
     setLanguage(e.target.value)
   };
 
@@ -64,14 +87,18 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
     setTranslateTo(e.target.value)
   };
 
-  // send files to the server // learn from my other video
   const handleUpload = ({ onClose }) => {
     if (projectName === '') {
       setErrors({ ...errors, projectName: 'Project Name is required' })
       return
     }
 
-    if (files.length === 0) {
+    if (numberSpeaker === 'manual' && speakerValue === 0) {
+      setErrors({ ...errors, numberSpeaker: 'Number of speakers is required' })
+      return
+    }
+
+    if (noFileSelected) {
       toast.error('Please select a video file', {
         position: "top-right",
         autoClose: 5000,
@@ -86,17 +113,54 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
       return;
     }
 
-    toast.success('Generate video success', {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
+    const formData = new FormData();
+    formData.append('name', projectName);
+    if (fileFromLink) {
+      formData.append('file', fileFromLink);
+    }
+    files.forEach((file) => {
+      formData.append('file', file);
     });
+    formData.append('numberOfSpeaker', speakerValue);
+    formData.append('originalLanguage', language);
+    formData.append('translatedTo', translateTo);
 
+    showLoader && showLoader();
+
+    dispatch(createVideo(formData)).then((res) => {
+      const response = res.payload;
+      const data = response.data;
+
+      if (response.status == 200) {
+        toast.success('Successfully created video', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        onClose();
+        clearFiles();
+      } else {
+        console.log('error', response)
+        toast.error('something went wrong, please try again', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        onClose();
+        clearFiles();
+      }
+      hideLoader && hideLoader();
+    });
   };
 
   return (
@@ -109,9 +173,11 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
         isDismissable={false}
         isKeyboardDismissDisabled={true}
         size='4xl'
+        onClose={() => clearFiles()}
       >
         <ModalContent>
           {(onClose) => (
+
             <>
               <ModalHeader className="flex flex-col">
                 <div className="flex flex-row gap-3">
@@ -128,30 +194,50 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
               <ModalBody>
                 <div className="px-8 h-auto flex flex-col py-12 w-full border-2 border-dashed border-[#4A5FEF] rounded-md ">
 
-                  {files.length > 0 ? (
-                    files.map((file, index) => (
-                      <React.Fragment key={index}>
+                  {noFileSelected  ? (
+
+                    <p className="text-sm text-gray-400 dark:text-white tex-center">No file selected</p>
+                  ) : (
+                    !fileFromLink ? (
+                      files?.length > 0 &&
+                      files?.map((file, index) => (
+                        <React.Fragment key={index}>
+                          <GenerateThumbnail
+                            setSpeakerValue={setSpeakerValue}
+                            setLanguage={setLanguage}
+                            autoDetectSpeaker={autoDetectSpeaker}
+                            autoDetectLanguage={autoDetectLanguage}
+                            clearFiles={clearFiles}
+                            onClose={onClose}
+                            file={file}
+                            noFileSelected={noFileSelected}
+                            fileFromLink={fileFromLink}
+                          />
+
+                        </React.Fragment>
+                      ))
+                    ) : (
+                      <React.Fragment >
                         <GenerateThumbnail
+                          setSpeakerValue={setSpeakerValue}
+                          setLanguage={setLanguage}
+                          autoDetectSpeaker={autoDetectSpeaker}
+                          autoDetectLanguage={autoDetectLanguage}
                           clearFiles={clearFiles}
                           onClose={onClose}
                           file={file}
                           noFileSelected={noFileSelected}
+                          fileFromLink={fileFromLink}
+                          typeFromLink={typeFromLink}
                         />
-                        {/* <VideoThumbnail
-                        videoUrl={URL.createObjectURL(file)}
-                        snapshotAtTime={2}
-                        width={120}
-                        height={80}
-                      /> */}
 
                       </React.Fragment>
-                    ))
-                  ) : (
-                    <p className="text-sm text-gray-400 dark:text-white tex-center">No file selected</p>
+                    )
                   )}
 
 
                 </div>
+
                 <form>
 
                   <div className='flex items-center gap-1'>
@@ -191,6 +277,24 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
                     {/* <p className="text-small text-default-500">Selected: {numberSpeaker}</p> */}
                   </div>
 
+                  {openInputSpeaker && (
+                    <div className=' mb-5'>
+                      <input
+                        type="number"
+                        id="NumberSpeaker"
+                        name="numberSpeaker"
+                        className="my-input pl-3 h-[48px] w-full rounded-[12px] dark:bg[#18181B] text-md text-gray-700"
+                        // value={speakerValue}
+                        defaultValue={speakerValue}
+                        onChange={(e) => {
+                          setErrors({ ...errors, numberSpeaker: '' })
+                          setSpeakerValue(e.target.value)
+                        }}
+                      />
+                      {errors && errors.numberSpeaker && <span className="text-red-500 text-sm">{errors.numberSpeaker}</span>}
+                    </div>
+                  )}
+
                   <div className="flex w-full flex-col gap-2 mb-5">
                     <Select
                       label="Original Language"
@@ -224,7 +328,7 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
                         base: "w-full bg-white dark:bg-[#18181B] rounded-md",
                         trigger: "h-12",
                       }}
-                      
+
                       renderValue={(items) => {
                         return items.map((item) => (
                           <div key={item.data.key} className="flex items-center gap-2">
@@ -269,6 +373,7 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
 
               </ModalFooter>
             </>
+
           )}
         </ModalContent>
       </Modal>

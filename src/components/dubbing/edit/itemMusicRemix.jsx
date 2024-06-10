@@ -3,7 +3,6 @@ import { CiClock1, CiClock2 } from "react-icons/ci";
 import { FiTrash2, FiPlus } from "react-icons/fi";
 import moment from 'moment';
 import { Avatar } from '@nextui-org/react';
-import PlayerComponent from '@/components/videoPlayer/playerComponent';
 import TimelineComponent from '@/components/videoPlayer/timelineComponent';
 
 const ItemMusicRemix = ({ categoryMusics, dataMusics }) => {

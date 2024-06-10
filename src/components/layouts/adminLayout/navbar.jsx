@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, { useContext, useEffect } from 'react'
 import {
   Bars3Icon,
 } from '@heroicons/react/20/solid'
@@ -8,20 +8,26 @@ import { useRouter } from 'next/router'
 import LanguageSelector from '@/components/elements/languageSelector'
 import { useSelector, useDispatch } from 'react-redux'
 import moment from 'moment'
-import { logoutUser } from '@/store/slices/authSlice'
+import { fetchUser, logoutUser } from '@/store/slices/authSlice'
 import { useGlobalSidebarContext } from '@/context/sidebarContext'
 import UserDropdown from './userDropdown'
+import { tokenAuth } from '@/utils/LocalStorage'
 
 const Navbar = () => {
   const dispatch = useDispatch()
   const router = useRouter()
-  const { user, token } = useSelector((state) => state.rootSlice?.auth);
-  const { showSidebar, isSidebarOpen } = useGlobalSidebarContext();  
+  const { user } = useSelector((state) => state.auth)
+  const { showSidebar, isSidebarOpen } = useGlobalSidebarContext();
+
+  useEffect(() => {
+    dispatch(fetchUser(tokenAuth()))
+  }
+    , []);
 
   const handleLogout = (e) => {
     e.preventDefault()
     try {
-      dispatch(logoutUser(token))
+      dispatch(logoutUser(tokenAuth()))
       router.push('/login')
     } catch (error) {
       console.log(error)

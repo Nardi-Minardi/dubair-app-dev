@@ -30,7 +30,7 @@ const AdminLayout = ({ children, title }) => {
         <Head >
           <title>{title}</title>
         </Head>
-        <PersistGate loading={null} persistor={persistor}>
+        {/* <PersistGate loading={null} persistor={persistor}> */}
           <div className="flex h-full min-h-screen bg-[#FAFBFC] dark:bg-zinc-900">
             <SidebarPovider>
               <Sidebar
@@ -51,7 +51,7 @@ const AdminLayout = ({ children, title }) => {
               </div>
             </SidebarPovider>
           </div>
-        </PersistGate>
+        {/* </PersistGate> */}
       </ThemeProvider>
     </Provider >
   )

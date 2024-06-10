@@ -3,60 +3,68 @@ import {
   generateVideoThumbnails,
   importFileandPreview
 } from "@rajesh896/video-thumbnails-generator";
+import videojs from 'video.js';
+import Player from "../videoPlayer/videojs/player";
+import { get_filesize } from "@/utils/videoHook";
 
-const GenerateThumbnail = ({ file, clearFiles, onClose, noFileSelected }) => {
-  console.log('noFileSelected', noFileSelected)
-  const [video, setVideo] = useState("");
-  const [thumbNumber, setThumbNumber] = useState(0);
-  const [videoUrl, setVideoUrl] = useState("");
-  const [videoThumb, setVideoThumb] = useState("");
-  const [thumbnails, setThumbnails] = useState([]);
+const GenerateThumbnail = ({ file, fileFromLink, typeFromLink, clearFiles, onClose, noFileSelected, setSpeakerValue, setLanguage, autoDetectSpeaker, autoDetectLanguage }) => {
   const [duration, setDuration] = useState(0);
-  const refs = useRef({
-    video: null,
-    loader: null,
-    numberInput: null,
-    thumbButton: null
-  });
+  const videoRef = useRef(null);
+  const playerRef = useRef(null);
+  const [fileSize, setFileSize] = useState(0);
+  const [prefixSize, setPrefixSize] = useState('');
 
   useEffect(() => {
-    if (file) {
-      setVideo(file);
-      importFileandPreview(file).then((res) => {
-        setVideoUrl(res);
+    if (fileFromLink) {
+      get_filesize(fileFromLink, function (size) {
+        let fileSize = isNaN(size) ? 0 : Number(size);
+        if (fileSize < 1024) {
+          setPrefixSize(`${fileSize} B`);
+        } else if (fileSize < 1024 * 1024) {
+          setPrefixSize(`${(fileSize / 1024).toFixed(2)} KB`);
+        } else if (fileSize < 1024 * 1024 * 1024) {
+          setPrefixSize(`${(fileSize / (1024 * 1024)).toFixed(2)} MB`);
+        } else {
+          setPrefixSize(`${(fileSize / (1024 * 1024 * 1024)).toFixed(2)} GB`);
+        }
       });
-      setVideoThumb("");
-      setThumbnails([]);
-      if (refs.current.video) {
-        refs.current.video.style.transform = "scale(1)";
-      }
-
-      if (refs.current.numberInput) {
-        refs.current.numberInput.style.display = "block";
-      }
-      if (refs.current.thumbButton) {
-        refs.current.thumbButton.style.display = "block";
-      }
-    }
-    getVideoDurationFromVideoFile(file).then((res) => {
-      setDuration(res);
-    });
-    generateVideoThumbnails(file).then((thumbs) => {
-      setThumbnails(thumbs);
-    });
-  }, [video, file]);
-
-  const acumulatedSize = (size) => {
-    if (size < 1024) {
-      return `${size} B`;
-    } else if (size < 1024 * 1024) {
-      return `${(size / 1024).toFixed(2)} KB`;
-    } else if (size < 1024 * 1024 * 1024) {
-      return `${(size / (1024 * 1024)).toFixed(2)} MB`;
     } else {
-      return `${(size / (1024 * 1024 * 1024)).toFixed(2)} GB`;
+      if (file.size < 1024) {
+        setPrefixSize(`${file.size} B`);
+      } else if (file.size < 1024 * 1024) {
+        setPrefixSize(`${(file.size / 1024).toFixed(2)} KB`);
+      } else if (file.size < 1024 * 1024 * 1024) {
+        setPrefixSize(`${(file.size / (1024 * 1024)).toFixed(2)} MB`);
+      } else {
+        setPrefixSize(`${(file.size / (1024 * 1024 * 1024)).toFixed(2)} GB`);
+      }
     }
-  }
+  }, [file, fileFromLink])
+
+  const videoJsOptions = {
+    autoplay: false,
+    controls: true,
+    responsive: true,
+    fluid: true,
+    techOrder: ['html5', 'youtube'],
+    sources: [{
+      src: fileFromLink ? fileFromLink : URL.createObjectURL(file),
+      type: typeFromLink ? `video/${typeFromLink}` : `video/${file.type.split('/')[1]}`
+    }]
+  };
+
+  const handlePlayerReady = (player) => {
+    playerRef.current = player;
+
+    // You can handle player events here, for example:
+    player.on('waiting', () => {
+      videojs.log('player is waiting');
+    });
+
+    player.on('dispose', () => {
+      videojs.log('player will dispose');
+    });
+  };
 
   const acumulatedDuration = (duration) => {
     let hours = Math.floor(duration / 3600);
@@ -65,47 +73,6 @@ const GenerateThumbnail = ({ file, clearFiles, onClose, noFileSelected }) => {
     return `${hours}:${minutes}:${seconds}`;
   }
 
-  // generate the video duration either via url
-  const generateVideoDurationFromUrl = (url) => {
-    return new Promise((resolve, reject) => {
-      let video = document.createElement("video");
-      video.addEventListener("loadeddata", function () {
-        resolve(video.duration);
-        window.URL.revokeObjectURL(url);
-      });
-      video.preload = "metadata";
-      video.src = url;
-      // Load video in Safari / IE11
-      video.muted = true;
-      video.crossOrigin = "Anonymous";
-      video.playsInline = true;
-      video.play();
-    })
-  }
-
-  const getVideoDurationFromVideoFile = (videoFile) => {
-    return new Promise((resolve, reject) => {
-      try {
-        if (videoFile) {
-          if ((videoFile)?.type?.match("video/*")) {
-            importFileandPreview(videoFile).then((url) => {
-              generateVideoDurationFromUrl(url).then((res) => {
-                resolve(res);
-              })
-            });
-          } else {
-            generateVideoDurationFromUrl(videoFile).then((res) => {
-              resolve(res)
-            })
-          }
-        } else {
-          reject("Cannot generate video duration for this video file.");
-        }
-      } catch (error) {
-        reject(error);
-      }
-    });
-  };
 
   return (
     <>
@@ -119,45 +86,29 @@ const GenerateThumbnail = ({ file, clearFiles, onClose, noFileSelected }) => {
         }}
       >
         {noFileSelected === true || !file ? (
-          <p className="text-sm text-gray-400 dark:text-white">No file awdselected</p>
+          <p className="text-sm text-gray-400 dark:text-white">No file selected</p>
         ) : (
           <div className="flex flex-row items-center gap-2">
-            <video
-              poster={videoThumb}
-              style={{
-                maxWidth: 250,
-                maxHeight: 500,
-                transform: "scale(0)",
-                transition: "all 0.3s",
-                width: "100%",
-                borderRadius: 5
-              }}
-              controls
-              id="video"
-              ref={(el) => (refs.current.video = el)}
-              src={videoUrl}
-            >
-              <source src={videoUrl} type={video?.type} />
-              Your browser does not support the video tag.
-            </video>
+            {/* <div ref={(el) => (videoRef.current = el)}
+              className="video-js vjs-default-skin vjs-big-play-centered"
+              style={{ width: 250, height: 'auto' }}>
+            </div> */}
+            <Player
+              fileFromLink={fileFromLink}
+              file={file}
+              autoDetectSpeaker={autoDetectSpeaker}
+              autoDetectLanguage={autoDetectLanguage}
+              setDuration={setDuration}
+              setSpeakerValue={setSpeakerValue}
+              setLanguage={setLanguage}
+              width={250}
+              height={'auto'}
+              options={videoJsOptions}
+              onReady={handlePlayerReady} />
 
-
-            {/* {thumbnails.map((item) => {
-            return (
-              <img
-                src={item}
-                style={{ width: 200, margin: 10, cursor: "pointer" }}
-                alt=""
-              // onClick={() => {
-              //   setVideoThumb(item);
-              //   window.scrollTo({ top: 0, behavior: "smooth" });
-              // }}
-              />
-            );
-          })} */}
             <div className="flex flex-col gap-2">
-              <span className="text-sm text-gray-400 dark:text-white">{file.name}</span>
-              <span className="text-sm text-gray-400 dark:text-white">{acumulatedSize(file.size)}</span>
+              <span className="text-sm text-gray-400 dark:text-white">{file.name ? file.name : 'Title not dectected'}</span>
+              <span className="text-sm text-gray-400 dark:text-white">{prefixSize}</span>
               <span className="text-sm text-gray-400 dark:text-white">{acumulatedDuration(duration)}</span>
             </div>
           </div>
@@ -171,119 +122,7 @@ const GenerateThumbnail = ({ file, clearFiles, onClose, noFileSelected }) => {
         >
           Remove
         </button>
-        {/* <div style={{ display: "flex", marginTop: 25 }}>
-          <input
-            type="file"
-            id="inputfile"
-            accept="video/*"
-            onChange={(e) => {
-              if (e.target.files?.length > 0) {
-                setVideo(e.target.files[0]);
-              }
-            }}
-          />
-          <div
-            id="numberWrapper"
-            style={{ display: "none" }}
-            ref={(el) => (refs.current.numberInput = el)}
-          >
-            <label for="numberofthumbnails" style={{ marginLeft: 15 }}>
-              Enter number of thumbnails to generate
-            </label>
-            <input
-              type="number"
-              id="numberofthumbnails"
-              onChange={(e) => {
-                setThumbNumber(parseInt(e.target.value, 0));
-              }}
-            />
-          </div>
-        </div>
-        <div
-          style={{ marginTop: 25, display: "none" }}
-          id="buttonWrapper"
-          ref={(el) => (refs.current.thumbButton = el)}
-        >
-          <button
-            id="generatethumbnails"
-            onClick={() => {
-              if (video) {
-                // if (refs.current.loader) {
-                //   refs.current.loader.style.display = "block";
-                // }
-                generateVideoThumbnails(video, thumbNumber).then((thumbs) => {
-                  setThumbnails(thumbs);
-                  // if (refs.current.loader) {
-                  //   refs.current.loader.style.display = "none";
-                  // }
-                });
-              }
-            }}
-          >
-            Generate Thumbnails
-          </button>
-        </div> */}
       </div>
-      {/* <div
-        id="loader"
-        style={{ display: "none", textAlign: "center" }}
-        ref={(el) => (refs.current.loader = el)}
-      >
-        <img
-          src="https://i.giphy.com/media/l3nWhI38IWDofyDrW/giphy.webp"
-          alt=""
-        />
-      </div> */}
-      {/* <div
-        id="thumbnails"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          flexWrap: "wrap",
-          alignItems: "center",
-          transition: "all 0.3s"
-        }}
-      >
-        {thumbnails.map((item) => {
-          return (
-            <img
-              src={item}
-              style={{ width: 200, margin: 10, cursor: "pointer" }}
-              alt=""
-              onClick={() => {
-                setVideoThumb(item);
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
-            />
-          );
-        })}
-      </div> */}
-
-      {/* <div
-        class="note"
-        style={{
-          position: "fixed",
-          bottom: 0,
-          right: 0,
-          fontWeight: "bold",
-          color: "black",
-          background: "whitesmoke",
-          border: "1px solid black",
-          borderRadius: 5,
-          padding: 5
-        }}
-      >
-        <ul>
-          <li>Not ready for production.</li>
-          <li>
-            Play with numbers sometimes promises behave badly [in-progress]
-          </li>
-          <li>
-            You have to reload the page everytime you want to select the video
-            [badly coded html/js]
-          </li>
-        </ul>
-      </div> */}
     </>
   );
 }

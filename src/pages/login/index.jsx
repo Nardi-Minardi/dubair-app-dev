@@ -9,13 +9,17 @@ import ButtonDarkMode from '@/components/buttons/buttonDarkMode';
 import Logo from '@/components/elements/logo';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '@/store/slices/authSlice';
+import { loginByGoogle, loginUser } from '@/store/slices/authSlice';
 import { LoadingContext } from '@/context/loadingContext';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useRouter } from 'next/router';
 import { getData, storeData } from '@/utils/LocalStorage';
 import Loader from '@/components/elements/loader';
 import Link from 'next/link';
+import { googleProvider } from '../api/firebase';
+import { getAuth, signInWithPopup } from "firebase/auth";
+import Cookies from 'js-cookie';
+import { APP_NAME } from '@/config';
 
 const CarouselLogin1 = dynamic(() => import('@/components/carousel/carouselLogin1'),
   { ssr: false }
@@ -45,7 +49,6 @@ const dataCarouselLogin = [
 const Login = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { loading } = useSelector((state) => state.rootSlice.auth);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [rememberMe, setRememberMe] = useState(false);
   const [email, setEmail] = useState('');
@@ -78,79 +81,94 @@ const Login = () => {
     }
 
     showLoader && showLoader();
-    router.push('/dubbing')
-    hideLoader && hideLoader();
-    // dispatch(loginUser({ username: email, password }))
-    //   .then((response) => {
-    //     const resp = response.payload;
-    //     const data = resp.data;
-    //     console.log('response', resp)
-    //     if (resp.status === 200) {
-
-    //       // toast.success('successfully logged in', {
-    //       //   position: "top-right",
-    //       //   autoClose: 5000,
-    //       //   hideProgressBar: true,
-    //       //   closeOnClick: true,
-    //       //   pauseOnHover: false,
-    //       //   draggable: true,
-    //       //   progress: undefined,
-    //       //   theme: "colored",
-    //       // });
-    //       router.push('/dubbing');
-    //     } else {
-    //       const errors = data.errors;
-    //       console.log(errors.username);
-    //       if (errors) {
-    //         // errors.map((error) => {
-    //         if (errors.username) {
-    //           setErrors({ ...errors, email: errors.username });
-    //         }
-    //         if (errors.password) {
-    //           setErrors({ ...errors, password: errors.password });
-    //         }
-    //         // })
-    //       }
-    //       toast.error('an error occurred', {
-    //         position: "top-right",
-    //         autoClose: 5000,
-    //         hideProgressBar: true,
-    //         closeOnClick: true,
-    //         pauseOnHover: false,
-    //         draggable: true,
-    //         progress: undefined,
-    //         theme: "colored",
-    //       });
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   })
-    //   .finally(() => {
-    //     hideLoader && hideLoader();
-    //     // toast.error('🦄 Wow so easy!', {
-    //     //   position: "top-right",
-    //     //   autoClose: 5000,
-    //     //   hideProgressBar: true,
-    //     //   closeOnClick: true,
-    //     //   pauseOnHover: false,
-    //     //   draggable: true,
-    //     //   progress: undefined,
-    //     //   theme: "colored",
-    //     // });
-    //   });
+    dispatch(loginUser({ email: email, password, returnSecureToken: true }))
+      .then((response) => {
+        const resp = response.payload;
+        const data = resp.data;
+        if (data.error) {
+          if (data.error.status === 500) {
+            toast.error(data.error?.description, {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+          }
+          toast.error(data.error?.message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        } else {
+          const cookiesName = APP_NAME + '-token';
+          Cookies.set(cookiesName, data?.idToken,
+            {
+              expires: 7,
+              secure: true,
+            });
+          router.push('/dubbing');
+        }
+        hideLoader && hideLoader();
+      })
+      .catch((err) => {
+        console.log(err);
+        hideLoader && hideLoader();
+      })
+      .finally(() => {
+        hideLoader && hideLoader();
+      });
   }
 
-  const handleLoginGoogle = useGoogleLogin({
-    onSuccess: codeResponse => console.log(codeResponse),
-    // flow: 'auth-code',
-    // prompt: 'consent',
-    // responseType: 'code',
-    // accessType: 'offline',
-    // scope: 'email profile openid',
-    onFailure: error => console.error(error),
-
-  });
+  const handleLoginGoogle = async (provider) => {
+    showLoader && showLoader();
+    const auth = getAuth();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const accessToken = result.user.accessToken;
+        console.log('accessToken dr popup', accessToken);
+        dispatch(loginByGoogle({ token: accessToken })).then((response) => {
+          const resp = response.payload;
+          const data = resp?.data;
+          if (resp?.status === 200) {
+            const cookiesName = APP_NAME + '-token';
+            Cookies.set(cookiesName, data?.token,
+              {
+                expires: 7,
+                secure: true,
+              });
+            router.push('/dubbing');
+          } else {
+            toast.error('an error occurred', {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+          }
+        })
+        hideLoader && hideLoader();
+      })
+      .catch((error) => {
+        console.log(error);
+        hideLoader && hideLoader();
+      })
+      .finally(() => {
+        hideLoader && hideLoader();
+      });
+  };
 
   const handleRememberMe = (e) => {
     if (e.target.checked) {
@@ -167,8 +185,6 @@ const Login = () => {
       });
     }
   }
-
-  // if (loading) return <Loader message="Loading..." />
 
   return (
     <section className="bg-white dark:bg-[#121212]">
@@ -199,7 +215,7 @@ const Login = () => {
                   width="w-full"
                   height="h-12"
                   radius="rounded-[12px]"
-                  onClick={handleLoginGoogle}
+                  onClick={() => handleLoginGoogle(googleProvider)}
                 />
                 <div className="flex items-center justify-center gap-2 mt-4">
                   <div className="w-full h-0.5 bg-gray-300"></div>

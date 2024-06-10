@@ -5,11 +5,11 @@ import { CiClock1, CiClock2 } from "react-icons/ci";
 import ModalGenerate from './modalGenerate';
 import { toast } from 'react-toastify';
 
-const DragDropFiles = ({ title, desc }) => {
+const DragDropFiles = ({ title, desc, fileFromLink, setFileFromLink, setTypeFromLink, typeFromLink }) => {
   const inputRef = useRef(null)
   const { theme, setTheme } = useTheme()
   const [dragActive, setDragActive] = useState(false);
-  const [mounted, setMounted] = React.useState(false)
+  const [mounted, setMounted] = useState(false)
   const [files, setFiles] = useState([])
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [scrollBehavior, setScrollBehavior] = useState("inside");
@@ -17,7 +17,12 @@ const DragDropFiles = ({ title, desc }) => {
 
   useEffect(() => {
     setMounted(true)
-  }, [files])
+    if (fileFromLink) {
+      setNoFileSelected(false)
+      onOpen()
+    }
+    // console.log('files', files)
+  }, [files, fileFromLink, typeFromLink])
 
   const handleDrop = (e) => {
     e.preventDefault();
@@ -101,15 +106,15 @@ const DragDropFiles = ({ title, desc }) => {
 
   const onChangeFile = (e) => {
     e.preventDefault();
-    console.log("File has been added");
 
     if (e.target.files && e.target.files[0]) {
       //validate is a format video
-      const formatAllowed = ["video/mp4", "video/mov", "video/avi", "video/mkv", "video/flv", "video/wmv", "video/3gp", "video/mpeg", "video/webm"];
+      const formatAllowed = ["video/mp4", "video/m4v", "video/mov", "video/webm"];
 
       const file = e.target.files[0];
+      //max 5GB
       const maxSizeFree = 5;
-      const size = (file.size / 1024 / 1024).toFixed(2);
+      const size = (file.size / 1024 / 1024 / 1024).toFixed(2);
 
       if (!formatAllowed.includes(file.type)) {
         toast.error('Please select a video file', {
@@ -127,7 +132,7 @@ const DragDropFiles = ({ title, desc }) => {
       }
 
       if (size > maxSizeFree) {
-        toast.error('Please select a video file less than 5MB', {
+        toast.error('Please select a video file less than 5GB', {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: true,
@@ -153,10 +158,10 @@ const DragDropFiles = ({ title, desc }) => {
     //clear the input type file
     inputRef.current.value = "";
     setFiles([]);
+    setFileFromLink('')
+    setTypeFromLink('')
     setNoFileSelected(true)
   }
-
-
 
   return (
     <>
@@ -199,29 +204,16 @@ const DragDropFiles = ({ title, desc }) => {
               <a href="https://www.dropbox.com/">
                 <img src={`/assets/icons/upload-box.svg`} alt="upload" className="w-6 h-6 " />
               </a>
-              <a href="#">
+              {/* <a href="#">
                 <img src={`/assets/icons/upload-link-${theme === 'dark' ? 'dark' : 'light'}.svg`}
                   alt="upload" className="w-6 h-6 " />
-              </a>
+              </a> */}
             </div>
           </div>
         </div>
 
         <div className="flex flex-col gap-4">
           <label className="text-sm text-gray-400">{desc}</label>
-          {/* <ul className="flex flex-row gap-4 flex-wrap px-2 lg:px-12 xl:px-12">
-            {files.length > 0 && files.map((file, index) => (
-              <li key={index}>
-                {file.name}
-                <span className="
-                border border-red-500 rounded-full py-0 px-2 text-md bg-red-500 text-white
-                cursor-pointer ml-2"
-                  onClick={() => removeFile(file.name, index)}>
-                  x
-                </span>
-              </li>
-            ))}
-          </ul> */}
         </div>
       </div>
       <ModalGenerate
@@ -230,7 +222,9 @@ const DragDropFiles = ({ title, desc }) => {
         scrollBehavior={scrollBehavior}
         clearFiles={clearFiles}
         files={files}
+        fileFromLink={fileFromLink}
         noFileSelected={noFileSelected}
+        typeFromLink={typeFromLink}
       />
     </>
   )

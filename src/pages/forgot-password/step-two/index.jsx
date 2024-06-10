@@ -7,7 +7,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/modules';
 import ButtonDarkMode from '@/components/buttons/buttonDarkMode';
 import { ArrowLongLeftIcon } from '@heroicons/react/20/solid';
-import ForgotPasswordLine from '@/components/lines/forgotPasswordLine';
 import { useRouter } from 'next/router';
 import { CheckIcon } from '@heroicons/react/20/solid';
 import Logo from '@/components/elements/logo';

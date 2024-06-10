@@ -1,9 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { API_URL } from '../../config';
-import { storeData } from '@/utils/LocalStorage';
-import { trending, animeinfo } from "../query";
-import { checkEnvironment } from '../checkEnvironment';
+import { storeData, tokenAuth } from '@/utils/LocalStorage';
 
 const initialState = {
   videos: [],
@@ -17,21 +15,13 @@ export const fetchVideo = createAsyncThunk(
   'video/fetchVideo',
   async (rejectWithValue) => {
     try {
-      const response = await fetch('https://graphql.anilist.co', {
-        method: 'POST',
+      const response = await axios.get(`${API_URL}/projects`, {
         headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({
-          query: trending,
-
-        }),
-        // }, { cache: "no-store" });
-      }, { next: { revalidate: 3600 } });
-
-      const data = await response.json();
-      return data.data.Page.media;
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${tokenAuth()}`,
+        }
+      });
+      return response.data;
     } catch (error) {
       console.error('Error fetching data from AniList:', error);
       return rejectWithValue(error);
@@ -39,29 +29,21 @@ export const fetchVideo = createAsyncThunk(
   }
 );
 
-export const fetchListVideo = createAsyncThunk(
-  'video/listVideo',
-  async (animeid, {rejectWithValue}) => {
+export const createVideo = createAsyncThunk(
+  'video/createVideo',
+  async (data, { rejectWithValue }) => {
     try {
-      const response = await fetch('https://graphql.anilist.co', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({
-          query: animeinfo,
-          variables: {
-            id: parseInt(animeid.id),
-          },
-        }),
-        // }, { cache: "no-store" });
-      }, { next: { revalidate: 3600 } });
-
-      const data = await response.json();
-      return data.data.Media;
+      const response = await axios.post(`${API_URL}/projects`, data,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${tokenAuth()}`,
+          }
+        });
+      return response;
     } catch (error) {
-      console.error('Error fetching data from AniList:', error);
+      console.error('Error creating video:', error);
       return rejectWithValue(error);
     }
   }
@@ -78,22 +60,23 @@ const videoSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(fetchVideo.fulfilled, (state, { payload }) => {
-      state.videos = payload;
+      state.videos = payload.projects;
       state.loading = false;
     });
     builder.addCase(fetchVideo.rejected, (state, { payload }) => {
       state.loading = false;
     });
-    //list video
-    builder.addCase(fetchListVideo.pending, (state) => {
-      state.loadingList = true;
+    //create video
+    builder.addCase(createVideo.pending, (state) => {
+      state.loading = true;
     });
-    builder.addCase(fetchListVideo.fulfilled, (state, { payload }) => {
-      state.listVideo = payload;
-      state.loadingList = false;
+    builder.addCase(createVideo.fulfilled, (state, { payload }) => {
+      const concat = state.videos.concat(payload.data);
+      state.videos = concat;
+      state.loading = false;
     });
-    builder.addCase(fetchListVideo.rejected, (state, { payload }) => {
-      state.loadingList = false;
+    builder.addCase(createVideo.rejected, (state, { payload }) => {
+      state.loading = false;
     });
   }
 });

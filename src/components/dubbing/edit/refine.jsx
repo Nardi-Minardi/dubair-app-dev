@@ -1,12 +1,14 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { CiClock1, CiClock2 } from "react-icons/ci";
 import { FiTrash2, FiPlus } from "react-icons/fi";
 import moment from 'moment';
-import PlayerComponent from '@/components/videoPlayer/playerComponent';
 import TimelineComponent from '@/components/videoPlayer/timelineComponent';
 
 const Refine = ({ items, items2 }) => {
   const playerPanel = useRef();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   return (
     <div className='relative flex flex-col h-auto gap-4'>
 
@@ -40,8 +42,8 @@ const Refine = ({ items, items2 }) => {
                           Out</span>
                       </div>
                       <div className='text-xs gap-1 flex flex-col items-center'>
-                        <span>{moment().format('HH:mm:ss')}</span>
-                        <span>{moment().format('HH:mm:ss')}</span>
+                        <span>{moment(new Date()).format('HH:mm:ss')}</span>
+                      <span>{moment(new Date()).format('HH:mm:ss')}</span>
                       </div>
                     </div>
                   </div>
@@ -75,7 +77,6 @@ const Refine = ({ items, items2 }) => {
 
             {/* videonya disini */}
             <div className="player-panel" id="player-ground-1" ref={playerPanel}></div>
-            {/* <PlayerComponent /> */}
 
           </div>
           {/* <div>

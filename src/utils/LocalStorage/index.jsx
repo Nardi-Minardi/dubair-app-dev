@@ -1,3 +1,6 @@
+import Cookies from 'js-cookie';
+import { APP_NAME } from '../../config';
+
 export const storeData = async (key, value) => {
   try {
     const jsonValue = JSON.stringify(value);
@@ -18,3 +21,17 @@ export const getData = async (key) => {
     // error reading value
   }
 };
+
+
+
+
+export const tokenAuth = () => {
+  const cookiesName = `${APP_NAME}-token`;
+  const cookies = Cookies.get(cookiesName);
+  const token = cookies ? cookies : null;
+  if (token) {
+    return token;
+  }
+  return null;
+}
+

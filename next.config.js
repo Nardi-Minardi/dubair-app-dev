@@ -1,7 +1,7 @@
 const { i18n } = require("./next-i18next.config");
 const withPlugins = require("next-compose-plugins");
 const withTM = require("next-transpile-modules");
-
+// import { API_URL } from "@/config";
 
 const nextConfig = {
   experimental: {
@@ -23,11 +23,19 @@ const nextConfig = {
   headers: async () => {
     return [
       {
-        source: '/login',
+        source: '/(.*)',
         headers: [
           {
-            key: "Cross-Origin-Embedder-Policy",
-            value: "unsafe-none",
+            key: 'Access-Control-Allow-Origin',
+            value: '*',
+          },
+          {
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET, POST, PUT, DELETE, OPTIONS',
+          },
+          {
+            key: 'Access-Control-Allow-Headers',
+            value: 'X-Requested-With, Content-Type, Accept',
           },
         ],
       },

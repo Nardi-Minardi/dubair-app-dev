@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useState, useEffect} from 'react'
 import { CiClock1, CiClock2 } from "react-icons/ci";
 import { FiTrash2, FiPlus } from "react-icons/fi";
 import moment from 'moment';
@@ -8,6 +8,9 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDi
 const Revoice = ({ items, items2 }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [scrollBehavior, setScrollBehavior] = useState("inside");
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   return (
     <>
       <div className=' bg-white w-full h-auto shadow-sm dark:bg-[#2B2C2B] rounded-sm'>
@@ -42,8 +45,8 @@ const Revoice = ({ items, items2 }) => {
                         Out</span>
                     </div>
                     <div className='text-xs gap-1 flex flex-col items-center'>
-                      <span>{moment().format('HH:mm:ss')}</span>
-                      <span>{moment().format('HH:mm:ss')}</span>
+                       <span>{moment(new Date()).format('HH:mm:ss')}</span>
+                      <span>{moment(new Date()).format('HH:mm:ss')}</span>
                     </div>
                   </div>
                 </div>

@@ -5,7 +5,6 @@ import { Provider } from "react-redux";
 import { store } from '@/store/store'
 import { LoadingContext } from "@/context/loadingContext";
 import Loader from '@/components/elements/loader';
-import { GoogleOAuthProvider } from '@react-oauth/google';
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistStore } from 'redux-persist'
 import NextNProgress from 'nextjs-progressbar';
@@ -26,20 +25,9 @@ const AuthLayout = ({ children, title }) => {
         <Head >
           <title>{title}</title>
         </Head>
-        <PersistGate loading={null} persistor={persistor}>
-          <GoogleOAuthProvider clientId="318621592135-jhcnrkn29dvkggogv2d450ert9v61rsn.apps.googleusercontent.com">
-            {/* <LoadingContext.Provider value={loadingAction}> */}
-              {/* {loading && <NextNProgress
-                height="3px"
-                color="#CA1313"
-                options={{ showSpinner: true }}
-
-              />} */}
-              {/* {loading && <Loader message="Loading..." />} */}
-              {children}
-            {/* </LoadingContext.Provider> */}
-          </GoogleOAuthProvider>
-        </PersistGate>
+        {/* <PersistGate loading={null} persistor={persistor}> */}
+          {children}
+        {/* </PersistGate> */}
       </ThemeProvider>
     </Provider>
   )

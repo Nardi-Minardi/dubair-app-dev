@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { API_URL } from '../../config';
-import { storeData } from '@/utils/LocalStorage';
+import { API_URL, APP_NAME } from '../../config';
+import { tokenAuth } from '@/utils/LocalStorage';
+import Cookies from 'js-cookie';
 
 const initialState = {
   user: {},
@@ -11,13 +12,13 @@ const initialState = {
 
 export const loginUser = createAsyncThunk(
   'auth/login',
-  async (loginData, { rejectWithValue }) => {
+  async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${API_URL}/login`, loginData,
+      const response = await axios.post(`${API_URL}/account/login`, data,
         {
           headers: {
             'Content-Type': 'application/json',
-            'Accept': 'application/json'
+            'Accept': 'application/json',
           }
         });
       return response;
@@ -27,14 +28,34 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-export const loginByGoogle = createAsyncThunk(
-  'auth/loginByGoogle',
-  async (loginData, { rejectWithValue }) => {
+export const registerUser = createAsyncThunk(
+  'auth/register',
+  async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${API_URL}/login_google`, loginData,
+      const response = await axios.post(`${API_URL}/account`, data,
         {
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }
+        });
+      console.log('response.data', response)
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response);
+    }
+  }
+);
+
+export const loginByGoogle = createAsyncThunk(
+  'auth/loginByGoogle',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${API_URL}/account/google`, data,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
           }
         });
       return response;
@@ -48,50 +69,34 @@ export const fetchUser = createAsyncThunk(
   'auth/fetchUser',
   async (token, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${API_URL}/user/me`,
+      const response = await axios.get(`${API_URL}/account`,
         {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
           }
         });
-      return response.data;
+      console.log('response.data user', response.data)
+      return response;
     } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
-
-export const updateUser = createAsyncThunk(
-  'auth/updateUser',
-  async (data, { rejectWithValue }) => {
-    try {
-      const response = await axios.post(`${API_URL}/user/update`, data.body,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${data.token}`
-          }
-        });
-        console.log('response.data logout', response.data)
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error.response);
     }
   }
 );
 
 export const logoutUser = createAsyncThunk(
   'auth/logout',
-  async (token, { rejectWithValue }) => {
+  async (  rejectWithValue ) => {
     try {
-      await axios.post(`${API_URL}/user/logout`, {},
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          }
-        });
+      // await axios.post(`${API_URL}/user/logout`, {},
+      //   {
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //       'Authorization': `Bearer ${tokenAuth()}`
+      //     }
+      //   });
+      const cookiesName = `${APP_NAME}-token`;
+      Cookies.remove(cookiesName);
       return;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -104,13 +109,27 @@ const authSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: builder => {
+    //register
+    builder.addCase(registerUser.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(registerUser.fulfilled, (state, { payload }) => {
+      // state.user = payload.data.user;
+      // state.token = payload.data.token;
+      state.loading = false;
+      //clear error
+    });
+    builder.addCase(registerUser.rejected, (state, { payload }) => {
+      state.loading = false;
+    });
+
     //login
     builder.addCase(loginUser.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(loginUser.fulfilled, (state, { payload }) => {
-      state.user = payload.data.user;
-      state.token = payload.data.token;
+      state.user = payload.data;
+      state.token = payload.data?.idToken;
       state.loading = false;
       //clear error
      
@@ -139,17 +158,6 @@ const authSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(fetchUser.rejected, (state, { payload }) => {
-      state.loading = false;
-    });
-    //update user
-    builder.addCase(updateUser.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(updateUser.fulfilled, (state, { payload }) => {
-      state.user = payload.data;
-      state.loading = false;
-    });
-    builder.addCase(updateUser.rejected, (state, { payload }) => {
       state.loading = false;
     });
 

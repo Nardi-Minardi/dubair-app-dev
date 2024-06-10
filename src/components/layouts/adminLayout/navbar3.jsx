@@ -3,25 +3,32 @@ import {
   Bars3Icon,
 } from '@heroicons/react/20/solid'
 import { useRouter } from 'next/router'
-import { useSelector, useDispatch } from 'react-redux'
 import { logoutUser } from '@/store/slices/authSlice'
 import { FiPlus, FiUpload } from "react-icons/fi";
 import { useGlobalSidebarContext } from '@/context/sidebarContext'
 import { FiChevronsLeft } from "react-icons/fi";
 import Logo from '@/components/elements/logo'
 import UserDropdown from './userDropdown'
+import { useSelector, useDispatch } from 'react-redux'
+import { tokenAuth } from '@/utils/LocalStorage'
+import { fetchUser, logoutUser } from '@/store/slices/authSlice'
 
 const Navbar3 = ({ firstOpen, setFirstOpen, setTitle, title }) => {
   const dispatch = useDispatch()
   const router = useRouter()
+  const { user } = useSelector((state) => state.auth)
   const locale = router.locale
-  const { user, token } = useSelector((state) => state.rootSlice?.auth);
   const { closeSidebar, isSidebarOpen, showSidebar, tabActive, setTabActive } = useGlobalSidebarContext();
+
+  useEffect(() => {
+    dispatch(fetchUser(tokenAuth()))
+  }
+    , []);
 
   const handleLogout = (e) => {
     e.preventDefault()
     try {
-      dispatch(logoutUser(token))
+      dispatch(logoutUser(tokenAuth()))
       router.push('/login')
     } catch (error) {
       console.log(error)

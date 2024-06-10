@@ -32,7 +32,7 @@ const ExportLayout = ({ children, title }) => {
         <Head >
           <title>{title}</title>
         </Head>
-        <PersistGate loading={null} persistor={persistor}>
+        {/* <PersistGate loading={null} persistor={persistor}> */}
           <div className="flex h-auto pb-5 lg:h-[100vh] xl:h-[100vh] bg-[#FAFBFC] dark:bg-zinc-900">
             <SidebarPovider>
               {/* <Sidebar
@@ -55,7 +55,7 @@ const ExportLayout = ({ children, title }) => {
               </div>
             </SidebarPovider>
           </div>
-        </PersistGate>
+        {/* </PersistGate> */}
       </ThemeProvider>
     </Provider >
   )

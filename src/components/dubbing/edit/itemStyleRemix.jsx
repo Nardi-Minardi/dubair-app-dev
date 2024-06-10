@@ -4,7 +4,6 @@ import { FiTrash2, FiPlus } from "react-icons/fi";
 import moment from 'moment';
 import { useTheme } from 'next-themes';
 import { Avatar } from '@nextui-org/react';
-import PlayerComponent from '@/components/videoPlayer/playerComponent';
 import TimelineComponent from '@/components/videoPlayer/timelineComponent';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Grid, Pagination, Scrollbar, Navigation } from 'swiper/modules';

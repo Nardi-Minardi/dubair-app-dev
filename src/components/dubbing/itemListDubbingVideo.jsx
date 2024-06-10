@@ -1,10 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import { FiMoreVertical } from "react-icons/fi";
 import CrudDropdown from '../elements/crudDropdown';
+import videojs from 'video.js';
+import Player from '../videoPlayer/videojs/player';
 
 const ItemListDubbingVideo = ({ videos, isWatched, loading, theme }) => {
+  const [urlVideo, setUrlVideo] = useState([]);
+
+  useEffect(() => {
+    const newUrl = [];
+    videos?.map((video) => {
+      newUrl.push(video?.videoUrl);
+    });
+    setUrlVideo(newUrl);
+  }, [videos]);
+
   return (
     <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 max-h-[100vh] overflow-y-auto scrollbar-webkit">
       {videos?.map((episode, index) => {
@@ -18,20 +30,14 @@ const ItemListDubbingVideo = ({ videos, isWatched, loading, theme }) => {
               </SkeletonTheme>
             ) : (
               <>
-                <div className={`relative w-full h-[200px] md:h-[250px] lg:h-[250px] xl:h-[250px] flex-1 rounded-lg overflow-hidden  aspect-video ${isWatched ? 'opacity-60' : ''}`}>
-
-                  <img src={episode?.coverImage?.extraLarge || episode?.coverImage?.large}
-                    alt={episode?.title?.english}
-                    className="bg-[#18181b] h-full w-full object-cover aspect-w-16 aspect-h-9 rounded-lg transition-all duration-300 transform group-hover:scale-105 group-hover:opacity-60" quality={100} />
-
-                  {/* play icons */}
-                  {/* <div className="absolute inset-0 flex items-center justify-center cursor-pointer">
-                    <div className="hidden group-hover:flex items-center justify-center opacity-0 bg-white bg-opacity-40 
-                          hover:bg-gradient-to-t from-[#9E0BF3] via-[#66B0FE] to-[#454FEC]
-                          rounded-full shadow group-hover:opacity-90 w-12 h-12">
-                      <svg xmlns="http://www.w3.org/2000/svg" className='play-buttonicon w-5 h-5' viewBox="0 0 24 24"><path fill="currentColor" d="M21.409 9.353a2.998 2.998 0 0 1 0 5.294L8.597 21.614C6.534 22.737 4 21.277 4 18.968V5.033c0-2.31 2.534-3.769 4.597-2.648z" /></svg>
-                    </div>
-                  </div> */}
+                <div className={`relative w-full h-[200px] md:h-[250px] lg:h-[250px] xl:h-[250px]  flex-1 rounded-lg overflow-hidden  aspect-video ${isWatched ? 'opacity-60' : ''}`}>
+                  <video 
+                  src={Array.isArray(urlVideo) && urlVideo.length > 0 ? urlVideo[index] : ''}
+                  controls
+                  disablePictureInPicture 
+                  controlsList="noplaybackrate nodownload"
+                  className="w-full h-full object-cover aspect-w-16 aspect-h-9 rounded-lg"
+                  />
                 </div>
 
                 <div className="flex flex-col lg:flex-row xl:flex-row justify-between mb-8 mt-3">
@@ -48,10 +54,6 @@ const ItemListDubbingVideo = ({ videos, isWatched, loading, theme }) => {
                       />
                     </div>
                   </div>
-
-                  {/* <CrudDropdown
-                      episode={episode}
-                    /> */}
                 </div>
               </>
             )}
