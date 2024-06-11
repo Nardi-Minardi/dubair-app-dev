@@ -30,11 +30,11 @@ const DragDropFiles = ({ title, desc, fileFromLink, setFileFromLink, setTypeFrom
     setDragActive(false);
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       //validate is a format video
-      const formatAllowed = ["video/mp4", "video/mov", "video/avi", "video/mkv", "video/flv", "video/wmv", "video/3gp", "video/mpeg", "video/webm"];
+      const formatAllowed = ["video/mp4", "video/m4v", "video/mov", "video/webm"];
 
       const file = e.dataTransfer.files[0];
       const maxSizeFree = 5;
-      const size = (file.size / 1024 / 1024).toFixed(2);
+      const size = (file.size / 1024 / 1024 / 1024).toFixed(2);
 
       if (!formatAllowed.includes(file.type)) {
         toast.error('Please select a video file', {
@@ -52,7 +52,7 @@ const DragDropFiles = ({ title, desc, fileFromLink, setFileFromLink, setTypeFrom
       }
 
       if (size > maxSizeFree) {
-        toast.error('Please select a video file less than 5MB', {
+        toast.error('Please select a video file less than 5GB', {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: true,

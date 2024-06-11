@@ -98,7 +98,7 @@ const Login = () => {
               theme: "colored",
             });
           }
-          toast.error(data.error?.message, {
+          toast.error(data.error?.description, {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: true,
