@@ -116,7 +116,7 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
     const formData = new FormData();
     formData.append('name', projectName);
     if (fileFromLink) {
-      formData.append('file', fileFromLink);
+      formData.append('videoUrl', fileFromLink);
     }
     files.forEach((file) => {
       formData.append('file', file);
@@ -128,6 +128,7 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
     showLoader && showLoader();
 
     dispatch(createVideo(formData)).then((res) => {
+      console.log('res', res)
       const response = res.payload;
       const data = response.data;
 
