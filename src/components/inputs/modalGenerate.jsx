@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
+import React, { useState, useEffect, useRef, useContext, createRef } from 'react'
 import { useTheme } from 'next-themes'
 import {
   Modal,
@@ -16,7 +16,9 @@ import {
   Button,
   cn,
   Tooltip,
-  Select, SelectSection, SelectItem
+  Select,
+  SelectSection,
+  SelectItem,
 } from "@nextui-org/react";
 import { CiClock1, CiClock2 } from "react-icons/ci";
 import GenerateThumbnail from './generateThumbnail';
@@ -27,6 +29,8 @@ import { toast } from 'react-toastify';
 import { createVideo } from '@/store/slices/videoSlice';
 import { useDispatch } from 'react-redux';
 import { LoadingContext } from '@/context/loadingContext';
+import { translateLanguages, languages } from '@/libs/data';
+import AutoCompleteSelect from '../elements/autoCompleteSelect';
 
 const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files, noFileSelected, fileFromLink, typeFromLink }) => {
   const dispatch = useDispatch()
@@ -34,15 +38,17 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
   const [numberSpeaker, setNumberSpeaker] = useState('auto')
   const [speakerValue, setSpeakerValue] = useState(0)
   const [language, setLanguage] = useState('auto')
-  const [translateTo, setTranslateTo] = useState('id')
+  const [translateTo, setTranslateTo] = useState('')
   const [openInputSpeaker, setOpenInputSpeaker] = useState(false)
   const [autoDetectSpeaker, setAutoDetectSpeaker] = useState(true)
   const [autoDetectLanguage, setAutoDetectLanguage] = useState(true)
   const [errors, setErrors] = useState({
     projectName: '',
     numberSpeaker: '',
-    language: ''
+    translateTo: ''
   });
+  const modalRef = useRef(null)
+  
   const { showLoader, hideLoader } = useContext(LoadingContext);
 
   const speakers = [
@@ -50,17 +56,6 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
     { key: "manual", label: "Manual" },
   ];
 
-  const languages = [
-    { key: "auto", label: "Autodetect" },
-    { key: "en", label: "English" },
-    { key: "id", label: "Indonesia" },
-  ];
-
-  const translateLanguages = [
-    { key: "id", label: "Indonesia", icon: "/assets/icons/id-icon.png" },
-    { key: "en", label: "English", icon: "/assets/icons/en-icon.png" },
-    { key: "es", label: "Spanish", icon: "/assets/icons/es-icon.png" },
-  ];
 
   const handleSelectionChangeSpeaker = (e) => {
     if (e.target.value !== 'auto') {
@@ -83,9 +78,13 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
     setLanguage(e.target.value)
   };
 
-  const handleSelectionChangeTranslateTo = (e) => {
-    setTranslateTo(e.target.value)
-  };
+  const clearErrors = () => {
+    setErrors({
+      projectName: '',
+      numberSpeaker: '',
+      translateTo: ''
+    })
+  }
 
   const handleUpload = ({ onClose }) => {
     if (projectName === '') {
@@ -97,6 +96,12 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
       setErrors({ ...errors, numberSpeaker: 'Number of speakers is required' })
       return
     }
+
+    if (!translateTo) {
+      setErrors({ ...errors, translateTo: 'Translate to is required' })
+      return
+    }
+
 
     if (noFileSelected) {
       toast.error('Please select a video file', {
@@ -145,6 +150,7 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
         });
         onClose();
         clearFiles();
+        clearErrors();
       } else {
         console.log('error', response)
         toast.error('something went wrong, please try again', {
@@ -159,6 +165,7 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
         });
         onClose();
         clearFiles();
+        clearErrors();
       }
       hideLoader && hideLoader();
     });
@@ -168,6 +175,7 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
     <div className="flex flex-col gap-2">
 
       <Modal
+        ref={modalRef}
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         scrollBehavior={scrollBehavior}
@@ -195,7 +203,7 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
               <ModalBody>
                 <div className="px-8 h-auto flex flex-col py-12 w-full border-2 border-dashed border-[#4A5FEF] rounded-md ">
 
-                  {noFileSelected  ? (
+                  {noFileSelected ? (
 
                     <p className="text-sm text-gray-400 dark:text-white tex-center">No file selected</p>
                   ) : (
@@ -318,36 +326,15 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
                   </div>
 
                   <div className="flex w-full flex-col gap-2 mb-5">
-                    <Select
-                      items={translateLanguages}
+                    <AutoCompleteSelect
+                      data={translateLanguages.sort((a, b) => a.label.localeCompare(b.label))}
+                      selectedKey={translateTo}
+                      setSelectedKey={setTranslateTo}
                       label="Translate to"
-                      variant="bordered"
-                      labelPlacement="outside"
-                      selectedKeys={[translateTo]}
-                      onChange={handleSelectionChangeTranslateTo}
-                      classNames={{
-                        base: "w-full bg-white dark:bg-[#18181B] rounded-md",
-                        trigger: "h-12",
-                      }}
-
-                      renderValue={(items) => {
-                        return items.map((item) => (
-                          <div key={item.data.key} className="flex items-center gap-2">
-                            <img src={item.data.icon} alt={item.data.label} className="w-6 h-6" />
-                            <span>{item.data.label}</span>
-                          </div>
-                        ));
-                      }}
-                    >
-                      {(item) => (
-                        <SelectItem key={item.key}>
-                          <div className="flex items-center gap-2">
-                            <img src={item.icon} alt={item.label} className="w-6 h-6" />
-                            <span>{item.label}</span>
-                          </div>
-                        </SelectItem>
-                      )}
-                    </Select>
+                      setErrors={setErrors}
+                      errors={errors}
+                    />
+                    {errors && errors.translateTo && <span className="text-red-500 text-sm">{errors.translateTo}</span>}
                     {/* <p className="text-small text-default-500">Selected: {translateTo}</p> */}
                   </div>
 
