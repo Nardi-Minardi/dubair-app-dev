@@ -21,7 +21,7 @@ const LoaderProgres = ({ progres }) => {
       }}
     >
       <Progress
-        aria-label="Upload progress..." 
+        aria-label="Upload progress..."
         size="md"
         value={progres}
         color="primary"
@@ -41,7 +41,7 @@ const LoaderProgres = ({ progres }) => {
       </span> */}
       <span className="text-center text-white">
         {progres} %<br />
-        Don't refresh the page, we are working on it
+        {"Don't refresh the page, we are working on it"}
       </span>
     </div>
   )
