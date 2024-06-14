@@ -14,7 +14,6 @@ import {
   DropdownMenu,
   DropdownItem,
   Button,
-  cn,
   Tooltip,
   Select,
   SelectSection,
@@ -26,11 +25,15 @@ import { FiMoreVertical } from "react-icons/fi";
 import { HiOutlineTranslate } from "react-icons/hi";
 import ButtonGradient from '../buttons/buttonGradient';
 import { toast } from 'react-toastify';
-import { createVideo } from '@/store/slices/videoSlice';
+import { createVideo, fetchVideo } from '@/store/slices/videoSlice';
 import { useDispatch } from 'react-redux';
 import { LoadingContext } from '@/context/loadingContext';
 import { translateLanguages, languages } from '@/libs/data';
 import AutoCompleteSelect from '../elements/autoCompleteSelect';
+import LoaderProgres from '../elements/loaderProgres';
+import { API_URL } from '@/config';
+import { tokenAuth } from '@/utils/LocalStorage';
+import axios from 'axios';
 
 const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files, noFileSelected, fileFromLink, typeFromLink }) => {
   const dispatch = useDispatch()
@@ -48,8 +51,8 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
     translateTo: ''
   });
   const modalRef = useRef(null)
-  
-  const { showLoader, hideLoader } = useContext(LoadingContext);
+  const [progres, setProgres] = useState(0)
+  const [loading, setLoading] = useState(false)
 
   const speakers = [
     { key: "auto", label: "Autodetect" },
@@ -84,6 +87,7 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
       numberSpeaker: '',
       translateTo: ''
     })
+    setProgres(0)
   }
 
   const handleUpload = ({ onClose }) => {
@@ -102,7 +106,6 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
       return
     }
 
-
     if (noFileSelected) {
       toast.error('Please select a video file', {
         position: "top-right",
@@ -118,6 +121,7 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
       return;
     }
 
+    setLoading(true);
     const formData = new FormData();
     formData.append('name', projectName);
     if (fileFromLink) {
@@ -130,29 +134,55 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
     formData.append('originalLanguage', language);
     formData.append('translatedTo', translateTo);
 
-    showLoader && showLoader();
-
-    dispatch(createVideo(formData)).then((res) => {
-      console.log('res', res)
-      const response = res.payload;
-      const data = response.data;
-
-      if (response.status == 200) {
-        toast.success('Successfully created video', {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-        onClose();
-        clearFiles();
-        clearErrors();
-      } else {
-        console.log('error', response)
+    axios.post(`${API_URL}/projects`, formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${tokenAuth()}`,
+        },
+        onUploadProgress: (progressEvent) => {
+          const { loaded, total } = progressEvent;
+          let percent = Math.floor((loaded * 100) / total);
+          setProgres(percent);
+        }
+      }).then((res) => {
+        console.log('res', res)
+        const response = res.data;
+        if (res.status == 200) {
+          toast.success('Successfully created video', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          onClose();
+          clearFiles();
+          clearErrors();
+          setLoading(false);
+        } else {
+          toast.error('something went wrong, please try again', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          onClose();
+          clearFiles();
+          clearErrors();
+          setLoading(false);
+        }
+        setLoading(false);
+      }).catch((error) => {
+        console.log('error', error)
         toast.error('something went wrong, please try again', {
           position: "top-right",
           autoClose: 5000,
@@ -166,10 +196,53 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
         onClose();
         clearFiles();
         clearErrors();
-      }
-      hideLoader && hideLoader();
-    });
-  };
+        setLoading(false);
+      })
+  }
+
+  const handleCancel = ({ onClose }) => {
+    clearFiles();
+    onClose();
+  }
+  // dispatch(createVideo(formData)).then((res) => {
+  //   console.log('res', res)
+  //   const response = res.payload;
+  //   const data = response.data;
+
+  //   if (response.status == 200) {
+  //     toast.success('Successfully created video', {
+  //       position: "top-right",
+  //       autoClose: 5000,
+  //       hideProgressBar: true,
+  //       closeOnClick: true,
+  //       pauseOnHover: false,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "colored",
+  //     });
+  //     onClose();
+  //     clearFiles();
+  //     clearErrors();
+  //   } else {
+  //     console.log('error', response)
+  //     toast.error('something went wrong, please try again', {
+  //       position: "top-right",
+  //       autoClose: 5000,
+  //       hideProgressBar: true,
+  //       closeOnClick: true,
+  //       pauseOnHover: false,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "colored",
+  //     });
+  //     onClose();
+  //     clearFiles();
+  //     clearErrors();
+  //   }
+  //   setLoading(false);
+  // });
+
+  if (loading) return <LoaderProgres progres={progres} />
 
   return (
     <div className="flex flex-col gap-2">

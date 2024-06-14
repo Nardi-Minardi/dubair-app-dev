@@ -6,8 +6,8 @@ import Loader from "@/components/elements/loader";
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
 
 const options = [
-  { country: "Eng (US)", code: "en", flag: '/assets/icons/en-icon.png' },
-  { country: "Indonesia", code: "id", flag: '/assets/icons/id-icon.png' },
+  { country: "Eng (US)", code: "en", flag: '/assets/flags/en-icon.png' },
+  { country: "Indonesia", code: "id", flag: '/assets/flags/id-icon.png' },
 ];
 
 const LanguageSelector = () => {
