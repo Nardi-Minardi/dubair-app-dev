@@ -147,7 +147,7 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
           setProgres(percent);
         }
       }).then((res) => {
-        console.log('res', res)
+        // console.log('res', res)
         const response = res.data;
         if (res.status == 200) {
           toast.success('Successfully created video', {
@@ -164,6 +164,7 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
           clearFiles();
           clearErrors();
           setLoading(false);
+          dispatch(fetchVideo())
         } else {
           toast.error('something went wrong, please try again', {
             position: "top-right",

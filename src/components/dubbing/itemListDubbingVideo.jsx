@@ -8,6 +8,7 @@ import Player from '../videoPlayer/videojs/player';
 
 const ItemListDubbingVideo = ({ videos, isWatched, loading, theme }) => {
   const [urlVideo, setUrlVideo] = useState([]);
+  const videoRef = useRef(null);
 
   useEffect(() => {
     const newUrl = [];
@@ -31,12 +32,14 @@ const ItemListDubbingVideo = ({ videos, isWatched, loading, theme }) => {
             ) : (
               <>
                 <div className={`relative w-full h-[200px] md:h-[250px] lg:h-[250px] xl:h-[250px]  flex-1 rounded-lg overflow-hidden  aspect-video ${isWatched ? 'opacity-60' : ''}`}>
-                  <video 
-                  src={Array.isArray(urlVideo) && urlVideo.length > 0 ? urlVideo[index] : ''}
-                  controls
-                  disablePictureInPicture 
-                  controlsList="noplaybackrate nodownload"
-                  className="w-full h-full object-cover aspect-w-16 aspect-h-9 rounded-lg"
+                  <video
+                    id={`video-${video.projectId}`}
+                    ref={videoRef}
+                    src={Array.isArray(urlVideo) && urlVideo.length > 0 ? urlVideo[index] : ''}
+                    controls
+                    disablePictureInPicture
+                    controlsList="noplaybackrate nodownload"
+                    className="w-full h-full object-cover aspect-w-16 aspect-h-9 rounded-lg"
                   />
                 </div>
 
@@ -50,6 +53,7 @@ const ItemListDubbingVideo = ({ videos, isWatched, loading, theme }) => {
                         <span className="text-sm text-gray-400">Viewed 5 days ago - Edited 3 months ago</span>
                       </div>
                       <CrudDropdown
+                        videoRef={videoRef}
                         video={video}
                       />
                     </div>

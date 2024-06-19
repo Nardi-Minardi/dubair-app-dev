@@ -63,7 +63,7 @@ const ItemDetailDubbingVideo = ({ videos, isWatched, loading, theme }) => {
                   <div className={`relative  max-w-[80px] h-[100px] lg:max-w-[80px] lg:h-[80px] xl:max-w-[80px] xl:h-[80px]
                       rounded-lg overflow-hidden bg-[#18181b] aspect-video ${isWatched ? 'opacity-60' : ''}`}>
                     <video
-                      id={`video-${index}`}
+                      id={`video-${video.projectId}`}
                       ref={(el) => (videoRef.current = el)}
                       src={Array.isArray(urlVideo) && urlVideo.length > 0 ? urlVideo[index] : ''}
                       // controls
@@ -74,7 +74,7 @@ const ItemDetailDubbingVideo = ({ videos, isWatched, loading, theme }) => {
                     {/* play icons */}
                     {!pauseShow ? (
                       <div
-                        onClick={() => onPlayVideo(index)}
+                        onClick={() => onPlayVideo(video.projectId)}
                         className="absolute inset-0 flex items-center justify-center cursor-pointer">
                         <div className="hidden group-hover:flex items-center justify-center opacity-0 bg-white bg-opacity-40 
                             hover:bg-gradient-to-t from-[#9E0BF3] via-[#66B0FE] to-[#454FEC]
@@ -87,7 +87,7 @@ const ItemDetailDubbingVideo = ({ videos, isWatched, loading, theme }) => {
                       </div>
                     ) : (
                       <div
-                        onClick={() => onPauseVideo(index)}
+                        onClick={() => onPauseVideo(video.projectId)}
                         className="absolute inset-0 flex items-center justify-center cursor-pointer">
                         <div className="hidden group-hover:flex items-center justify-center opacity-0 bg-white bg-opacity-40 
                             hover:bg-gradient-to-t from-[#9E0BF3] via-[#66B0FE] to-[#454FEC]
