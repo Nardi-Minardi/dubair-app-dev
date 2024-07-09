@@ -22,7 +22,7 @@ export const fetchVideo = createAsyncThunk(
       });
       return response.data;
     } catch (error) {
-      console.error('Error fetching data from AniList:', error);
+      console.error('Error fetching data:', error);
       return rejectWithValue(error);
     }
   }
@@ -62,7 +62,7 @@ export const deleteVideo = createAsyncThunk(
         });
       return response;
     } catch (error) {
-      console.error('Error creating video:', error);
+      console.error('Error deleting video:', error);
       return rejectWithValue(error);
     }
   }
@@ -103,6 +103,7 @@ const videoSlice = createSlice({
     });
     builder.addCase(deleteVideo.fulfilled, (state, { payload }) => {
       const filter = state.videos.filter((video) => video.id !== state.videos.id);
+      console.log('filter', filter)
       state.videos = filter;
       state.loading = false;
     });

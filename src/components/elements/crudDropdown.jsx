@@ -1,13 +1,15 @@
 import React from 'react'
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button, cn, Tooltip } from "@nextui-org/react";
 import { FiEdit2, FiDownload, FiScissors, FiMoreVertical } from "react-icons/fi";
-import {useRouter} from 'next/router'
-import {useDispatch} from 'react-redux'
+import { useRouter } from 'next/router'
+import { useDispatch } from 'react-redux'
 import { deleteVideo } from '@/store/slices/videoSlice';
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
+import axios from 'axios'
+import { API_URL } from '@/config';
+import { tokenAuth } from '@/utils/LocalStorage';
 
 const CrudDropdown = ({ video, videoRef }) => {
-  console.log('video ref from dropdown', videoRef)
   const dispatch = useDispatch()
   const router = useRouter()
   const locale = router.locale
@@ -21,7 +23,7 @@ const CrudDropdown = ({ video, videoRef }) => {
     dispatch(deleteVideo(video.projectId)).then((response) => {
       // console.log('response delete from dropdown', response)
       const resp = response.payload
-      if (resp.status === 200){
+      if (resp.status === 200) {
         toast.success('Video deleted successfully')
       } else {
         toast.error('something went wrong, error deleting video')
@@ -29,24 +31,27 @@ const CrudDropdown = ({ video, videoRef }) => {
     })
   }
 
-  const handleDownload = () => {
+  const handleDownload = async () => {
     const elementVideo = document.getElementById(`video-${video.projectId}`);
     const url = elementVideo.src;
     //download
     window.open(url)
-    // const a = document.createElement
-    // ('a');
-    // a.href
-    // = url;
-    // a.download
-    // = 'video.mp4';
-    // a.click();
-    
+    // return await axios.get(`${API_URL}/projects/${video.projectId}/download`, {
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'Authorization': `Bearer ${tokenAuth()}`
+    //   },
+    // }).then((response) => {
+    //   console.log('response download', response)
+    // }).catch((error) => {
+    //   console.log('error download', error)
+    // })
   }
 
   const handleOption = (option) => {
     if (option === 'edit') {
-      router.push(`/${locale}/dubbing/${option}/${video.projectId}`)
+      // router.push(`/${locale}/dubbing/${option}/${video.projectId}`)
+      toast.info('this feature is under development')
     } else if (option === 'download') {
       handleDownload()
     } else if (option === 'cut') {

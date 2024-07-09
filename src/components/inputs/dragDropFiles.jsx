@@ -5,7 +5,7 @@ import { CiClock1, CiClock2 } from "react-icons/ci";
 import ModalGenerate from './modalGenerate';
 import { toast } from 'react-toastify';
 
-const DragDropFiles = ({ title, desc, fileFromLink, setFileFromLink, setTypeFromLink, typeFromLink }) => {
+const DragDropFiles = ({ title, desc, user, fileFromLink, setFileFromLink, setTypeFromLink, typeFromLink, handleUploadFromGoogleDrive }) => {
   const inputRef = useRef(null)
   const { theme, setTheme } = useTheme()
   const [dragActive, setDragActive] = useState(false);
@@ -19,7 +19,7 @@ const DragDropFiles = ({ title, desc, fileFromLink, setFileFromLink, setTypeFrom
     setMounted(true)
     if (fileFromLink) {
       setNoFileSelected(false)
-      onOpen()
+      handleOpenModal()
     }
     // console.log('files', files)
   }, [files, fileFromLink, typeFromLink])
@@ -70,7 +70,7 @@ const DragDropFiles = ({ title, desc, fileFromLink, setFileFromLink, setTypeFrom
         setFiles((prevState) => [...prevState, e.dataTransfer.files[i]]);
       }
       setNoFileSelected(false)
-      onOpen()
+      handleOpenModal()
     }
   }
 
@@ -150,7 +150,7 @@ const DragDropFiles = ({ title, desc, fileFromLink, setFileFromLink, setTypeFrom
         setFiles((prevState) => [...prevState, e.target.files[i]]);
       }
       setNoFileSelected(false)
-      onOpen()
+      handleOpenModal()
     }
   }
 
@@ -161,6 +161,23 @@ const DragDropFiles = ({ title, desc, fileFromLink, setFileFromLink, setTypeFrom
     setFileFromLink('')
     setTypeFromLink('')
     setNoFileSelected(true)
+  }
+
+  const handleOpenModal = () => {
+    if(user?.minutesAvailable <= 0) {
+      toast.error('You have no minutes available, please upgrade your plan', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      return
+    }
+    onOpen();
   }
 
   return (
@@ -193,17 +210,20 @@ const DragDropFiles = ({ title, desc, fileFromLink, setFileFromLink, setTypeFrom
           />
 
           <div className='flex flex-col mb-8'>
-            <div className='flex flex-row items-center justify-center gap-8 lg:gap-20 xl:gap-20 mt-5'>
-              <a href="#" onClick={() => inputRef.current.click()}>
+            <div className='flex cursor-pointer flex-row items-center justify-center gap-8 lg:gap-20 xl:gap-20 mt-5'>
+              <span onClick={() => inputRef.current.click()}>
                 <img src={`/assets/icons/upload-folder-${theme === 'dark' ? 'dark' : 'light'}.svg`}
                   alt="upload" className="w-6 h-6 " />
-              </a>
-              <a href="https://www.google.com/intl/in/drive/about.html">
+              </span>
+              <span onClick={() => {
+                toast.info('this feature is under development')
+                // handleUploadFromGoogleDrive()
+                }}>
                 <img src={`/assets/icons/upload-drive.svg`} alt="upload" className="w-6 h-6 " />
-              </a>
-              <a href="https://www.dropbox.com/">
+              </span>
+              <span onClick={() => toast.info('this feature is under development')}>
                 <img src={`/assets/icons/upload-box.svg`} alt="upload" className="w-6 h-6 " />
-              </a>
+              </span>
               {/* <a href="#">
                 <img src={`/assets/icons/upload-link-${theme === 'dark' ? 'dark' : 'light'}.svg`}
                   alt="upload" className="w-6 h-6 " />

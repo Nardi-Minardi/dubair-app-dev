@@ -147,7 +147,7 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
           setProgres(percent);
         }
       }).then((res) => {
-        // console.log('res', res)
+        console.log('res', res)
         const response = res.data;
         if (res.status == 200) {
           toast.success('Successfully created video', {
@@ -184,16 +184,31 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
         setLoading(false);
       }).catch((error) => {
         console.log('error', error)
-        toast.error('something went wrong, please try again', {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+        const data = error.response.data;
+        if (data.error?.status == 400) {
+          toast.error(`something went wrong, ${data.error?.description}`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        } else {
+          toast.error('something went wrong, please try again', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+
+        }
         onClose();
         clearFiles();
         clearErrors();
@@ -205,43 +220,6 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
     clearFiles();
     onClose();
   }
-  // dispatch(createVideo(formData)).then((res) => {
-  //   console.log('res', res)
-  //   const response = res.payload;
-  //   const data = response.data;
-
-  //   if (response.status == 200) {
-  //     toast.success('Successfully created video', {
-  //       position: "top-right",
-  //       autoClose: 5000,
-  //       hideProgressBar: true,
-  //       closeOnClick: true,
-  //       pauseOnHover: false,
-  //       draggable: true,
-  //       progress: undefined,
-  //       theme: "colored",
-  //     });
-  //     onClose();
-  //     clearFiles();
-  //     clearErrors();
-  //   } else {
-  //     console.log('error', response)
-  //     toast.error('something went wrong, please try again', {
-  //       position: "top-right",
-  //       autoClose: 5000,
-  //       hideProgressBar: true,
-  //       closeOnClick: true,
-  //       pauseOnHover: false,
-  //       draggable: true,
-  //       progress: undefined,
-  //       theme: "colored",
-  //     });
-  //     onClose();
-  //     clearFiles();
-  //     clearErrors();
-  //   }
-  //   setLoading(false);
-  // });
 
   if (loading) return <LoaderProgres progres={progres} />
 

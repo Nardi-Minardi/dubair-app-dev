@@ -105,8 +105,8 @@ const ItemDetailDubbingVideo = ({ videos, isWatched, loading, theme }) => {
                       {video?.name}
                     </div>
                     <div className="flex flex-col md:flex-row lg:flex-row xl:flex-row  gap-2">
-                      <span className="text-sm text-gray-400">Viewed 5 days ago</span>-
-                      <span className="text-sm text-gray-400">Edited 3 months ago</span>
+                      {/* <span className="text-sm text-gray-400">Viewed 5 days ago</span>-
+                      <span className="text-sm text-gray-400">Edited 3 months ago</span> */}
                     </div>
                   </div>
                 </div>
