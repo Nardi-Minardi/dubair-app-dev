@@ -35,9 +35,10 @@ const UserDropdown = ({ user, loading, handleLogout }) => {
         ) : (
           <>
             <span className="text-lg md-max:w-20 w-32 truncate mt-1">
-              {user?.name}</span>
+              {user?.name ? user?.name : 'username'}
+            </span>
             <span className="font-extralight lg-max:text-sm md-max:w-20 w-40 truncate">
-              {user?.email?.substring(0, 15) + '...'}
+              {user?.email ? user?.email?.substring(0, 15) + '...' : 'email'}
             </span>
           </>
         )}

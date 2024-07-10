@@ -115,7 +115,8 @@ const Login = () => {
               expires: 7,
               secure: true,
             });
-          router.push('/dubbing');
+          window.location.href = '/dubbing';
+          // router.push('/dubbing');
         }
         hideLoader && hideLoader();
       })
@@ -144,7 +145,8 @@ const Login = () => {
                 expires: 7,
                 secure: true,
               });
-            router.push('/dubbing');
+            window.location.href = '/dubbing';
+            // router.push('/dubbing');
           } else {
             toast.error('an error occurred', {
               position: "top-right",
