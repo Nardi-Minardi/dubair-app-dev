@@ -46,6 +46,13 @@ const MinutesAvailable = () => {
     <div className="mt-6 py-2 sm:w-full">
       <div className="flex flex-col w-full h-full py-10 bg-white dark:bg-[#2B2C2B] rounded-xl shadow-md">
         <div className='justify-end flex flex-row gap-4 mx-5 mb-3'>
+          <button
+            onClick={() => router.push('/pricing')}
+            className=" bg-gradient-to-t from-[#9E0BF3] via-[#66B0FE] to-[#454FEC] text-white 
+            text-xs py-2 px-4 rounded-lg flex items-center">
+            VIP
+            <img src="/assets/icons/diamond-white.svg" className="w-4 ml-1" />
+          </button>
           <Tooltip content="Refresh">
             <button
               onClick={handleRefresh}
@@ -72,9 +79,9 @@ const MinutesAvailable = () => {
             <div className='flex flex-col gap-2 shadow-lg p-4 rounded-sm w-1/2'>
               <h1 className='text-2xl font-bold text-gray-800 dark:text-white'>Minutes Available</h1>
               <p className='text-lg text-gray-500 dark:text-gray-300'>You have {" "}
-              <span className='text-blue-500 font-bold'>{formatToDecimal(minutesAvailable)} </span> / {" "}
-              <span className='text-red-500 font-bold'>{formatToDecimal(minutesUsed)} </span> 
-              minutes used</p>
+                <span className='text-blue-500 font-bold'>{formatToDecimal(minutesAvailable)} </span> / {" "}
+                <span className='text-red-500 font-bold'>{formatToDecimal(minutesUsed)} </span>
+                minutes used</p>
             </div>
           </div>
         )}

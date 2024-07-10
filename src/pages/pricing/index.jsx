@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Logo from '@/components/elements/logo'
 import { MdCheck } from "react-icons/md";
 import { ThemeProvider } from "next-themes"
+import Link from 'next/link';
 
 const Pricing = () => {
   const [activeTab, setActiveTab] = useState("Monthly");
@@ -181,7 +182,10 @@ const Pricing = () => {
   return (
     <ThemeProvider attribute="class">
       <div className="pl-8 py-4">
-        <Logo />
+        <Link className="h-auto w-auto" href="/dubbing">
+          <img src={'/assets/images/logo.svg'} alt="logo"
+          />
+        </Link>
       </div>
       {/* 4 box pricing */}
       <div className="bg-white py-12 dark:bg-[#18181B]" >
@@ -215,7 +219,7 @@ const Pricing = () => {
                     </div>
                   ))}
                 </ul>
-             
+
               </div>
             )}
             {data[activeTab.toLowerCase()].inovator && (
@@ -235,7 +239,7 @@ const Pricing = () => {
                     </div>
                   ))}
                 </ul>
-                
+
               </div>
             )}
             {data[activeTab.toLowerCase()].studioDub && (
@@ -255,7 +259,7 @@ const Pricing = () => {
                     </div>
                   ))}
                 </ul>
-                
+
               </div>
             )}
             {data[activeTab.toLowerCase()].agencyDub && (
@@ -275,7 +279,7 @@ const Pricing = () => {
                     </div>
                   ))}
                 </ul>
-               
+
               </div>
             )}
           </div>

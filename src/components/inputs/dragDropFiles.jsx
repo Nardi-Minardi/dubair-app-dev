@@ -4,9 +4,11 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDi
 import { CiClock1, CiClock2 } from "react-icons/ci";
 import ModalGenerate from './modalGenerate';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/router'
 
 const DragDropFiles = ({ title, desc, user, fileFromLink, setFileFromLink, setTypeFromLink, typeFromLink, handleUploadFromGoogleDrive }) => {
   const inputRef = useRef(null)
+  const router = useRouter()
   const { theme, setTheme } = useTheme()
   const [dragActive, setDragActive] = useState(false);
   const [mounted, setMounted] = useState(false)
@@ -145,7 +147,7 @@ const DragDropFiles = ({ title, desc, user, fileFromLink, setFileFromLink, setTy
         setFiles([]);
         return;
       }
-      
+
       for (let i = 0; i < e.target.files["length"]; i++) {
         setFiles((prevState) => [...prevState, e.target.files[i]]);
       }
@@ -164,7 +166,7 @@ const DragDropFiles = ({ title, desc, user, fileFromLink, setFileFromLink, setTy
   }
 
   const handleOpenModal = () => {
-    if(user?.minutesAvailable <= 0) {
+    if (user?.minutesAvailable <= 0) {
       toast.error('You have no minutes available, please upgrade your plan', {
         position: "top-right",
         autoClose: 5000,
@@ -175,6 +177,9 @@ const DragDropFiles = ({ title, desc, user, fileFromLink, setFileFromLink, setTy
         progress: undefined,
         theme: "colored",
       });
+      setTimeout(() => {
+        router.push('/pricing')
+      }, 5000)
       return
     }
     onOpen();
@@ -218,7 +223,7 @@ const DragDropFiles = ({ title, desc, user, fileFromLink, setFileFromLink, setTy
               <span onClick={() => {
                 toast.info('this feature is under development')
                 // handleUploadFromGoogleDrive()
-                }}>
+              }}>
                 <img src={`/assets/icons/upload-drive.svg`} alt="upload" className="w-6 h-6 " />
               </span>
               <span onClick={() => toast.info('this feature is under development')}>

@@ -15,11 +15,13 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDi
 import ListDocumentGdrive from '@/components/elements/listDocumentGdrive';
 import { fetchUser } from '@/store/slices/authSlice';
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 
 const Dubbing = () => {
   const t = useTranslations('Dubbing');
   const dispatch = useDispatch()
   const gdriveRef = useRef(null)
+  const router = useRouter()
   const [fileFromLink, setFileFromLink] = useState('')
   const [typeFromLink, setTypeFromLink] = useState('')
   const [isYoutube, setIsYoutube] = useState(false)
@@ -80,6 +82,10 @@ const Dubbing = () => {
         progress: undefined,
         theme: "colored",
       });
+
+      setTimeout(() => {
+        router.push('/pricing')
+      }, 5000)
       return
     }
 

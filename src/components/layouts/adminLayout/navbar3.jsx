@@ -11,6 +11,9 @@ import UserDropdown from './userDropdown'
 import { useSelector, useDispatch } from 'react-redux'
 import { tokenAuth } from '@/utils/LocalStorage'
 import { fetchUser, logoutUser } from '@/store/slices/authSlice'
+//icon arrow left from heroicons
+import { ChevronLeftIcon } from '@heroicons/react/20/solid'
+
 
 const Navbar3 = ({ firstOpen, setFirstOpen, setTitle, title }) => {
   const dispatch = useDispatch()
@@ -47,12 +50,22 @@ const Navbar3 = ({ firstOpen, setFirstOpen, setTitle, title }) => {
           <Logo />
         </div>
         <div className='flex flex-row w-full items-center  justify-end gap-4'>
-          <button
+          {/* <button
             onClick={handleLogout}
             className=" bg-gradient-to-t from-[#9E0BF3] via-[#66B0FE] to-[#454FEC] text-white 
             text-xs py-2 px-4 rounded-lg flex items-center">
             VIP
             <img src="/assets/icons/diamond-white.svg" className="w-4 ml-1" />
+          </button> */}
+          <button
+            onClick={() => {
+              router.push('/dubbing')
+            }
+            }
+            className=" bg-gradient-to-t from-[#9E0BF3] via-[#66B0FE] to-[#454FEC] text-white 
+            text-xs py-2 px-4 rounded-lg flex items-center">
+            <ChevronLeftIcon className="w-4 h-4" />
+            Back to home
           </button>
           <UserDropdown loading={loading} user={user} handleLogout={handleLogout} />
         </div>
