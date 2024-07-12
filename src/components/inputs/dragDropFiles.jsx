@@ -6,7 +6,7 @@ import ModalGenerate from './modalGenerate';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router'
 
-const DragDropFiles = ({ title, desc, user, fileFromLink, setFileFromLink, setTypeFromLink, typeFromLink, handleUploadFromGoogleDrive }) => {
+const DragDropFiles = ({ title, desc, user, getVideo, fileFromLink, setFileFromLink, setTypeFromLink, typeFromLink, handleUploadFromGoogleDrive }) => {
   const inputRef = useRef(null)
   const router = useRouter()
   const { theme, setTheme } = useTheme()
@@ -166,7 +166,7 @@ const DragDropFiles = ({ title, desc, user, fileFromLink, setFileFromLink, setTy
   }
 
   const handleOpenModal = () => {
-    if (user?.minutesAvailable <= 0) {
+    if (user?.minutesAvailable <= user?.minutesUsed || user?.minutesAvailable === 0) {
       toast.error('You have no minutes available, please upgrade your plan', {
         position: "top-right",
         autoClose: 5000,
@@ -250,6 +250,7 @@ const DragDropFiles = ({ title, desc, user, fileFromLink, setFileFromLink, setTy
         fileFromLink={fileFromLink}
         noFileSelected={noFileSelected}
         typeFromLink={typeFromLink}
+        getVideo={getVideo}
       />
     </>
   )

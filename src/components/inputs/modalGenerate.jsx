@@ -35,7 +35,7 @@ import { API_URL } from '@/config';
 import { tokenAuth } from '@/utils/LocalStorage';
 import axios from 'axios';
 
-const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files, noFileSelected, fileFromLink, typeFromLink }) => {
+const ModalGenerate = ({ isOpen, onOpenChange, getVideo, scrollBehavior, clearFiles, files, noFileSelected, fileFromLink, typeFromLink }) => {
   const dispatch = useDispatch()
   const [projectName, setProjectName] = useState('')
   const [numberSpeaker, setNumberSpeaker] = useState('auto')
@@ -147,7 +147,7 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
           setProgres(percent);
         }
       }).then((res) => {
-        console.log('res', res)
+        // console.log('res', res)
         const response = res.data;
         if (res.status == 200) {
           toast.success('Successfully created video', {
@@ -164,7 +164,7 @@ const ModalGenerate = ({ isOpen, onOpenChange, scrollBehavior, clearFiles, files
           clearFiles();
           clearErrors();
           setLoading(false);
-          dispatch(fetchVideo())
+          getVideo()
         } else {
           toast.error('something went wrong, please try again', {
             position: "top-right",

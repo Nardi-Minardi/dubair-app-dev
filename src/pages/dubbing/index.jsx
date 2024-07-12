@@ -10,12 +10,14 @@ import { toast } from 'react-toastify'
 import { get_filesize } from '@/utils/videoHook';
 import axios from 'axios';
 import ytdl from 'ytdl-core';
-import { API_KEY_FIREBASE, API_KEY_GDRIVE, GOOGLE_CLIENT_ID } from '@/config';
+import { API_KEY_GDRIVE, GOOGLE_CLIENT_ID } from '@/config';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, RadioGroup, Radio } from "@nextui-org/react";
 import ListDocumentGdrive from '@/components/elements/listDocumentGdrive';
 import { fetchUser } from '@/store/slices/authSlice';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import { tokenAuth } from '@/utils/LocalStorage';
+import { acumulatedDuration } from '@/utils/acumlatedDuration';
 
 const Dubbing = () => {
   const t = useTranslations('Dubbing');
@@ -28,7 +30,9 @@ const Dubbing = () => {
   const [source, setSource] = useState('')
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [scrollBehavior, setScrollBehavior] = useState("inside");
-  const {user} = useSelector((state) => state.auth)
+  const [user, setUser] = useState(null)
+  const [minutesAvailable, setMinutesAvailable] = useState(0)
+  const [minutesUsed, setMinutesUsed] = useState(0)
 
   const [listDocumentsVisible, setListDocumentsVisibility] = useState(false);
   const [documents, setDocuments] = useState([]);
@@ -38,7 +42,16 @@ const Dubbing = () => {
 
   useEffect(() => {
     getVideo()
-    fetchUser()
+    dispatch(fetchUser(tokenAuth())).then((res) => {
+      console.log('res user', res.payload.data)
+      setUser(res.payload?.data)
+      const minutesAvailable = acumulatedDuration(res.payload?.data?.minutesAvailable)
+      const minutesUsed = acumulatedDuration(res.payload?.data?.minutesUsed)
+      // console.log('minutesAvailable', minutesAvailable)
+      // console.log('minutesUsed', minutesUsed)
+      // setMinutesAvailable(minutesAvailable)
+      // setMinutesUsed(minutesUsed)
+    })
   }, [])
 
   const getVideo = () => {
@@ -71,7 +84,7 @@ const Dubbing = () => {
       return
     }
 
-    if(user?.minutesAvailable <= 0) {
+    if (user?.minutesAvailable <= user?.minutesUsed || user?.minutesAvailable === 0) {
       toast.error('You have no minutes available, please upgrade your plan', {
         position: "top-right",
         autoClose: 5000,
@@ -162,6 +175,7 @@ const Dubbing = () => {
       gapi.client.load('drive', 'v3', () => {
         gapi.auth2.getAuthInstance().signIn().then(() => {
           // const user = gapi.auth2.getAuthInstance().currentUser.get();
+          // console.log('user', user)
           updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
           onOpen();
         });
@@ -245,6 +259,7 @@ const Dubbing = () => {
               handleUploadFromGoogleDrive={handleUploadFromtGooggleDrive}
               gdriveRef={gdriveRef}
               user={user}
+              getVideo={getVideo}
             />
             {/* OR */}
             <div className="flex items-center justify-center gap-2 mt-4">

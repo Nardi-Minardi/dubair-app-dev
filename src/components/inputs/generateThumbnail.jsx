@@ -6,6 +6,7 @@ import {
 import videojs from 'video.js';
 import Player from "../videoPlayer/videojs/player";
 import { get_filesize } from "@/utils/videoHook";
+import { acumulatedDuration } from "@/utils/acumlatedDuration";
 
 const GenerateThumbnail = ({ file, fileFromLink, typeFromLink, clearFiles, onClose, noFileSelected, setSpeakerValue, setLanguage, autoDetectSpeaker, autoDetectLanguage }) => {
   const [duration, setDuration] = useState(0);
@@ -65,13 +66,6 @@ const GenerateThumbnail = ({ file, fileFromLink, typeFromLink, clearFiles, onClo
       videojs.log('player will dispose');
     });
   };
-
-  const acumulatedDuration = (duration) => {
-    let hours = Math.floor(duration / 3600);
-    let minutes = Math.floor((duration % 3600) / 60);
-    let seconds = Math.floor(duration % 60);
-    return `${hours}:${minutes}:${seconds}`;
-  }
 
 
   return (
