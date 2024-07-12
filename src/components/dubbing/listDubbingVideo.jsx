@@ -167,9 +167,9 @@ const ListDubbingVideo = ({ getVideo }) => {
       <div className='pb-8 h-auto'>
         {totalData > 0 ? (
           layout === 'list' ? (
-            <ItemListDubbingVideo loading={loading} theme={theme} videos={filteredData} isWatched={isWatched} />
+            <ItemListDubbingVideo getVideo={getVideo} loading={loading} theme={theme} videos={filteredData} isWatched={isWatched} />
           ) : (
-            <ItemDetailDubbingVideo loading={loading} theme={theme} videos={filteredData} isWatched={isWatched} />
+            <ItemDetailDubbingVideo getVideo={getVideo} loading={loading} theme={theme} videos={filteredData} isWatched={isWatched} />
           )
         ) : (
           <div className="flex items-center justify-center h-[100px]">

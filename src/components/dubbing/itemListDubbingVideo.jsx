@@ -6,7 +6,7 @@ import CrudDropdown from '../elements/crudDropdown';
 import videojs from 'video.js';
 import Player from '../videoPlayer/videojs/player';
 
-const ItemListDubbingVideo = ({ videos, isWatched, loading, theme }) => {
+const ItemListDubbingVideo = ({ videos, isWatched, loading, theme, getVideo }) => {
   const [urlVideo, setUrlVideo] = useState([]);
   const videoRef = useRef(null);
 
@@ -55,6 +55,7 @@ const ItemListDubbingVideo = ({ videos, isWatched, loading, theme }) => {
                       <CrudDropdown
                         videoRef={videoRef}
                         video={video}
+                        getVideo={getVideo}
                       />
                     </div>
                   </div>

@@ -4,7 +4,7 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import { FiMoreVertical } from "react-icons/fi";
 import CrudDropdown from '../elements/crudDropdown';
 
-const ItemDetailDubbingVideo = ({ videos, isWatched, loading, theme }) => {
+const ItemDetailDubbingVideo = ({ videos, isWatched, loading, theme, getVideo }) => {
   const [openPopover, setOpenPopover] = useState(false)
   const [urlVideo, setUrlVideo] = useState([]);
   const [pauseShow, setPauseShow] = useState(false);
@@ -113,6 +113,7 @@ const ItemDetailDubbingVideo = ({ videos, isWatched, loading, theme }) => {
                 <div className="flex items-center">
                   <CrudDropdown
                     video={video}
+                    getVideo={getVideo}
                   />
                 </div>
               </div>

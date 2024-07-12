@@ -9,7 +9,7 @@ import axios from 'axios'
 import { API_URL } from '@/config';
 import { tokenAuth } from '@/utils/LocalStorage';
 
-const CrudDropdown = ({ video, videoRef }) => {
+const CrudDropdown = ({ video, videoRef, getVideo }) => {
   const dispatch = useDispatch()
   const router = useRouter()
   const locale = router.locale
@@ -25,6 +25,7 @@ const CrudDropdown = ({ video, videoRef }) => {
       const resp = response.payload
       if (resp.status === 200) {
         toast.success('Video deleted successfully')
+        getVideo()
       } else {
         toast.error('something went wrong, error deleting video')
       }

@@ -6,10 +6,10 @@ import {
 import videojs from 'video.js';
 import Player from "../videoPlayer/videojs/player";
 import { get_filesize } from "@/utils/videoHook";
-import { acumulatedDuration } from "@/utils/acumlatedDuration";
+import { acumulatedDuration } from "@/utils/videoHook";
 
-const GenerateThumbnail = ({ file, fileFromLink, typeFromLink, clearFiles, onClose, noFileSelected, setSpeakerValue, setLanguage, autoDetectSpeaker, autoDetectLanguage }) => {
-  const [duration, setDuration] = useState(0);
+const GenerateThumbnail = ({ file, fileFromLink, typeFromLink, clearFiles, onClose, noFileSelected, setSpeakerValue, setLanguage, autoDetectSpeaker, autoDetectLanguage, duration, setDuration }) => {
+ 
   const videoRef = useRef(null);
   const playerRef = useRef(null);
   const [fileSize, setFileSize] = useState(0);

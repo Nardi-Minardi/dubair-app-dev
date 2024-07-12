@@ -37,6 +37,7 @@ import axios from 'axios';
 
 const ModalGenerate = ({ isOpen, onOpenChange, getVideo, scrollBehavior, clearFiles, files, noFileSelected, fileFromLink, typeFromLink }) => {
   const dispatch = useDispatch()
+  const [duration, setDuration] = useState(0);
   const [projectName, setProjectName] = useState('')
   const [numberSpeaker, setNumberSpeaker] = useState('auto')
   const [speakerValue, setSpeakerValue] = useState(0)
@@ -91,6 +92,7 @@ const ModalGenerate = ({ isOpen, onOpenChange, getVideo, scrollBehavior, clearFi
   }
 
   const handleUpload = ({ onClose }) => {
+    console.log('duration', duration)
     if (projectName === '') {
       setErrors({ ...errors, projectName: 'Project Name is required' })
       return
@@ -133,6 +135,7 @@ const ModalGenerate = ({ isOpen, onOpenChange, getVideo, scrollBehavior, clearFi
     formData.append('numberOfSpeaker', speakerValue);
     formData.append('originalLanguage', language);
     formData.append('translatedTo', translateTo);
+    formData.append('minutesUsed', duration);
 
     axios.post(`${API_URL}/projects`, formData,
       {
@@ -273,6 +276,8 @@ const ModalGenerate = ({ isOpen, onOpenChange, getVideo, scrollBehavior, clearFi
                             file={file}
                             noFileSelected={noFileSelected}
                             fileFromLink={fileFromLink}
+                            duration={duration}
+                            setDuration={setDuration}
                           />
 
                         </React.Fragment>
@@ -290,6 +295,8 @@ const ModalGenerate = ({ isOpen, onOpenChange, getVideo, scrollBehavior, clearFi
                           noFileSelected={noFileSelected}
                           fileFromLink={fileFromLink}
                           typeFromLink={typeFromLink}
+                          duration={duration}
+                          setDuration={setDuration}
                         />
 
                       </React.Fragment>

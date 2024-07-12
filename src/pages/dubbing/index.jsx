@@ -17,7 +17,7 @@ import { fetchUser } from '@/store/slices/authSlice';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { tokenAuth } from '@/utils/LocalStorage';
-import { acumulatedDuration } from '@/utils/acumlatedDuration';
+import { acumulatedDuration } from '@/utils/videoHook';
 
 const Dubbing = () => {
   const t = useTranslations('Dubbing');
@@ -43,14 +43,8 @@ const Dubbing = () => {
   useEffect(() => {
     getVideo()
     dispatch(fetchUser(tokenAuth())).then((res) => {
-      console.log('res user', res.payload.data)
+      // console.log('res user', res.payload.data)
       setUser(res.payload?.data)
-      const minutesAvailable = acumulatedDuration(res.payload?.data?.minutesAvailable)
-      const minutesUsed = acumulatedDuration(res.payload?.data?.minutesUsed)
-      // console.log('minutesAvailable', minutesAvailable)
-      // console.log('minutesUsed', minutesUsed)
-      // setMinutesAvailable(minutesAvailable)
-      // setMinutesUsed(minutesUsed)
     })
   }, [])
 

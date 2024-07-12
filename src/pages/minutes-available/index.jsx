@@ -5,6 +5,7 @@ import { Tooltip } from '@nextui-org/react';
 import AdminLayout from '@/layouts/adminLayout';
 import { fetchUser } from '@/store/slices/authSlice';
 import { tokenAuth } from '@/utils/LocalStorage';
+import { acumulatedDuration } from '@/utils/acumlatedDuration';
 
 const MinutesAvailable = () => {
   const router = useRouter();
@@ -36,10 +37,6 @@ const MinutesAvailable = () => {
   const handleRefresh = () => {
     setLoadingRefresh(true);
     getDataMinutes();
-  }
-
-  const formatToDecimal = (number) => {
-    return number.toFixed(2);
   }
 
   return (
@@ -79,8 +76,8 @@ const MinutesAvailable = () => {
             <div className='flex flex-col gap-2 shadow-lg p-4 rounded-sm w-1/2'>
               <h1 className='text-2xl font-bold text-gray-800 dark:text-white'>Minutes Available</h1>
               <p className='text-lg text-gray-500 dark:text-gray-300'>You have {" "}
-                <span className='text-blue-500 font-bold'>{formatToDecimal(minutesAvailable)} </span> / {" "}
-                <span className='text-red-500 font-bold'>{formatToDecimal(minutesUsed)} </span>
+                <span className='text-blue-500 font-bold'>{acumulatedDuration(minutesAvailable)} </span> / {" "}
+                <span className='text-red-500 font-bold'>{acumulatedDuration(minutesUsed)} </span>
                 minutes used</p>
             </div>
           </div>
