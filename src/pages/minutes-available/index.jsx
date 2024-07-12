@@ -5,7 +5,7 @@ import { Tooltip } from '@nextui-org/react';
 import AdminLayout from '@/layouts/adminLayout';
 import { fetchUser } from '@/store/slices/authSlice';
 import { tokenAuth } from '@/utils/LocalStorage';
-import { acumulatedDuration } from '@/utils/acumlatedDuration';
+import { acumulatedDuration } from '@/utils/videoHook';
 
 const MinutesAvailable = () => {
   const router = useRouter();
