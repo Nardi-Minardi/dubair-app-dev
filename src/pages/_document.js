@@ -19,6 +19,7 @@ export default function Document(props) {
         <meta property="og:description" content={APP_DESCRIPTION} />
         <meta name="description" content={APP_DESCRIPTION} />
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+        <title>{APP_NAME}</title>
       </Head>
       <body>
         <Main />

@@ -27,12 +27,12 @@ const menus = [
 ]
 
 const otherMenus = [
-  {
-    title: 'Settings',
-    icon: '/assets/icons/settings.svg',
-    iconWhite: '/assets/icons/settings-white.svg',
-    link: '/settings'
-  },
+  // {
+  //   title: 'Settings',
+  //   icon: '/assets/icons/settings.svg',
+  //   iconWhite: '/assets/icons/settings-white.svg',
+  //   link: '/settings'
+  // },
   {
     title: 'Account',
     icon: '/assets/icons/account.svg',

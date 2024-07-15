@@ -5,13 +5,13 @@ import {
 import ButtonDarkMode from '@/components/buttons/buttonDarkMode'
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
 import { useRouter } from 'next/router'
-import LanguageSelector from '@/components/elements/languageSelector'
 import { useSelector, useDispatch } from 'react-redux'
 import moment from 'moment'
 import { logoutUser } from '@/store/slices/authSlice'
 import { useGlobalSidebarContext } from '@/context/sidebarContext'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import { useTheme } from 'next-themes'
+import Link from 'next/link'
 
 const UserDropdown = ({ user, loading, handleLogout }) => {
   const { theme, setTheme } = useTheme();
@@ -23,14 +23,14 @@ const UserDropdown = ({ user, loading, handleLogout }) => {
       <div className="flex flex-col">
         {loading ? (
           <>
-          <SkeletonTheme baseColor={theme === 'dark' ? '#1f1f1f' : '#e0e0e0'}
-            highlightColor={theme === 'dark' ? '#333' : '#f5f5f5'}>
-            <Skeleton width={100} height={20} />
-          </SkeletonTheme>
-          <SkeletonTheme baseColor={theme === 'dark' ? '#1f1f1f' : '#e0e0e0'}
-            highlightColor={theme === 'dark' ? '#333' : '#f5f5f5'}>
-            <Skeleton width={100} height={20} />
-          </SkeletonTheme>
+            <SkeletonTheme baseColor={theme === 'dark' ? '#1f1f1f' : '#e0e0e0'}
+              highlightColor={theme === 'dark' ? '#333' : '#f5f5f5'}>
+              <Skeleton width={100} height={20} />
+            </SkeletonTheme>
+            <SkeletonTheme baseColor={theme === 'dark' ? '#1f1f1f' : '#e0e0e0'}
+              highlightColor={theme === 'dark' ? '#333' : '#f5f5f5'}>
+              <Skeleton width={100} height={20} />
+            </SkeletonTheme>
           </>
         ) : (
           <>
@@ -71,28 +71,30 @@ const UserDropdown = ({ user, loading, handleLogout }) => {
           <MenuItems className="absolute right-0 z-10 mt-2 w-56
                 origin-top-right rounded-md bg-white dark:bg-[#2B2C2B] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div className="py-1">
-              <MenuItem>
+              <MenuItem className="flex flex-col gap-5">
                 {({ focus }) => (
-                  <div className={`
-                          ${focus ? 'bg-gray-100 dark:bg-[#2B2C2B] text-gray-900' : 'text-gray-700 dark:text-white'}
-                          flex items-center w-full px-4 py-2 text-left text-sm
-                          dark:hover:bg-[#2B2C2B] dark:hover:text-white hover:bg-gray-100 hover:text-gray-900`}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24">
-                      <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}>
-                        <path d="M14 8V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2v-2"></path>
-                        <path d="M9 12h12l-3-3m0 6l3-3"></path>
-                      </g>
-                    </svg>
-                    <button
-                      type="button"
-                      onClick={handleLogout}
-                      className={`
-                              ${focus ? 'bg-gray-100 dark:bg-[#2B2C2B] text-gray-900' : 'text-gray-700 dark:text-white'}
-                              dark:hover:bg-[#2B2C2B] dark:hover:text-white 
-                              flex items-center w-full px-4 py-2 text-left text-sm`}
-                    >
-                      Sign out
-                    </button>
+                  <div className="flex flex-col gap-5 p-2">
+                    {/* account */}
+                    <div className='flex flex-row gap-2 items-center'>
+                      <img src='/assets/icons/account.svg' alt="account" className="w-6 h-6" />
+                      <Link href="/account" className="text-sm">Account</Link>
+                    </div>
+                    <div className='flex flex-row gap-2 items-center'>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" viewBox="0 0 24 24">
+                        <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}>
+                          <path d="M14 8V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2v-2"></path>
+                          <path d="M9 12h12l-3-3m0 6l3-3"></path>
+                        </g>
+                      </svg>
+                      <button
+                        type="button"
+                        onClick={handleLogout}
+                        className="text-sm"
+                      >
+                        Sign out
+                      </button>
+                    </div>
+
                   </div>
                 )}
               </MenuItem>

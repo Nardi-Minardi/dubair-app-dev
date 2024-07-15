@@ -168,8 +168,7 @@ const Dubbing = () => {
 
       gapi.client.load('drive', 'v3', () => {
         gapi.auth2.getAuthInstance().signIn().then(() => {
-          // const user = gapi.auth2.getAuthInstance().currentUser.get();
-          // console.log('user', user)
+          const userGdrive = gapi.auth2.getAuthInstance().currentUser.get();
           updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
           onOpen();
         });
@@ -202,7 +201,10 @@ const Dubbing = () => {
         Authorization: `Bearer ${token}`,
       },
       params: {
-        pageSize: 10,
+        corpora: 'allDrives',
+        includeItemsFromAllDrives: true,
+        supportsAllDrives: true,
+        // pageSize: 10,
         fields: 'nextPageToken, files(id, name, mimeType, modifiedTime, videoMediaMetadata, webViewLink, webContentLink)',
         q: searchTerm,
       }

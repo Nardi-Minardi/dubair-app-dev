@@ -60,9 +60,9 @@ const Navbar = () => {
       <div className="flex flex-row items-center gap-5">
         <div className="xl:flex md:flex lg:flex items-center justify-center xl:py-0 xl:justify-end lg:justify-end md:justify-start">
 
-          <div className="hidden xl:flex md:flex lg:flex">
+          {/* <div className="hidden xl:flex md:flex lg:flex">
             <LanguageSelector />
-          </div>
+          </div> */}
 
           <UserDropdown loading={loading} user={user} handleLogout={handleLogout} />
 

@@ -9,7 +9,8 @@ const GOOGLE_CLIENT_ID = "419356635890-cjb10218b366sacl7lqo4so10hl12s7e.apps.goo
 const API_KEY_GDRIVE = "AIzaSyAvS4kWKBn0BRQCG63LY4AiCgLj7VK0-4A";
 const REDIRECT_URI_GDRIVE = "https://developers.google.com/oauthplayground";
 const REFRESH_TOKEN_GDRIVE = "1//04nB1VU3f7XtMCgYIARAAGAQSNwF-L9IrThoneY6ZJXKiEWZOc3irTq3fNGfGQRB8BG3cg1zDuMKB6ZPHDiKGkuzU8h6JFd4UpIg";
-
+const USER_EMAIL = "pwbestial@gmail.com";
+const PASS_EMAIL = "lspdjiwvsmnhcguv";
 
 export {
   APP_NAME,
@@ -19,4 +20,6 @@ export {
   NODE_ENV,
   GOOGLE_CLIENT_ID,
   API_KEY_GDRIVE,
+  USER_EMAIL,
+  PASS_EMAIL,
 };
