@@ -11,6 +11,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18.20.0"
+          cache: "npm"
 
       - name: Build project
         run: npm run build
