@@ -18,15 +18,15 @@ jobs:
           node-version: "18.20.0"
           cache: "npm"
 
-      - name: install dependencies
+      - name: Install dependencies
         run: |
-        if [ -e yarn.lock ]; then
-        yarn install --frozen-lockfile
-        elif [ -e package-lock.json ]; then
-        npm ci
-        else
-        npm i
-        fi
+          if [ -e yarn.lock ]; then
+          yarn install --frozen-lockfile
+          elif [ -e package-lock.json ]; then
+          npm ci
+          else
+          npm i
+          fi
 
       - name: build
         run: npm run build
