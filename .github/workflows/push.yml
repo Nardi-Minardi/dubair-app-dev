@@ -6,24 +6,14 @@ on:
       - master
 
 jobs:
-      primary:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: "18.20.0"
-      - name: install dependencies
-        run: npm install
-      - name: build
-        run: npm run build
-      - name: test
-        run: npm run test
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Deploy based on branch
-        run: 
+      - name: Deploy to AWS
+        run: |
           aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-         aws configure set region eu-west-1
-          aws s3 sync ./build s3://app.dubair.ai
+          aws s3 cp ./build s3://app.dubair.ai --recursive
