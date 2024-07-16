@@ -18,11 +18,15 @@ jobs:
           node-version: "18.20.0"
           cache: "npm"
 
-      - name: Build project
+      - name: install dependencies
+        run: npm install
+
+      - name: build
         run: npm run build
 
       - name: Deploy to AWS
         run: |
+          BUILD_DIRECTORY=build
           aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws configure set region eu-west-1
