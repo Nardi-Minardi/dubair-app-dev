@@ -21,7 +21,7 @@ const Pricing = () => {
       basic: {
         value: 'Free Trial',
         data: [
-          "10 Minutes of Dubbed Video",
+          "3 Minutes of Dubbed Video",
           "Cloned Voice of Input File",
           "Output .Mp4",
           "Voice Cloning in 29 Languages",
