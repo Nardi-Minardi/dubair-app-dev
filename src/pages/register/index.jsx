@@ -195,7 +195,7 @@ const Register = () => {
         <main className="h-full w-full lg:w-1/2 min-h-screen">
           {/* logo */}
           <div className="px-12 py-8 flex justify-between items-center">
-            <Logo />
+            <Logo link="/login" />
             {/* <ButtonDarkMode /> */}
           </div>
           {/* end logo */}

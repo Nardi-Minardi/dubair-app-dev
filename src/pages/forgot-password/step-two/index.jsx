@@ -9,8 +9,9 @@ import ButtonDarkMode from '@/components/buttons/buttonDarkMode';
 import { ArrowLongLeftIcon } from '@heroicons/react/20/solid';
 import { useRouter } from 'next/router';
 import { CheckIcon } from '@heroicons/react/20/solid';
-import Logo from '@/components/elements/logo';
 import Link from 'next/link';
+
+const Logo = dynamic(() => import('@/components/elements/logo', { ssr: false }))
 
 const CarouselLogin1 = dynamic(() => import('@/components/carousel/carouselLogin1'),
   { ssr: false }
@@ -73,7 +74,7 @@ const ForgotStepTwo = () => {
         <main className="h-full w-full lg:w-1/2 min-h-screen">
           {/* logo */}
           <div className="px-8 py-8 flex justify-between items-center">
-            <Logo />
+          <Logo link="/login"/>
             {/* <ButtonDarkMode /> */}
           </div>
           {/* end logo */}

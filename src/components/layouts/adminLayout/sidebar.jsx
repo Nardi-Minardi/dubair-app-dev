@@ -4,6 +4,7 @@ import { useTheme } from 'next-themes'
 import UpgradePro from '@/components/elements/upgradePro'
 import { useGlobalSidebarContext } from '@/context/sidebarContext'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
 
 const menus = [
   {
@@ -41,13 +42,18 @@ const otherMenus = [
   },
 ]
 
+const Logo = dynamic(() => import('@/components/elements/logo'), { ssr: false })
+
 const Sidebar = ({ firstOpen, setFirstOpen }) => {
   const router = useRouter();
   const currentPath = router.pathname;
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
   const { isSidebarOpen, closeSidebar } = useGlobalSidebarContext();
-  useEffect(() => setMounted(true), [])
+  
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const ModalOverlay = ({ onClick }) => (
     <div
@@ -89,9 +95,7 @@ const Sidebar = ({ firstOpen, setFirstOpen }) => {
 
         <div className="flex flex-col">
           <div className="mx-auto pt-8 px-5">
-            <Link href='/dubbing' >
-              <img src="/assets/images/logo.png" className="w-full cursor-pointer" />
-            </Link>
+            <Logo link="/dubbing" />
           </div>
           <div className=" ml-8 mt-12 text-md text-color-gray">MENU
           </div>

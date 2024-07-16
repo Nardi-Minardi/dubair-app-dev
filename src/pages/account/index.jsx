@@ -133,7 +133,7 @@ const Account = () => {
               </div>
 
               {!isEdit && !isChangePassword && (
-                <div className='flex flex-col'>
+                <div className='flex flex-col w-32'>
                   <span className="text-lg md-max:w-20 w-32 truncate mt-1">
                     {user?.name}
                   </span>

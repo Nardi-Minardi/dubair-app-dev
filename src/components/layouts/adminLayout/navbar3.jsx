@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import { FiPlus, FiUpload } from "react-icons/fi";
 import { useGlobalSidebarContext } from '@/context/sidebarContext'
 import { FiChevronsLeft } from "react-icons/fi";
-import Logo from '@/components/elements/logo'
+import dynamic from 'next/dynamic';
 import UserDropdown from './userDropdown'
 import { useSelector, useDispatch } from 'react-redux'
 import { tokenAuth } from '@/utils/LocalStorage'
@@ -14,6 +14,7 @@ import { fetchUser, logoutUser } from '@/store/slices/authSlice'
 //icon arrow left from heroicons
 import { ChevronLeftIcon } from '@heroicons/react/20/solid'
 
+const Logo = dynamic(() => import('@/components/elements/logo'), { ssr: false })
 
 const Navbar3 = ({ firstOpen, setFirstOpen, setTitle, title }) => {
   const dispatch = useDispatch()
@@ -47,7 +48,7 @@ const Navbar3 = ({ firstOpen, setFirstOpen, setTitle, title }) => {
     <div>
       <div className="flex px-5  gap-5 w-full flex-col lg:flex-row justify-between items-center">
         <div className="flex items-center w-full gap-3 max-w-1/2">
-          <Logo />
+          <Logo link="dubbing"/>
         </div>
         <div className='flex flex-row w-full items-center  justify-end gap-4'>
           {/* <button

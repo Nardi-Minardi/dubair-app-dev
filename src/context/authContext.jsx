@@ -13,9 +13,9 @@ const AuthProvider = ({ children }) => {
   //verify token if login not using gmail
   const verifyToken = async (token) => {
     const auth = getAuth();
-    console.log('auth', auth);
+    // console.log('auth', auth);
     await signInWithCustomToken(auth, token).then((userCredential) => {
-      console.log('userCredential', userCredential);
+      // console.log('userCredential', userCredential);
       // Signed in
       const user = userCredential.user;
       console.log('user', user);
@@ -29,7 +29,7 @@ const AuthProvider = ({ children }) => {
   const refreshToken = async () => {
     const auth = getAuth();
     await auth.currentUser?.getIdToken(true).then((idToken) => {
-      console.log('idToken', idToken);
+      // console.log('idToken', idToken);
       // Send token to your backend via HTTPS
       // ...
 
@@ -44,7 +44,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      console.log('user', user);
+      // console.log('user', user);
       if (!user) {
         //force refresh token
         // refreshToken();

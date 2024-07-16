@@ -8,6 +8,7 @@ import Loader from '@/components/elements/loader';
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistStore } from 'redux-persist'
 import NextNProgress from 'nextjs-progressbar';
+import { Plus_Jakarta_Sans } from "next/font/google";
 
 const AuthLayout = ({ children, title }) => {
   const [loading, setLoading] = useState(false);
