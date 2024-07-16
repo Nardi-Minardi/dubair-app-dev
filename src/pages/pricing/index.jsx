@@ -193,7 +193,7 @@ const Pricing = () => {
               <div className=" bg-gradient-to-t from-[#9E0BF3] via-[#66B0FE] to-[#454FEC] rounded-lg shadow-lg p-4 m-4 max-w-[16rem]">
                 <div className="flex flex-col justify-start gap-2 items-start">
                   <h3 className="text-2xl text-white font-bold">Basic</h3>
-                  <p className="text-white text-[2rem]">${data[activeTab.toLowerCase()].basic.value}</p>
+                  <p className="text-white text-[2rem]">{data[activeTab.toLowerCase()].basic.value}</p>
                 </div>
                 <button
                   onClick={() => handleOnClick(data[activeTab.toLowerCase()].basic.action)}
