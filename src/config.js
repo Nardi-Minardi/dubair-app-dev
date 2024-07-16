@@ -11,6 +11,8 @@ const REDIRECT_URI_GDRIVE = "https://developers.google.com/oauthplayground";
 const REFRESH_TOKEN_GDRIVE = "1//04nB1VU3f7XtMCgYIARAAGAQSNwF-L9IrThoneY6ZJXKiEWZOc3irTq3fNGfGQRB8BG3cg1zDuMKB6ZPHDiKGkuzU8h6JFd4UpIg";
 const USER_EMAIL = "pwbestial@gmail.com";
 const PASS_EMAIL = "lspdjiwvsmnhcguv";
+const AWS_ACCESS_KEY_ID = 'AKIAU6GDX6PJ74HUBCJT';
+const AWS_SECRET_ACCESS_KEY = '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';
 
 export {
   APP_NAME,
@@ -22,4 +24,6 @@ export {
   API_KEY_GDRIVE,
   USER_EMAIL,
   PASS_EMAIL,
+  AWS_ACCESS_KEY_ID,
+  AWS_SECRET_ACCESS_KEY,
 };

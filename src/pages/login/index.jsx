@@ -199,7 +199,7 @@ const Login = () => {
         <main className="h-full w-full lg:w-1/2 min-h-screen">
           {/* logo */}
           <div className="px-12 py-8 flex justify-between items-center">
-            <Logo link="/login"/>
+            <Logo link="/login" />
             {/* <ButtonDarkMode /> */}
           </div>
           {/* end logo */}
@@ -281,7 +281,12 @@ const Login = () => {
                     Remember me
                   </span>
                 </label>
-                <Link href="/forgot-password/step-one" className="my-text text-sm underline">Forgot your password?</Link>
+                {/* <Link href="/forgot-password/step-one"
+                  className="my-text text-sm underline">Forgot your password?
+                </Link> */}
+                <span onClick={() => toast.info('If you forget your password, please contact our support team, on support@dubair.ai')}
+                  className="my-text cursor-pointer text-sm underline">Forgot your password?
+                </span>
               </div>
 
               <div className="fex flex-col mt-[50px]">

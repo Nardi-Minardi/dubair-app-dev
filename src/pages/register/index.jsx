@@ -207,7 +207,7 @@ const Register = () => {
             </h1>
 
             <p className="mt-4 mb-4 text-2xl leading-relaxed text-gray-500 text-center">
-              {" Let's get started with your free 5 minutes trial"}
+              {" Let's get started with your free 3 minutes trial"}
             </p>
 
             <form action="#" className="mx-auto">
