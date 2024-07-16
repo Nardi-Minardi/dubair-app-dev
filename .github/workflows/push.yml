@@ -17,4 +17,4 @@ jobs:
           aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws configure set region eu-west-1
-          aws s3 sync ./build s3://app.dubair.ai/
+          aws s3 sync ./next s3://app.dubair.ai/
