@@ -38,7 +38,7 @@ const UserDropdown = ({ user, loading, handleLogout }) => {
               {user?.name ? user?.name : 'username'}
             </span>
             <span className="font-extralight lg-max:text-sm md-max:w-20 w-40 truncate">
-              {user?.email ? user?.email?.substring(0, 15) + '...' : 'email'}
+              {user?.email ? user?.email?.substring(0, 20) + '...' : 'email'}
             </span>
           </>
         )}
@@ -76,7 +76,8 @@ const UserDropdown = ({ user, loading, handleLogout }) => {
                   <div className="flex flex-col gap-5 p-2">
                     {/* account */}
                     <div className='flex flex-row gap-2 items-center'>
-                      <img src='/assets/icons/account.svg' alt="account" className="w-6 h-6" />
+                      <img src={theme === 'dark' ? '/assets/icons/account-white.svg' : '/assets/icons/account.svg'}
+                      alt="account" className="w-6 h-6" />
                       <Link href="/account" className="text-sm">Account</Link>
                     </div>
                     <div className='flex flex-row gap-2 items-center'>

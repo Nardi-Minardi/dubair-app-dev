@@ -12,7 +12,7 @@ const UpgradePro = () => {
           <p className="text-xl font-bold text-white">Upgrade Account</p>
           <p className="text-sm px-4 text-center text-white">Get acces to all <br /> features</p></div>
         <div>
-          <Link rel="noopener noreferrer" className="bg-white px-8 py-2 flex items-center rounded-lg text-black hover:bg-gradient-to-b hover:from-white/40 hover:to-white/5 " href="/pricing">VIP
+          <Link rel="noopener noreferrer" className="bg-white text-sm px-8 py-2 flex items-center rounded-lg text-black hover:bg-gradient-to-b hover:from-white/40 hover:to-white/5 " href="/pricing">Buy Now
             <img src="/assets/icons/diamond.svg" className="ml-1 w-5 h-5" alt="" /></Link>
         </div>
       </div>

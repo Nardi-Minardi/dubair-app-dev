@@ -109,8 +109,8 @@ const Navbar2 = ({ firstOpen, setFirstOpen, setTitle, title }) => {
             onClick={handleLogout}
             className=" bg-gradient-to-t from-[#9E0BF3] via-[#66B0FE] to-[#454FEC] text-white 
             text-xs py-2 px-4 rounded-lg flex items-center">
-            VIP
-            <img src="/assets/icons/diamond-white.svg" className="w-4 ml-1" />
+            Upgrade Plan
+            {/* <img src="/assets/icons/diamond-white.svg" className="w-4 ml-1" /> */}
           </button>
           <button className='bg-[#2B2C2B] text-white  text-xs py-2 px-4 rounded-lg flex items-center '>
             <FiPlus className='' />

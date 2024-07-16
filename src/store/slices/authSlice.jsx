@@ -3,6 +3,7 @@ import axios from 'axios';
 import { API_URL, APP_NAME } from '../../config';
 import { tokenAuth } from '@/utils/LocalStorage';
 import Cookies from 'js-cookie';
+import { getAuth } from 'firebase/auth';
 
 const initialState = {
   user: {},
@@ -21,6 +22,7 @@ export const loginUser = createAsyncThunk(
             'Accept': 'application/json',
           }
         });
+      console.log('response.data', response)
       return response;
     } catch (error) {
       return rejectWithValue(error.response);
@@ -85,15 +87,18 @@ export const fetchUser = createAsyncThunk(
 
 export const logoutUser = createAsyncThunk(
   'auth/logout',
-  async (  rejectWithValue ) => {
+  async (data,  {rejectWithValue} ) => {
     try {
-      // await axios.post(`${API_URL}/user/logout`, {},
-      //   {
-      //     headers: {
-      //       'Content-Type': 'application/json',
-      //       'Authorization': `Bearer ${tokenAuth()}`
-      //     }
-      //   });
+      const response = await axios.post(`${API_URL}/account/logout`, data,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${data.token}`
+          }
+        });
+      // remove user firebase
+      const auth = getAuth();
+      auth.signOut();
       const cookiesName = `${APP_NAME}-token`;
       Cookies.remove(cookiesName);
       return;

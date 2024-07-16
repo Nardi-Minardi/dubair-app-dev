@@ -27,7 +27,7 @@ const Navbar = () => {
   const handleLogout = (e) => {
     e.preventDefault()
     try {
-      dispatch(logoutUser(tokenAuth()))
+      dispatch(logoutUser({token: tokenAuth()}))
       router.push('/login')
     } catch (error) {
       console.log(error)
@@ -50,9 +50,9 @@ const Navbar = () => {
               className="xl:hidden md:hidden lg:hidden cursor-pointer">
               {!isSidebarOpen && <Bars3Icon className="h-6 w-6 stroke-2" />}
             </div>
-            <div className="flex xl:hidden md:hidden lg:hidden">
+            {/* <div className="flex xl:hidden md:hidden lg:hidden">
               <LanguageSelector />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

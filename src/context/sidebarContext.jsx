@@ -1,6 +1,6 @@
-import React, {createContext, useContext, useState} from "react";
+import React, { createContext, useContext, useState } from "react";
 
-const SidebarContext = createContext();
+const SidebarContext = createContext({});
 
 const SidebarPovider = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

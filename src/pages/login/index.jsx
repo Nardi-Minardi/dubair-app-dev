@@ -109,10 +109,12 @@ const Login = () => {
             theme: "colored",
           });
         } else {
+          //pindah di auth provider cookiesnya
+          const in1hour = new Date(new Date().getTime() + 60 * 60 * 1000);
           const cookiesName = APP_NAME + '-token';
           Cookies.set(cookiesName, data?.idToken,
             {
-              expires: 7,
+              expires: in1hour,
               secure: true,
             });
           window.location.href = '/dubbing';
@@ -139,12 +141,15 @@ const Login = () => {
           const resp = response.payload;
           const data = resp?.data;
           if (resp?.status === 200) {
-            const cookiesName = APP_NAME + '-token';
-            Cookies.set(cookiesName, data?.token,
-              {
-                expires: 7,
-                secure: true,
-              });
+            //pindah di auth provider cookiesnya
+            // const in1hour = new Date(new Date().getTime() + 60 * 60 * 1000);
+            // const inFifteenMinutes = new Date(new Date().getTime() + 15 * 60 * 1000);
+            // const cookiesName = APP_NAME + '-token';
+            // Cookies.set(cookiesName, data?.idToken,
+            //   {
+            //     expires: inFifteenMinutes,
+            //     secure: true,
+            //   });
             window.location.href = '/dubbing';
             // router.push('/dubbing');
           } else {

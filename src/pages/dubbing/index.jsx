@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import AdminLayout from '@/layouts/adminLayout';
 import { useTranslations } from 'next-intl';
-import DragDropFiles from '@/components/inputs/dragDropFiles';
+// import DragDropFiles from '@/components/inputs/dragDropFiles';
 import ButtonGradient from '@/components/buttons/buttonGradient';
 import ListDubbingVideo from '@/components/dubbing/listDubbingVideo';
 import { useDispatch } from 'react-redux';
@@ -18,6 +18,9 @@ import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { tokenAuth } from '@/utils/LocalStorage';
 import { acumulatedDuration } from '@/utils/videoHook';
+import dynamic from 'next/dynamic'
+
+const DragDropFiles = dynamic(() => import('@/components/inputs/dragDropFiles'), { ssr: false })
 
 const Dubbing = () => {
   const t = useTranslations('Dubbing');

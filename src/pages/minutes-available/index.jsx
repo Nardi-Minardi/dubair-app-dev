@@ -47,8 +47,8 @@ const MinutesAvailable = () => {
             onClick={() => router.push('/pricing')}
             className=" bg-gradient-to-t from-[#9E0BF3] via-[#66B0FE] to-[#454FEC] text-white 
             text-xs py-2 px-4 rounded-lg flex items-center">
-            VIP
-            <img src="/assets/icons/diamond-white.svg" className="w-4 ml-1" />
+            Upgrade Plan
+            {/* <img src="/assets/icons/diamond-white.svg" className="w-4 ml-1" /> */}
           </button>
           <Tooltip content="Refresh">
             <button

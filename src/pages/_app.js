@@ -19,6 +19,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { useRouter } from 'next/router';
 import NextNProgress from 'nextjs-progressbar';
 import { LoadingContext } from "@/context/loadingContext";
+import { AuthProvider } from "@/context/authContext";
 
 const App = ({ Component, pageProps }) => {
   const router = useRouter();
@@ -33,18 +34,20 @@ const App = ({ Component, pageProps }) => {
 
   return getLayout(
     <Provider store={store}>
-      <LoadingContext.Provider value={loadingAction}>
-        <NextIntlClientProvider
-          locale={router.locale}
-          timeZone="Europe/Vienna"
-          messages={pageProps.messages}
-        >
-          {loading && <Loader message="Loading..." />}
-          <Component {...pageProps} />
-          <ToastContainer theme="colored" />
+      <AuthProvider>
+        <LoadingContext.Provider value={loadingAction}>
+          <NextIntlClientProvider
+            locale={router.locale}
+            timeZone="Europe/Vienna"
+            messages={pageProps.messages}
+          >
+            {loading && <Loader message="Loading..." />}
+            <Component {...pageProps} />
+            <ToastContainer theme="colored" />
 
-        </NextIntlClientProvider>
-      </LoadingContext.Provider>
+          </NextIntlClientProvider>
+        </LoadingContext.Provider>
+      </AuthProvider>
     </Provider>
   )
 }

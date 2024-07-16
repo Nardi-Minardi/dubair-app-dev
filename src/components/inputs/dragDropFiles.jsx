@@ -5,6 +5,7 @@ import { CiClock1, CiClock2 } from "react-icons/ci";
 import ModalGenerate from './modalGenerate';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router'
+import { FolderIcon } from '@heroicons/react/20/solid'
 
 const DragDropFiles = ({ title, desc, user, getVideo, fileFromLink, setFileFromLink, setTypeFromLink, typeFromLink, handleUploadFromGoogleDrive }) => {
   const inputRef = useRef(null)

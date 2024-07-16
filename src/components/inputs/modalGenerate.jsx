@@ -354,9 +354,15 @@ const ModalGenerate = ({ isOpen, onOpenChange, getVideo, scrollBehavior, clearFi
                         className="my-input pl-3 h-[48px] w-full rounded-[12px] dark:bg[#18181B] text-md text-gray-700"
                         // value={speakerValue}
                         defaultValue={speakerValue}
+                        //max length 9
+                        max={9}
                         onChange={(e) => {
                           setErrors({ ...errors, numberSpeaker: '' })
                           setSpeakerValue(e.target.value)
+                          //force to max 9
+                          if (e.target.value > 9) {
+                            e.target.value = 9
+                          }
                         }}
                       />
                       {errors && errors.numberSpeaker && <span className="text-red-500 text-sm">{errors.numberSpeaker}</span>}
