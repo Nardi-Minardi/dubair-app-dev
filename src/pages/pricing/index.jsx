@@ -19,7 +19,7 @@ const Pricing = () => {
   const data = {
     monthly: {
       basic: {
-        value: '0/forever',
+        value: 'Free Trial',
         data: [
           "10 Minutes of Dubbed Video",
           "Cloned Voice of Input File",
@@ -122,7 +122,7 @@ const Pricing = () => {
           "Refine [ Fine-tune Your Production] - Coming Soon",
           "Remix [ Mix It Up and Add a New Dynamic] - Coming Soon",
         ],
-        action: "Get Started"
+        action: "Start Now"
       },
       studioDub: {
         value: '810',
@@ -133,7 +133,7 @@ const Pricing = () => {
           "Automated Machine Translation",
           "Voice Cloning in 29 Languages",
         ],
-        action: "Get Started"
+        action: "Start Now"
       },
       agencyDub: {
         value: '2225',
@@ -143,14 +143,16 @@ const Pricing = () => {
           "Priority support",
           "Real-time dubbing - Coming Soon",
         ],
-        action: "Get Started"
+        action: "Start Now"
       }
     }
   }
 
   const handleOnClick = (action) => {
-    if (action === "Get Started") {
-      router.push('/sendMail')
+    if (action === "Start Now") {
+      // router.push('/sendMail')
+      //open mail
+      window.open("mailto:support@dubair.ai")
     } else {
       console.log("Coming Soon")
     }
