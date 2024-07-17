@@ -16,7 +16,7 @@ import { useRouter } from 'next/router';
 import { getData, storeData } from '@/utils/LocalStorage';
 import Loader from '@/components/elements/loader';
 import Link from 'next/link';
-import { googleProvider } from '../api/firebase';
+import { googleProvider } from './api/firebase';
 import { getAuth, signInWithPopup } from "firebase/auth";
 import Cookies from 'js-cookie';
 import { APP_NAME } from '@/config';
