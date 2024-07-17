@@ -3,6 +3,7 @@ const withTM = require("next-transpile-modules");
 // import { API_URL } from "@/config";
 
 const nextConfig = {
+  trailingSlash:true,
   output: "export",
   experimental: {
     nextScriptWorkers: true,
