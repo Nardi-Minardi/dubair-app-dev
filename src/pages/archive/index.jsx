@@ -18,7 +18,7 @@ const Archive = () => {
   useEffect(() => {
     getVideo()
     dispatch(fetchUser(tokenAuth())).then((res) => {
-      // console.log('res userr, res.payload.data)
+      // console.log('res user, res.payload.data)
       setUser(res.payload?.data)
     })
   }, [])
