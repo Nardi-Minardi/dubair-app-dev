@@ -1,6 +1,5 @@
 import { Html, Head, Main, NextScript } from "next/document";
 import { APP_NAME, APP_DESCRIPTION } from "../config";
-import i18n from "../../next-i18next.config";
 
 export default function Document(props) {
 

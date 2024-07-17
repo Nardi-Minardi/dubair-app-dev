@@ -37,7 +37,7 @@ const App = ({ Component, pageProps }) => {
       <AuthProvider>
         <LoadingContext.Provider value={loadingAction}>
           <NextIntlClientProvider
-            locale={router.locale}
+            locale='en'
             timeZone="Europe/Vienna"
             messages={pageProps.messages}
           >

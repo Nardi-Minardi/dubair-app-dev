@@ -1,15 +1,14 @@
-const { i18n } = require("./next-i18next.config");
 const withPlugins = require("next-compose-plugins");
 const withTM = require("next-transpile-modules");
 // import { API_URL } from "@/config";
 
 const nextConfig = {
+  output: "export",
   experimental: {
     nextScriptWorkers: true,
   },
   reactStrictMode: true,
   cssModules: true,
-  i18n,
   
   transpilePackages: [
     // antd & deps

@@ -317,7 +317,7 @@ export async function getStaticProps({ locale }) {
   // console.log(locale);
   return {
     props: {
-      messages: (await import(`../../../locales/${locale}.json`)).default,
+      messages: (await import(`../../../locales/en.json`)).default,
     }
   };
 }

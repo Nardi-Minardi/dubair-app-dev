@@ -197,14 +197,6 @@ DubbingDetail.getLayout = function getLayout(page) {
   return <AdminLayout2 title={"Dubbing Detail"}>{page}</AdminLayout2>;
 }
 
-export async function getServerSideProps({ locale, id}) {
-  return {
-    props: {
-      messages: (await import(`../../../../locales/${locale}.json`)).default,
-    }
-  };
-}
-
 
 export default DubbingDetail;
 
