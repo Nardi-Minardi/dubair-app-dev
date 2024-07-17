@@ -21,7 +21,6 @@ const Account = () => {
   const [loading, setLoading] = useState(false);
   const [imgPreview, setImgPreview] = useState(null);
   const { user } = useSelector((state) => state.auth);
-  console.log(user);
   const [minutesAvailable, setMinutesAvailable] = useState(0);
   const [minutesUsed, setMinutesUsed] = useState(0);
 

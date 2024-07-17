@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import AdminLayout from '@/layouts/adminLayout';
 import { useTranslations } from 'next-intl';
-// import DragDropFiles from '@/components/inputs/dragDropFiles';
 import ButtonGradient from '@/components/buttons/buttonGradient';
 import ListDubbingVideo from '@/components/dubbing/listDubbingVideo';
 import { useDispatch } from 'react-redux';
@@ -25,8 +24,8 @@ const DragDropFiles = dynamic(() => import('@/components/inputs/dragDropFiles'),
 const Dubbing = () => {
   const t = useTranslations('Dubbing');
   const dispatch = useDispatch()
-  const gdriveRef = useRef(null)
   const router = useRouter()
+  const gdriveRef = useRef(null)
   const [fileFromLink, setFileFromLink] = useState('')
   const [typeFromLink, setTypeFromLink] = useState('')
   const [isYoutube, setIsYoutube] = useState(false)
@@ -132,7 +131,7 @@ const Dubbing = () => {
 
     get_filesize(source, function (size) {
       const zSize = (size / 1024 / 1024 / 1024).toFixed(2);
-      console.log('zSize', zSize)
+      // console.log('zSize', zSize)
       const maxSizeFree = 5;
       if (zSize > maxSizeFree) {
         toast.error('Please select a video file less than 5GB', {
@@ -212,7 +211,7 @@ const Dubbing = () => {
         q: searchTerm,
       }
     }).then((response) => {
-      console.log('response file gdrive', response)
+      // console.log('response file gdrive', response)
       setIsFetchingGoogleDriveFiles(false);
       setListDocumentsVisibility(true);
       const data = response.data.files;
@@ -315,7 +314,7 @@ Dubbing.getLayout = function getLayout(page) {
 }
 
 export async function getStaticProps({ locale }) {
-  console.log(locale);
+  // console.log(locale);
   return {
     props: {
       messages: (await import(`../../../locales/${locale}.json`)).default,

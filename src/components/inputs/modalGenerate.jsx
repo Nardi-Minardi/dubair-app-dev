@@ -92,7 +92,7 @@ const ModalGenerate = ({ isOpen, onOpenChange, getVideo, scrollBehavior, clearFi
   }
 
   const handleUpload = ({ onClose }) => {
-    console.log('duration', duration)
+    // console.log('duration', duration)
     if (projectName === '') {
       setErrors({ ...errors, projectName: 'Project Name is required' })
       return
