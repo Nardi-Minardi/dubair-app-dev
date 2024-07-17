@@ -246,13 +246,13 @@ const ModalGenerate = ({ isOpen, onOpenChange, getVideo, scrollBehavior, clearFi
               <ModalHeader className="flex flex-col">
                 <div className="flex flex-row gap-3">
                   <span>Project Detail</span>
-                  <div className='bg-[#EEEEEE] dark:bg-[#2B2C2B] rounded-md items-center my-1 justify-center flex w-auto px-2'>
+                  {/* <div className='bg-[#EEEEEE] dark:bg-[#2B2C2B] rounded-md items-center my-1 justify-center flex w-auto px-2'>
                     <CiClock2 className='text-[#2B2C2B] dark:text-white h-3 w-3 mr-2' />
                     <p className='text-[#2B2C2B] dark:text-white text-sm whitespace-nowrap font-semibold'>20 minutes</p>
-                  </div>
+                  </div> */}
                 </div>
                 <span className="text-sm text-gray-400 dark:text-white">
-                  {"The trial video must have a duration of 20 minutes or less. We'll edit your video to craft a 5-minute test clip"}.
+                  {"We'll edit your video to craft a 3-minute test clip"}.
                 </span>
               </ModalHeader>
               <ModalBody>
