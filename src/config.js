@@ -12,7 +12,6 @@ const REFRESH_TOKEN_GDRIVE = "1//04nB1VU3f7XtMCgYIARAAGAQSNwF-L9IrThoneY6ZJXKiEW
 const USER_EMAIL = "pwbestial@gmail.com";
 const PASS_EMAIL = "lspdjiwvsmnhcguv";
 
-
 export {
   APP_NAME,
   APP_VERSION,
