@@ -34,9 +34,18 @@ jobs:
       - name: Upload to S3
         uses: jakejarvis/s3-sync-action@master
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-1
-          command: s3
-          subcommand: sync
-          arguments: ./.next/ s3://app.dubair.ai/ --request-payer requester
+          args: --acl public-read --follow-symlinks --delete
+        env:
+          AWS_S3_BUCKET: "s3://app.dubair.ai/"
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: "eu-west-1"
+          SOURCE_DIR: ".next"
+
+        # with:
+        #   aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        #   aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        #   aws-region: eu-west-1
+        #   command: s3
+        #   subcommand: sync
+        #   arguments: ./.next/ s3://app.dubair.ai/ --request-payer requester
