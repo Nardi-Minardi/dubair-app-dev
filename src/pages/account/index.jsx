@@ -104,13 +104,13 @@ const Account = () => {
                 {imgPreview && (
                   <img src={imgPreview
                     ? imgPreview
-                    : user?.image ? user.image : '/assets/images/avatar.png'}
+                    : user?.image ? user.image : '/assets/images/avatar_profile.png'}
                     alt="avatar"
                     className="w-16 mr-1 aspect-square rounded-full" />
                 )}
 
                 {!imgPreview && (
-                  <img src={user?.image ? user.image : '/assets/images/avatar.png'}
+                  <img src={user?.image ? user.image : '/assets/images/avatar_profile.png'}
                     alt="avatar"
                     className="w-16 mr-1 aspect-square rounded-full" />
                 )}

@@ -17,7 +17,7 @@ const UserDropdown = ({ user, loading, handleLogout }) => {
   const { theme, setTheme } = useTheme();
   return (
     <div className="flex flex-row items-center">
-      <img src={user?.image ? user.image : '/assets/images/avatar.png'}
+      <img src={user?.image ? user.image : '/assets/images/avatar_profile.png'}
         alt="avatar"
         className="w-12 mr-1 aspect-square rounded-full" />
       <div className="flex flex-col">
