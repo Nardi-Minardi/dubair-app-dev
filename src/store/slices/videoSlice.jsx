@@ -103,7 +103,6 @@ const videoSlice = createSlice({
     });
     builder.addCase(deleteVideo.fulfilled, (state, { payload }) => {
       const filter = state.videos.filter((video) => video.id !== state.videos.id);
-      console.log('filter', filter)
       state.videos = filter;
       state.loading = false;
     });
