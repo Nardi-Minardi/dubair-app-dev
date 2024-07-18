@@ -8,6 +8,7 @@ export function middleware(req) {
   const { pathname, origin } = req.nextUrl
 
   const tokenLogin = req.cookies.get(token_cookie_name)?.value
+  // console.log('tokenLogin', tokenLogin)
   
   if(tokenLogin) {
     if(pathname == '/') {
@@ -28,6 +29,13 @@ export function middleware(req) {
 
 export const config = {
   matcher: [
+    '/account',
+    '/archive',
+    '/dubbing',
     '/dubbing/:path*', 
+    '/export',
+    '/minutes-available',
+    '/sendMail',
+    '/settings',
   ],
 }

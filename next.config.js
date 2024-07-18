@@ -4,7 +4,7 @@ const withTM = require("next-transpile-modules");
 
 const nextConfig = {
   trailingSlash:true,
-  output: "export",
+  // output: "export",
   experimental: {
     nextScriptWorkers: true,
   },
@@ -50,36 +50,36 @@ const nextConfig = {
     "rc-util",
   ],
 
-  redirects: async () => {
-    return [
-      {
-        source: '/',
-        destination: '/login',
-        permanent: true,
-      },
-    ];
-  },
-  headers: async () => {
-    return [
-      {
-        source: '/(.*)',
-        headers: [
-          {
-            key: 'Access-Control-Allow-Origin',
-            value: '*',
-          },
-          {
-            key: 'Access-Control-Allow-Methods',
-            value: 'GET, POST, PUT, DELETE, OPTIONS',
-          },
-          {
-            key: 'Access-Control-Allow-Headers',
-            value: 'X-Requested-With, Content-Type, Accept',
-          },
-        ],
-      },
-    ];
-  },
+  // redirects: async () => {
+  //   return [
+  //     {
+  //       source: '/',
+  //       destination: '/login',
+  //       permanent: true,
+  //     },
+  //   ];
+  // },
+  // headers: async () => {
+  //   return [
+  //     {
+  //       source: '/(.*)',
+  //       headers: [
+  //         {
+  //           key: 'Access-Control-Allow-Origin',
+  //           value: '*',
+  //         },
+  //         {
+  //           key: 'Access-Control-Allow-Methods',
+  //           value: 'GET, POST, PUT, DELETE, OPTIONS',
+  //         },
+  //         {
+  //           key: 'Access-Control-Allow-Headers',
+  //           value: 'X-Requested-With, Content-Type, Accept',
+  //         },
+  //       ],
+  //     },
+  //   ];
+  // },
 };
 
 module.exports = withPlugins([[withTM]], nextConfig);
