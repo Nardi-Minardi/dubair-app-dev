@@ -281,12 +281,12 @@ const Login = () => {
                     Remember me
                   </span>
                 </label>
-                {/* <Link href="/forgot-password/step-one"
+                <Link href="/forgot-password/step-one"
                   className="my-text text-sm underline">Forgot your password?
-                </Link> */}
-                <span onClick={() => toast.info('If you forget your password, please contact our support team, on support@dubair.ai')}
+                </Link>
+                {/* <span onClick={() => toast.info('If you forget your password, please contact our support team, on support@dubair.ai')}
                   className="my-text cursor-pointer text-sm underline">Forgot your password?
-                </span>
+                </span> */}
               </div>
 
               <div className="fex flex-col mt-[50px]">

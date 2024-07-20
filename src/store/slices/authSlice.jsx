@@ -22,7 +22,6 @@ export const loginUser = createAsyncThunk(
             'Accept': 'application/json',
           }
         });
-      console.log('response.data', response)
       return response;
     } catch (error) {
       return rejectWithValue(error.response);
@@ -41,7 +40,6 @@ export const registerUser = createAsyncThunk(
             'Accept': 'application/json',
           }
         });
-      console.log('response.data', response)
       return response;
     } catch (error) {
       return rejectWithValue(error.response);
@@ -104,6 +102,23 @@ export const logoutUser = createAsyncThunk(
       return;
     } catch (error) {
       return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const forgotPassword = createAsyncThunk(
+  'auth/logout',
+  async (data,  {rejectWithValue} ) => {
+    try {
+      const response = await axios.post(`${API_URL}/account/forgot-password`, data,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response);
     }
   }
 );

@@ -6,8 +6,21 @@ import ModalGenerate from './modalGenerate';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router'
 import { FolderIcon } from '@heroicons/react/20/solid'
+import { acumulatedDuration, validationMinutes } from '@/utils/videoHook'
 
-const DragDropFiles = ({ title, desc, user, getVideo, fileFromLink, setFileFromLink, setTypeFromLink, typeFromLink, handleUploadFromGoogleDrive }) => {
+const DragDropFiles = ({
+  title,
+  desc,
+  user,
+  getVideo,
+  fileFromLink,
+  setFileFromLink,
+  setTypeFromLink,
+  typeFromLink,
+  handleUploadFromGoogleDrive,
+  duration,
+  setDuration
+}) => {
   const inputRef = useRef(null)
   const router = useRouter()
   const { theme, setTheme } = useTheme()
@@ -24,8 +37,30 @@ const DragDropFiles = ({ title, desc, user, getVideo, fileFromLink, setFileFromL
       setNoFileSelected(false)
       handleOpenModal()
     }
-    // console.log('files', files)
-  }, [files, fileFromLink, typeFromLink])
+    files.map((file) => {
+      validationMinutes(user, duration).then((res) => {
+        if (!res) {
+          toast.error('You do not have enough minutes available to generate this video. this video has a duration of ' + acumulatedDuration(duration) + ' please upgrade your plan', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+
+          setTimeout(() => {
+            router.push('/pricing')
+          }, 3000)
+          return
+        } else {
+          handleOpenModal()
+        }
+      })
+    })
+  }, [files, fileFromLink, typeFromLink, duration])
 
   const handleDrop = (e) => {
     e.preventDefault();
@@ -166,24 +201,27 @@ const DragDropFiles = ({ title, desc, user, getVideo, fileFromLink, setFileFromL
     setNoFileSelected(true)
   }
 
-  const handleOpenModal = () => {
-    if (user?.minutesAvailable <= user?.minutesUsed || user?.minutesAvailable === 0) {
-      toast.error('You have no minutes available, please upgrade your plan', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-      setTimeout(() => {
-        router.push('/pricing')
-      }, 5000)
-      return
-    }
-    onOpen();
+  const handleOpenModal = async () => {
+    await validationMinutes(user, duration).then((res) => {
+      if (!res) {
+        toast.error('You do not have enough minutes available to generate this video. this video has a duration of ' + acumulatedDuration(duration) + ' please upgrade your plan', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+
+        setTimeout(() => {
+          router.push('/pricing')
+        }, 3000)
+        return
+      }
+    })
+    onOpen()
   }
 
   return (
@@ -252,6 +290,8 @@ const DragDropFiles = ({ title, desc, user, getVideo, fileFromLink, setFileFromL
         noFileSelected={noFileSelected}
         typeFromLink={typeFromLink}
         getVideo={getVideo}
+        duration={duration}
+        setDuration={setDuration}
       />
     </>
   )

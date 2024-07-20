@@ -1,3 +1,4 @@
+import { duration } from "moment";
 import React, { useEffect, useRef, useState } from "react";
 import videojs from 'video.js';
 
@@ -10,6 +11,7 @@ const Player = ({
   autoDetectSpeaker,
   autoDetectLanguage,
   setDuration,
+  duration,
   setSpeakerValue,
   setLanguage,
   fileFromLink
@@ -54,7 +56,7 @@ const Player = ({
       });
     }
 
-  }, [options, videoRef]);
+  }, [options, videoRef, duration]);
 
   // Dispose the Video.js player when the functional component unmounts
   useEffect(() => {

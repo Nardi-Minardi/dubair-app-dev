@@ -49,7 +49,6 @@ const AuthProvider = ({ children }) => {
         //force refresh token
         // refreshToken();
         verifyToken(tokenAuth());
-        console.log('no user');
         setUser(null);  
 
         return;

@@ -1,7 +1,7 @@
 const APP_NAME = "app.dubair.ai";
 const APP_VERSION = "0.0.1";
 const APP_DESCRIPTION = "Dubair is a simple, fast, and lightweight web browser for the desktop.";
-const API_URL = "https://alfikri.tech";
+const API_URL = "https://backend.dubair.ai";
 // const API_URL = "http://localhost:5000";
 const NODE_ENV = "production";
 const GOOGLE_CLIENT_ID = "419356635890-cjb10218b366sacl7lqo4so10hl12s7e.apps.googleusercontent.com";

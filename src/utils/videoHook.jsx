@@ -16,3 +16,14 @@ export const acumulatedDuration = (duration) => {
   let seconds = Math.floor(duration % 60);
   return `${hours}:${minutes}:${seconds}`;
 }
+
+export const validationMinutes = (user, duration) => {
+  //promise
+  return new Promise((resolve, reject) => {
+    if (user?.minutesAvailable - user?.minutesUsed < duration || user?.minutesAvailable === 0) {
+      resolve(false)
+    } else {
+      resolve(true)
+    }
+  })
+}

@@ -8,8 +8,21 @@ import Player from "../videoPlayer/videojs/player";
 import { get_filesize } from "@/utils/videoHook";
 import { acumulatedDuration } from "@/utils/videoHook";
 
-const GenerateThumbnail = ({ file, fileFromLink, typeFromLink, clearFiles, onClose, noFileSelected, setSpeakerValue, setLanguage, autoDetectSpeaker, autoDetectLanguage, duration, setDuration }) => {
- 
+const GenerateThumbnail = ({
+  file,
+  fileFromLink,
+  typeFromLink,
+  clearFiles,
+  onClose,
+  noFileSelected,
+  setSpeakerValue,
+  setLanguage,
+  autoDetectSpeaker,
+  autoDetectLanguage,
+  duration,
+  setDuration,
+}) => {
+
   const videoRef = useRef(null);
   const playerRef = useRef(null);
   const [fileSize, setFileSize] = useState(0);
@@ -40,7 +53,7 @@ const GenerateThumbnail = ({ file, fileFromLink, typeFromLink, clearFiles, onClo
         setPrefixSize(`${(file.size / (1024 * 1024 * 1024)).toFixed(2)} GB`);
       }
     }
-  }, [file, fileFromLink])
+  }, [file, fileFromLink, duration])
 
   const videoJsOptions = {
     autoplay: false,
@@ -88,11 +101,13 @@ const GenerateThumbnail = ({ file, fileFromLink, typeFromLink, clearFiles, onClo
               style={{ width: 250, height: 'auto' }}>
             </div> */}
             <Player
+              playerRef={playerRef}
               fileFromLink={fileFromLink}
               file={file}
               autoDetectSpeaker={autoDetectSpeaker}
               autoDetectLanguage={autoDetectLanguage}
               setDuration={setDuration}
+              duration={duration}
               setSpeakerValue={setSpeakerValue}
               setLanguage={setLanguage}
               width={250}

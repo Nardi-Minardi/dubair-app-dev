@@ -16,7 +16,7 @@ import { fetchUser } from '@/store/slices/authSlice';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { tokenAuth } from '@/utils/LocalStorage';
-import { acumulatedDuration } from '@/utils/videoHook';
+import { acumulatedDuration, validationMinutes } from '@/utils/videoHook';
 import dynamic from 'next/dynamic'
 
 const DragDropFiles = dynamic(() => import('@/components/inputs/dragDropFiles'), { ssr: false })
@@ -35,7 +35,7 @@ const Dubbing = () => {
   const [user, setUser] = useState(null)
   const [minutesAvailable, setMinutesAvailable] = useState(0)
   const [minutesUsed, setMinutesUsed] = useState(0)
-
+  const [duration, setDuration] = useState(0);
   const [listDocumentsVisible, setListDocumentsVisibility] = useState(false);
   const [documents, setDocuments] = useState([]);
   const [isLoadingGoogleDriveApi, setIsLoadingGoogleDriveApi] = useState(false);
@@ -48,7 +48,7 @@ const Dubbing = () => {
       // console.log('res user', res.payload.data)
       setUser(res.payload?.data)
     })
-  }, [])
+  }, [duration])
 
   const getVideo = () => {
     try {
@@ -64,7 +64,7 @@ const Dubbing = () => {
     return Promise.resolve(url.match(regex)[0].split('=')[1])
   }
 
-  const handleUploadFromLink = (e) => {
+  const handleUploadFromLink = async (e) => {
     if (!source) {
       toast.error('Please enter the link', {
         position: "top-right",
@@ -80,23 +80,6 @@ const Dubbing = () => {
       return
     }
 
-    if (user?.minutesAvailable <= user?.minutesUsed || user?.minutesAvailable === 0) {
-      toast.error('You have no minutes available, please upgrade your plan', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-
-      setTimeout(() => {
-        router.push('/pricing')
-      }, 5000)
-      return
-    }
 
     //validate is a format video from link
     const formatAllowed = new Map([["mp4", "video"], ["mov", "video"], ["m4v", "video"], ["webm", "video"], ["youtube", "iframe"]]);
@@ -258,6 +241,8 @@ const Dubbing = () => {
               gdriveRef={gdriveRef}
               user={user}
               getVideo={getVideo}
+              duration={duration}
+              setDuration={setDuration}
             />
             {/* OR */}
             <div className="flex items-center justify-center gap-2 mt-4">

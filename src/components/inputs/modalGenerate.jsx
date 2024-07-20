@@ -35,13 +35,24 @@ import { API_URL } from '@/config';
 import { tokenAuth } from '@/utils/LocalStorage';
 import axios from 'axios';
 
-const ModalGenerate = ({ isOpen, onOpenChange, getVideo, scrollBehavior, clearFiles, files, noFileSelected, fileFromLink, typeFromLink }) => {
+const ModalGenerate = ({
+  isOpen,
+  onOpenChange,
+  getVideo,
+  scrollBehavior,
+  clearFiles,
+  files,
+  noFileSelected,
+  fileFromLink,
+  typeFromLink,
+  duration,
+  setDuration,
+}) => {
   const dispatch = useDispatch()
-  const [duration, setDuration] = useState(0);
   const [projectName, setProjectName] = useState('')
   const [numberSpeaker, setNumberSpeaker] = useState('auto')
   const [speakerValue, setSpeakerValue] = useState(0)
-  const [language, setLanguage] = useState('auto')
+  const [language, setLanguage] = useState('')
   const [translateTo, setTranslateTo] = useState('')
   const [openInputSpeaker, setOpenInputSpeaker] = useState(false)
   const [autoDetectSpeaker, setAutoDetectSpeaker] = useState(true)
@@ -49,7 +60,8 @@ const ModalGenerate = ({ isOpen, onOpenChange, getVideo, scrollBehavior, clearFi
   const [errors, setErrors] = useState({
     projectName: '',
     numberSpeaker: '',
-    translateTo: ''
+    translateTo: '',
+    language: ''
   });
   const modalRef = useRef(null)
   const [progres, setProgres] = useState(0)
@@ -92,7 +104,6 @@ const ModalGenerate = ({ isOpen, onOpenChange, getVideo, scrollBehavior, clearFi
   }
 
   const handleUpload = ({ onClose }) => {
-    // console.log('duration', duration)
     if (projectName === '') {
       setErrors({ ...errors, projectName: 'Project Name is required' })
       return
@@ -133,7 +144,7 @@ const ModalGenerate = ({ isOpen, onOpenChange, getVideo, scrollBehavior, clearFi
       formData.append('file', file);
     });
     formData.append('numberOfSpeaker', speakerValue);
-    formData.append('originalLanguage', language);
+    formData.append('originalLanguage', language === 'en-US' ? 'en' : language);
     formData.append('translatedTo', translateTo);
     formData.append('minutesUsed', duration);
 
@@ -187,8 +198,8 @@ const ModalGenerate = ({ isOpen, onOpenChange, getVideo, scrollBehavior, clearFi
         setLoading(false);
       }).catch((error) => {
         console.log('error', error)
-        const data = error.response.data;
-        if (data.error?.status == 400) {
+        const data = error?.response?.data;
+        if (data?.error?.status == 400) {
           toast.error(`something went wrong, ${data.error?.description}`, {
             position: "top-right",
             autoClose: 5000,
@@ -278,6 +289,7 @@ const ModalGenerate = ({ isOpen, onOpenChange, getVideo, scrollBehavior, clearFi
                             fileFromLink={fileFromLink}
                             duration={duration}
                             setDuration={setDuration}
+
                           />
 
                         </React.Fragment>
@@ -297,6 +309,7 @@ const ModalGenerate = ({ isOpen, onOpenChange, getVideo, scrollBehavior, clearFi
                           typeFromLink={typeFromLink}
                           duration={duration}
                           setDuration={setDuration}
+
                         />
 
                       </React.Fragment>
@@ -387,6 +400,7 @@ const ModalGenerate = ({ isOpen, onOpenChange, getVideo, scrollBehavior, clearFi
                         </SelectItem>
                       ))}
                     </Select>
+                    {errors && errors.language && <span className="text-red-500 text-sm">{errors.language}</span>}
                     {/* <p className="text-small text-default-500">Selected: {language}</p> */}
                   </div>
 

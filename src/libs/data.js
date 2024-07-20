@@ -31,7 +31,7 @@ export const translateLanguages = [
 
 export const languages = [
   { key: "auto", label: "Autodetect" },
-  { key: "en", label: "English" },
+  { key: "en-US", label: "English" },
   { key: "id", label: "Indonesia" },
   { key: "ms", label: "Malay" },
   { key: "fil", label: "Filipino" },

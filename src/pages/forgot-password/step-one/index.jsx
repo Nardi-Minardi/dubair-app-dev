@@ -9,6 +9,9 @@ import { ArrowLongLeftIcon } from '@heroicons/react/20/solid';
 import { useRouter } from 'next/router';
 import { CheckIcon } from '@heroicons/react/20/solid';
 import Link from 'next/link';
+import { forgotPassword } from '@/store/slices/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import {toast} from 'react-toastify';
 
 const Logo = dynamic(() => import('@/components/elements/logo', { ssr: false }))
 
@@ -39,9 +42,11 @@ const dataCarouselLogin = [
 
 const ForgotStepOne = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedPath, setSelectedPath] = useState("");
   const [lastStep, setLastStep] = useState(true);
+  const [email, setEmail] = useState("");
 
   const currentPath = router.pathname;
   useEffect(() => {
@@ -61,6 +66,24 @@ const ForgotStepOne = () => {
     })
   }
 
+  const handleSubmit = (e) => {
+    try {
+      dispatch(forgotPassword({ email: email })).then(res => {
+        const data = res.payload.data;
+        if(data?.error){
+          toast.error(data?.error?.message)
+          return;
+        }
+
+        toast.success('Reset password link has been sent to your email')
+      })
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
+
+
   return (
     <section className="bg-white dark:bg-[#121212]">
       <div className="flex flex-col lg:flex-row">
@@ -68,7 +91,7 @@ const ForgotStepOne = () => {
         <main className="h-full w-full lg:w-1/2 min-h-screen">
           {/* logo */}
           <div className="px-8 py-8 flex justify-between items-center">
-          <Logo link="/login"/>
+            <Logo link="/login" />
             {/* <ButtonDarkMode /> */}
           </div>
           {/* end logo */}
@@ -80,7 +103,7 @@ const ForgotStepOne = () => {
             </h1>
 
             <p className="mt-4 mb-4 text-1xl leading-relaxed text-gray-500 text-center">
-             {"No need to wory, we'll email you reset instructions"}
+              {"No need to wory, we'll email you reset instructions"}
             </p>
 
             <form action="#" className="mx-auto">
@@ -93,6 +116,8 @@ const ForgotStepOne = () => {
                 id="Email"
                 name="email"
                 className="my-input pl-3 mb-5 h-[48px] w-full rounded-[12px] bg-white text-md text-gray-700 outline-none"
+                placeholder="Enter your email"
+                onChange={(e) => setEmail(e.target.value)}
               />
 
               <div className="fex flex-col mt-[50px]">
@@ -103,7 +128,7 @@ const ForgotStepOne = () => {
                   height="h-12"
                   type="button"
                   radius="rounded-[12px]"
-                  onClick={handleNextPath}
+                  onClick={handleSubmit}
                 />
 
                 <p className="mt-4 text-sm text-center">
@@ -114,8 +139,7 @@ const ForgotStepOne = () => {
             </form>
 
             <div className="flex items-center justify-center gap-2 mt-4">
-              <div className='mt-12'>
-                {/* create bullet timeline here */}
+              {/* <div className='mt-12'>
                 <div className="flex items-center justify-center">
                   <div
                     className="w-4 h-4 bg-gradient-to-t from-[#9E0BF3] via-[#66B0FE] to-[#454FEC] rounded-full cursor-pointer">
@@ -132,7 +156,7 @@ const ForgotStepOne = () => {
                   <div className="w-4 h-4 bg-gradient-to-t from-[#9E0BF3] via-[#66B0FE] to-[#454FEC] rounded-full cursor-pointer">
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </main>
