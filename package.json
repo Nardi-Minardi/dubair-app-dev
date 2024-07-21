@@ -25,6 +25,7 @@
     "@xzdarcy/react-timeline-editor": "^0.1.9",
     "antd": "^5.18.3",
     "axios": "^1.7.2",
+    "crypto-js": "^4.2.0",
     "firebase": "^10.12.2",
     "flag-icons": "^7.2.2",
     "framer-motion": "^11.2.6",

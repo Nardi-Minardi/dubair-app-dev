@@ -20,6 +20,7 @@ import { googleProvider } from './api/firebase';
 import { getAuth, signInWithPopup } from "firebase/auth";
 import Cookies from 'js-cookie';
 import { APP_NAME } from '@/config';
+import { Encrypt, Decrypt } from './api/helpers';
 
 const CarouselLogin1 = dynamic(() => import('@/components/carousel/carouselLogin1'),
   { ssr: false }
@@ -61,9 +62,10 @@ const Login = () => {
 
   useEffect(() => {
     getData('rememberMe').then((data) => {
+      const decryptPassword = Decrypt(data?.password);
       setRememberMe(data?.rememberMe);
       setEmail(data?.email);
-      setPassword(data?.password);
+      setPassword(decryptPassword);
     });
   }, []);
 
@@ -178,10 +180,11 @@ const Login = () => {
 
   const handleRememberMe = (e) => {
     if (e.target.checked) {
+      const passwordEncrypted = Encrypt(password);
       storeData('rememberMe', {
         rememberMe: e.target.checked,
         email: email,
-        password: password
+        password: passwordEncrypted
       });
     } else {
       storeData('rememberMe', {

@@ -97,8 +97,8 @@ const Sidebar = ({ firstOpen, setFirstOpen }) => {
           <div className="mx-auto pt-8 px-5">
             <Logo link="/dubbing" />
           </div>
-          <div className=" ml-8 mt-12 text-md text-color-gray">MENU
-          </div>
+          {/* <div className=" ml-8 mt-12 text-md text-color-gray">MENU
+          </div> */}
 
           {mounted && (
             <ul className="mb-auto mx-[10%] mt-4">
@@ -134,11 +134,11 @@ const Sidebar = ({ firstOpen, setFirstOpen }) => {
             </ul>
           )}
 
-          <div className="ml-8 mt-12 text-md text-color-gray">OTHER
-          </div>
+          {/* <div className="ml-8 mt-12 text-md text-color-gray">OTHER
+          </div> */}
 
           {mounted && (
-            <ul className="mb-auto mx-[10%] mt-4">
+            <ul className="mb-auto mx-[10%]">
               {otherMenus.length > 0 && otherMenus.map((menu, index) => (
                 <div key={index} onClick={() => {
                   handleRoute(menu.link)

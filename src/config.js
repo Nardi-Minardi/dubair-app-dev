@@ -2,6 +2,7 @@ const APP_NAME = "app.dubair.ai";
 const APP_VERSION = "0.0.1";
 const APP_DESCRIPTION = "Dubair is a simple, fast, and lightweight web browser for the desktop.";
 const API_URL = "https://backend.dubair.ai";
+const COOKIE_KEY = "A1B2C3D4E5F6G7H8I9J0K1L2M3N4O5P6Q7R8S9T0U1V2W3X4Y5Z6";
 // const API_URL = "http://localhost:5000";
 const NODE_ENV = "production";
 const GOOGLE_CLIENT_ID = "419356635890-cjb10218b366sacl7lqo4so10hl12s7e.apps.googleusercontent.com";
@@ -22,4 +23,5 @@ export {
   API_KEY_GDRIVE,
   USER_EMAIL,
   PASS_EMAIL,
+  COOKIE_KEY,
 };
