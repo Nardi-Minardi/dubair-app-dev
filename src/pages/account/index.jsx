@@ -71,7 +71,7 @@ const Account = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    toast.success('Profile updated successfully');
+    toast.info('This feature is under development');
     setIsEdit(false);
     setIsChangePassword(false);
   }
@@ -244,8 +244,8 @@ const Account = () => {
           <div className='flex flex-col gap-2 shadow-lg p-4 rounded-sm w-1/2'>
             <h1 className='text-2xl font-bold text-gray-800 dark:text-white'>Minutes Available</h1>
             <p className='text-lg text-gray-500 dark:text-gray-300'>You have {" "}
-              <span className='text-blue-500 font-bold'>{acumulatedDuration(minutesAvailable)} </span> / {" "}
-              <span className='text-red-500 font-bold'>{acumulatedDuration(minutesUsed)} </span>
+              <span className='text-blue-500 font-bold'>{secondToMinutes(minutesAvailable)} </span> / {" "}
+              <span className='text-red-500 font-bold'>{secondToMinutes(minutesUsed)} </span>
               minutes used</p>
           </div>
         </div>

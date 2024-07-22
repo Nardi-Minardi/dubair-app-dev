@@ -19,12 +19,12 @@ const menus = [
     iconWhite: '/assets/icons/archive-white.svg',
     link: '/archive'
   },
-  {
-    title: 'Minutes Available',
-    icon: '/assets/icons/diamond.svg',
-    iconWhite: '/assets/icons/diamond-white.svg',
-    link: '/minutes-available'
-  },
+  // {
+  //   title: 'Minutes Available',
+  //   icon: '/assets/icons/diamond.svg',
+  //   iconWhite: '/assets/icons/diamond-white.svg',
+  //   link: '/minutes-available'
+  // },
 ]
 
 const otherMenus = [
