@@ -276,8 +276,9 @@ const DragDropFiles = ({
           </div>
         </div>
 
-        <div className="flex flex-col gap-4">
-          <label className="text-sm text-gray-400">{desc}</label>
+        <div className="flex flex-col">
+          <label className="text-sm text-gray-400">Add a video file up to 500mb or 45 minutes, The larger the file the longer it will take to generate</label>
+          <label className="text-sm text-gray-400">Check out our Knowledge Base for more information</label>
         </div>
       </div>
       <ModalGenerate
