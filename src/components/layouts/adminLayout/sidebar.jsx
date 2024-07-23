@@ -21,11 +21,12 @@ const menus = [
     link: '/archive'
   },
   {
-    title: 'Knowledge Base',
-    icon: '/assets/icons/idea.svg',
-    iconWhite: '/assets/icons/idea-white.svg',
-    link: 'https://help.dubair.ai/'
+    title: 'Account',
+    icon: '/assets/icons/account.svg',
+    iconWhite: '/assets/icons/account-white.svg',
+    link: '/account'
   },
+ 
 ]
 
 const otherMenus = [
@@ -36,10 +37,16 @@ const otherMenus = [
   //   link: '/settings'
   // },
   {
-    title: 'Account',
-    icon: '/assets/icons/account.svg',
-    iconWhite: '/assets/icons/account-white.svg',
-    link: '/account'
+    title: 'Knowledge Base',
+    icon: '/assets/icons/idea.svg',
+    iconWhite: '/assets/icons/idea-white.svg',
+    link: 'https://help.dubair.ai/'
+  },
+  {
+    title: 'Feedback or Report Bug',
+    icon: '/assets/icons/report-bug.svg',
+    iconWhite: '/assets/icons/report-bug-white.svg',
+    link: 'https://opnform.com/forms/dub-air-feedback-and-bug-report-form-kpd20n/'
   },
 ]
 
@@ -65,6 +72,10 @@ const Sidebar = ({ firstOpen, setFirstOpen }) => {
 
   const handleRoute = (path) => {
     if (path === 'https://help.dubair.ai/') {
+      window.open(path, '_blank')
+      return
+    }
+    if (path === 'https://opnform.com/forms/dub-air-feedback-and-bug-report-form-kpd20n/') {
       window.open(path, '_blank')
       return
     }
