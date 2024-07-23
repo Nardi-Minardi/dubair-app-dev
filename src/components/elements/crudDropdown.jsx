@@ -8,6 +8,7 @@ import { toast } from 'react-toastify'
 import axios from 'axios'
 import { API_URL } from '@/config';
 import { tokenAuth } from '@/utils/LocalStorage';
+import Swal from 'sweetalert2'
 
 const CrudDropdown = ({ video, videoRef, getVideo }) => {
   const dispatch = useDispatch()
@@ -16,20 +17,33 @@ const CrudDropdown = ({ video, videoRef, getVideo }) => {
   const options = [
     { label: 'Edit', value: 'edit' },
     { label: 'Download', value: 'download' },
-    { label: 'Cut', value: 'cut' },
+    { label: 'Delete', value: 'delete' },
   ]
 
   const handleDelete = () => {
-    dispatch(deleteVideo(video.projectId)).then((response) => {
-      // console.log('response delete from dropdown', response)
-      const resp = response.payload
-      if (resp.status === 200) {
-        toast.success('Video deleted successfully')
-        getVideo()
-      } else {
-        toast.error('something went wrong, error deleting video')
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteVideo(video.projectId)).then((response) => {
+          // console.log('response delete from dropdown', response)
+          const resp = response.payload
+          if (resp.status === 200) {
+            toast.success('Video deleted successfully')
+            getVideo()
+          } else {
+            toast.error('something went wrong, error deleting video')
+          }
+        })
       }
     })
+
   }
 
   const handleDownload = async () => {
@@ -55,7 +69,7 @@ const CrudDropdown = ({ video, videoRef, getVideo }) => {
       toast.info('this feature is under development')
     } else if (option === 'download') {
       handleDownload()
-    } else if (option === 'cut') {
+    } else if (option === 'delete') {
       handleDelete()
     }
   }
@@ -83,7 +97,7 @@ const CrudDropdown = ({ video, videoRef, getVideo }) => {
               <div className="flex items-center justify-center">
                 {option.value === 'edit' && <FiEdit2 />}
                 {option.value === 'download' && <FiDownload />}
-                {option.value === 'cut' && <FiScissors />}
+                {option.value === 'delete' && <FiScissors />}
               </div>
               <div>{option.label}</div>
             </div>

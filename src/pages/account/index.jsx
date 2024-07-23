@@ -11,6 +11,8 @@ import { FaPencilAlt, FaLock } from 'react-icons/fa';
 import { tokenAuth } from '@/utils/LocalStorage';
 import ProfileInput from '@/components/elements/profilInput';
 import { toast } from 'react-toastify';
+import moment from 'moment';
+import 'moment/locale/en-gb';
 
 const Account = () => {
   const imgRef = useRef(null);
@@ -23,6 +25,7 @@ const Account = () => {
   const { user } = useSelector((state) => state.auth);
   const [minutesAvailable, setMinutesAvailable] = useState(0);
   const [minutesUsed, setMinutesUsed] = useState(0);
+  const [renewalDate, setRenewalDate] = useState(new Date('2024-08-23'));
 
   useEffect(() => {
     getDataMinutes();
@@ -254,8 +257,8 @@ const Account = () => {
           <div className='flex flex-col gap-2 shadow-lg p-4 rounded-sm w-1/2'>
             <h1 className='text-2xl font-bold text-gray-800 dark:text-white'>Renewal Date</h1>
             <p className='text-lg text-gray-500 dark:text-gray-300'>
-              {/* today */}
-              {new Date(Date.now()).toLocaleDateString()}
+              {/* 1 month from 23 Agustus 2024 */}
+              {moment(renewalDate).add(1, 'months').format('DD MMMM YYYY')}
             </p>
           </div>
           <div className='flex flex-col gap-2 shadow-lg p-4 rounded-sm w-1/2'>

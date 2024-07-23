@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 import LanguageSelector from '@/components/elements/languageSelector'
 import { useSelector, useDispatch } from 'react-redux'
 import moment from 'moment'
+import 'moment/locale/en-gb';
 import { fetchUser, logoutUser } from '@/store/slices/authSlice'
 import { useGlobalSidebarContext } from '@/context/sidebarContext'
 import UserDropdown from './userDropdown'
@@ -40,7 +41,7 @@ const Navbar = () => {
         <div className="flex flex-row w-full gap-5 items-center justify-between">
           <div className="flex flex-col w-1/2">
             <span className="text-2xl font-bold">Hi, Welcome Back</span><span className="font-extralight">
-              {moment().format('dddd, MMMM Do YYYY')}
+              {moment().format('dddd, DD MMMM YYYY')}
             </span>
           </div>
           {/* bars icons */}

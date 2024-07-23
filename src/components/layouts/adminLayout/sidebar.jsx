@@ -5,6 +5,7 @@ import UpgradePro from '@/components/elements/upgradePro'
 import { useGlobalSidebarContext } from '@/context/sidebarContext'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
+import { FaBookReader } from "react-icons/fa";
 
 const menus = [
   {
@@ -19,12 +20,12 @@ const menus = [
     iconWhite: '/assets/icons/archive-white.svg',
     link: '/archive'
   },
-  // {
-  //   title: 'Minutes Available',
-  //   icon: '/assets/icons/diamond.svg',
-  //   iconWhite: '/assets/icons/diamond-white.svg',
-  //   link: '/minutes-available'
-  // },
+  {
+    title: 'Knowledge Base',
+    icon: '/assets/icons/idea.svg',
+    iconWhite: '/assets/icons/idea-white.svg',
+    link: 'https://help.dubair.ai/'
+  },
 ]
 
 const otherMenus = [
@@ -63,6 +64,10 @@ const Sidebar = ({ firstOpen, setFirstOpen }) => {
   )
 
   const handleRoute = (path) => {
+    if (path === 'https://help.dubair.ai/') {
+      window.open(path, '_blank')
+      return
+    }
     router.push(path)
   }
 
