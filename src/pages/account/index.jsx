@@ -39,9 +39,9 @@ const Account = () => {
   }
 
   const secondToMinutes = (seconds) => {
-    const minutes = Math.floor(seconds % 3600 / 60).toString().padStart(2, '0');
-    const secondsLeft = Math.floor(seconds % 60).toString().padStart(2, '0');
-    return `${minutes}.${secondsLeft}`;
+    const minutes = Math.floor(seconds / 60);
+    const sec = seconds % 60;
+    return `${minutes}.${sec}`;
   }
 
   const handleLogout = (e) => {
