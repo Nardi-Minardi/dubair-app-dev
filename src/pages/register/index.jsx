@@ -103,7 +103,6 @@ const Register = () => {
       .then((response) => {
         const resp = response.payload;
         const data = resp.data;
-        console.log('response', resp)
         if (data.error) {
           toast.error(data.error?.description, {
             position: "top-right",

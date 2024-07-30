@@ -114,6 +114,7 @@ const ItemDetailDubbingVideo = ({ videos, isWatched, loading, theme, getVideo })
                   <CrudDropdown
                     video={video}
                     getVideo={getVideo}
+                    videoRef={videoRef}
                   />
                 </div>
               </div>

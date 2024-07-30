@@ -16,7 +16,8 @@ import { useRouter } from 'next/router';
 import { getData, storeData } from '@/utils/LocalStorage';
 import Loader from '@/components/elements/loader';
 import Link from 'next/link';
-import { googleProvider } from './api/firebase';
+import { signInWithGooglePopup, auth, signInWithGoogleRedirect } from './api/firebase';
+import { getRedirectResult } from 'firebase/auth';
 import { getAuth, signInWithPopup } from "firebase/auth";
 import Cookies from 'js-cookie';
 import { APP_NAME } from '@/config';
@@ -133,50 +134,33 @@ const Login = () => {
       });
   }
 
-  const handleLoginGoogle = async (provider) => {
-    showLoader && showLoader();
-    const auth = getAuth();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const accessToken = result.user.accessToken;
-        dispatch(loginByGoogle({ token: accessToken })).then((response) => {
-          const resp = response.payload;
-          const data = resp?.data;
-          if (resp?.status === 200) {
-            //pindah di auth provider cookiesnya
-            // const in1hour = new Date(new Date().getTime() + 60 * 60 * 1000);
-            // const inFifteenMinutes = new Date(new Date().getTime() + 15 * 60 * 1000);
-            // const cookiesName = APP_NAME + '-token';
-            // Cookies.set(cookiesName, data?.idToken,
-            //   {
-            //     expires: inFifteenMinutes,
-            //     secure: true,
-            //   });
-            window.location.href = '/dubbing';
-            // router.push('/dubbing');
-          } else {
-            toast.error('an error occurred', {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: false,
-              draggable: true,
-              progress: undefined,
-              theme: "colored",
-            });
-          }
-        })
-        hideLoader && hideLoader();
+  const handleLoginGoogle = async () => {
+    try {
+      const result = await signInWithGooglePopup();
+      const user = result.user;
+      const accessToken = user.accessToken;
+      dispatch(loginByGoogle({ token: accessToken })).then((response) => {
+        const resp = response.payload;
+        const data = resp?.data;
+        if (resp?.status === 200) {
+          window.location.href = '/dubbing';
+        } else {
+          toast.error('an error occurred', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
       })
-      .catch((error) => {
-        console.log(error);
-        hideLoader && hideLoader();
-      })
-      .finally(() => {
-        hideLoader && hideLoader();
-      });
-  };
+    } catch (error) {
+      console.log('error', error);
+    }
+  }
 
   const handleRememberMe = (e) => {
     if (e.target.checked) {
@@ -224,7 +208,7 @@ const Login = () => {
                   width="w-full"
                   height="h-12"
                   radius="rounded-[12px]"
-                  onClick={() => handleLoginGoogle(googleProvider)}
+                  onClick={handleLoginGoogle}
                 />
                 <div className="flex items-center justify-center gap-2 mt-4">
                   <div className="w-full h-0.5 bg-gray-300"></div>

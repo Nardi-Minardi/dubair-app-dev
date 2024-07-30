@@ -3,14 +3,14 @@ const withTM = require("next-transpile-modules");
 // import { API_URL } from "@/config";
 
 const nextConfig = {
-  trailingSlash:true,
+  trailingSlash: true,
   // output: "export",
   experimental: {
     nextScriptWorkers: true,
   },
   reactStrictMode: true,
   cssModules: true,
-  
+
   transpilePackages: [
     // antd & deps
     "@ant-design",
@@ -50,36 +50,45 @@ const nextConfig = {
     "rc-util",
   ],
 
-  // redirects: async () => {
-  //   return [
-  //     {
-  //       source: '/',
-  //       destination: '/login',
-  //       permanent: true,
-  //     },
-  //   ];
-  // },
-  // headers: async () => {
-  //   return [
-  //     {
-  //       source: '/(.*)',
-  //       headers: [
-  //         {
-  //           key: 'Access-Control-Allow-Origin',
-  //           value: '*',
-  //         },
-  //         {
-  //           key: 'Access-Control-Allow-Methods',
-  //           value: 'GET, POST, PUT, DELETE, OPTIONS',
-  //         },
-  //         {
-  //           key: 'Access-Control-Allow-Headers',
-  //           value: 'X-Requested-With, Content-Type, Accept',
-  //         },
-  //       ],
-  //     },
-  //   ];
-  // },
+  redirects: async () => {
+    return [
+      {
+        source: '/',
+        destination: '/login',
+        permanent: true,
+      },
+    ];
+  },
+  headers: async () => {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: '*',
+          },
+          {
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET, POST, PUT, DELETE, OPTIONS',
+          },
+          {
+            key: 'Access-Control-Allow-Headers',
+            value: 'X-Requested-With, Content-Type, Accept',
+          },
+        ],
+      },
+    ];
+  },
+  //reverse proxy for signin-helpers for popup/redirect sign in.
+  rewrites: async () => {
+    return [
+      {
+        source: '/__/auth/:path*',
+        destination: 'https://dubair-77c5b.firebaseapp.com/__/auth/:path*',
+      },
+    ];
+  }
 };
 
 module.exports = withPlugins([[withTM]], nextConfig);

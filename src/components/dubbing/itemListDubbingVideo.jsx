@@ -34,7 +34,7 @@ const ItemListDubbingVideo = ({ videos, isWatched, loading, theme, getVideo }) =
                 <div className={`relative w-full h-[200px] md:h-[250px] lg:h-[250px] xl:h-[250px]  flex-1 rounded-lg overflow-hidden  aspect-video ${isWatched ? 'opacity-60' : ''}`}>
                   <video
                     id={`video-${video.projectId}`}
-                    ref={videoRef}
+                    ref={(el) => (videoRef.current = el)}
                     src={Array.isArray(urlVideo) && urlVideo.length > 0 ? urlVideo[index] : ''}
                     controls
                     disablePictureInPicture

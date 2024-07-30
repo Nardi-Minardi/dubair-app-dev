@@ -9,6 +9,7 @@ import axios from 'axios'
 import { API_URL } from '@/config';
 import { tokenAuth } from '@/utils/LocalStorage';
 import Swal from 'sweetalert2'
+import fileDownload from 'js-file-download';
 
 const CrudDropdown = ({ video, videoRef, getVideo }) => {
   const dispatch = useDispatch()
@@ -46,21 +47,57 @@ const CrudDropdown = ({ video, videoRef, getVideo }) => {
 
   }
 
-  const handleDownload = async () => {
+  const downloadVideo = async () => {
     const elementVideo = document.getElementById(`video-${video.projectId}`);
     const url = elementVideo.src;
+
+    // const a = document.createElement('a');
+    // a.href = url;
+    // a.download = 'video.mp4';
+    // a.click();
+
+    //open with axios blob
+    await axios.get(url, {
+      responseType: 'blob',
+    }).then((response) => {
+      console.log('response download', response)
+      fileDownload(response.data, 'video.mp4')
+     
+    }).catch((error) => {
+      console.log('error download', error)
+    })
+
+
     //download
-    window.open(url)
-    // return await axios.get(`${API_URL}/projects/${video.projectId}/download`, {
+    // window.open(url)
+
+    // await axios.post(`${API_URL}/projects/${video.projectId}/download`, {
     //   headers: {
     //     'Content-Type': 'application/json',
-    //     'Authorization': `Bearer ${tokenAuth()}`
+    //     'Accept': 'application/json',
+    //     'Authorization': `Bearer ${tokenAuth()}`,
     //   },
     // }).then((response) => {
     //   console.log('response download', response)
     // }).catch((error) => {
     //   console.log('error download', error)
     // })
+  }
+
+  const handleDownload = async () => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You want to download this video?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, download it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        downloadVideo()
+      }
+    })
   }
 
   const handleOption = (option) => {

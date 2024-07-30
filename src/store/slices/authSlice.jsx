@@ -3,7 +3,8 @@ import axios from 'axios';
 import { API_URL, APP_NAME } from '../../config';
 import { tokenAuth } from '@/utils/LocalStorage';
 import Cookies from 'js-cookie';
-import { getAuth } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/pages/api/firebase';
 
 const initialState = {
   user: {},
@@ -22,6 +23,7 @@ export const loginUser = createAsyncThunk(
             'Accept': 'application/json',
           }
         });
+    
       return response;
     } catch (error) {
       return rejectWithValue(error.response);
@@ -95,10 +97,11 @@ export const logoutUser = createAsyncThunk(
           }
         });
       // remove user firebase
-      const auth = getAuth();
       auth.signOut();
-      const cookiesName = `${APP_NAME}-token`;
-      Cookies.remove(cookiesName);
+      const cookiesTokenAuth = `${APP_NAME}-token`;
+      const cookiesTokenRefresh = `${APP_NAME}-refresh-token`;
+      Cookies.remove(cookiesTokenAuth);
+      Cookies.remove(cookiesTokenRefresh);
       return;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -116,6 +119,27 @@ export const forgotPassword = createAsyncThunk(
             'Content-Type': 'application/json',
           }
         });
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response);
+    }
+  }
+);
+
+export const refreshTokenUser = createAsyncThunk(
+  'auth/refreshtoken',
+  async (params,  {rejectWithValue} ) => {
+    try {
+      const response = await axios.post(`${API_URL}/account/refresh-token`,
+      {
+        refreshToken: params.refreshToken
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+      );
       return response;
     } catch (error) {
       return rejectWithValue(error.response);
@@ -177,6 +201,18 @@ const authSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(fetchUser.rejected, (state, { payload }) => {
+      state.loading = false;
+    });
+
+    //refresh token
+    builder.addCase(refreshTokenUser.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(refreshTokenUser.fulfilled, (state, { payload }) => {
+      state.token = payload.data.token;
+      state.loading = false;
+    });
+    builder.addCase(refreshTokenUser.rejected, (state) => {
       state.loading = false;
     });
 

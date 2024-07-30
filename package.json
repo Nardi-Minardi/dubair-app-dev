@@ -32,6 +32,8 @@
     "gapi-script": "^1.2.0",
     "howler": "^2.2.4",
     "js-cookie": "^3.0.5",
+    "js-file-download": "^0.4.12",
+    "jwt-decode": "^4.0.0",
     "lodash": "^4.17.21",
     "lottie-web": "^5.12.2",
     "moment": "^2.30.1",
