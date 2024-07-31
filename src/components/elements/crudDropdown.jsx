@@ -50,22 +50,19 @@ const CrudDropdown = ({ video, videoRef, getVideo }) => {
   const downloadVideo = async () => {
     const elementVideo = document.getElementById(`video-${video.projectId}`);
     const url = elementVideo.src;
-
-    // const a = document.createElement('a');
-    // a.href = url;
-    // a.download = 'video.mp4';
-    // a.click();
+    //window open
+    window.open(url, '_blank')
 
     //open with axios blob
-    await axios.get(url, {
-      responseType: 'blob',
-    }).then((response) => {
-      console.log('response download', response)
-      fileDownload(response.data, 'video.mp4')
+    // await axios.get(url, {
+    //   responseType: 'blob',
+    // }).then((response) => {
+    //   console.log('response download', response)
+    //   fileDownload(response.data, 'video.mp4')
      
-    }).catch((error) => {
-      console.log('error download', error)
-    })
+    // }).catch((error) => {
+    //   console.log('error download', error)
+    // })
 
 
     //download
